@@ -7,6 +7,8 @@ public class SOP {
 	private String sopName; 
 	private String SOPAuthor;
 	private int authorIDnumber;
+	private int priority;
+	
 	
 	//to generate the unique SOP ID numbers. 
 	Random rand;
@@ -16,7 +18,12 @@ public class SOP {
 		setSopIdNumber(rand.nextInt(100000));
 	}
 	
-	
+	 public int getPriority() {
+		return priority;
+	}
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
 	public int getSopIdNumber() {
 		return sopIdNumber;
 	}
