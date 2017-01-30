@@ -10,6 +10,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import ycp.cs320.teamProject.model.*;
+
 public class DerbyDatabase {
 	static {
 		try {
@@ -25,6 +28,205 @@ public class DerbyDatabase {
 
 	private static final int MAX_ATTEMPTS = 100;
 	
+	public List<User> getAccountInfo(final String name) {
+		
+		return executeTransaction(new Transaction<List<User>>() {
+			@Override
+			public List<User> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				try {
+					stmt = conn.prepareStatement(
+							"select * from Users " +
+									" where user_userName = ? "
+							);
+					stmt.setString(1, name);
+					List<User> result = new ArrayList<User>();
+					resultSet = stmt.executeQuery();
+					Boolean found = false;
+					while (resultSet.next()) {
+						found = true;
+
+						User u = new User();
+						loadUser(u, resultSet, 1);
+						result.add(u);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + name + "> was not found in the Users table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	public List<User> matchUsernameWithPassword(final String name) {
+		
+		return executeTransaction(new Transaction<List<User>>() {
+			@Override
+			public List<User> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+
+				try {
+
+
+					stmt = conn.prepareStatement(
+							"select * from Users " +
+									" where user_userName = ? "
+							);
+					stmt.setString(1, name);
+					List<User> result = new ArrayList<User>();
+					resultSet = stmt.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						User u = new User();
+						loadUser(u, resultSet, 1);
+						result.add(u);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + name + "> was not found in the Users table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	
+	public List<User> addUserToDatabase(final String name, final String pswd, final String email, final String type, final String first,
+			final String last) {
+		return executeTransaction(new Transaction<List<User>>() {
+			@Override
+			public List<User> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				ResultSet resultSet = null;
+
+				try {
+					stmt = conn.prepareStatement(
+							"insert into users(user_userName, user_passWord, user_email, user_accountType, user_firstName, user_lastName) " +
+									" values(?, ?, ?, ?, ?, ?) "
+							);
+					stmt.setString(1, name);
+					stmt.setString(2, pswd);
+					stmt.setString(3, email);
+					stmt.setString(4, type);
+					stmt.setString(5, first);
+					stmt.setString(6, last);
+					stmt.executeUpdate();
+					
+					stmt2 = conn.prepareStatement(
+							"select * " +
+									" from users " +
+									" where user_userName = ?"
+							);
+					stmt2.setString(1, name);
+					
+					resultSet = stmt2.executeQuery();
+
+					// for testing that a result was returned
+					Boolean found = false;
+					List<User> result = new ArrayList<User>();
+					while (resultSet.next()) {
+						found = true;
+						User u = new User();
+						loadUser(u, resultSet, 1);
+						result.add(u);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + name + "> was not found in the users table");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
+				}
+			}
+		});
+	}
+	
+	public List<User> DeleteUserFromDatabase(final String name, final String pswd) {
+		return executeTransaction(new Transaction<List<User>>() {
+			@Override
+			public List<User> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null; 
+				ResultSet resultSet = null;
+
+				try {
+
+
+					stmt = conn.prepareStatement(
+							"delete from users " +
+									" where user_userName = ? " +
+									" and user_passWord = ? "
+							);
+					stmt.setString(1, name);
+					stmt.setString(2, pswd);
+					stmt.executeUpdate();
+
+					// return all users and see that the one entered was deleted
+					
+					stmt2 = conn.prepareStatement(
+							"select * from users " 		
+							);
+					resultSet = stmt2.executeQuery();
+					List<User> result = new ArrayList<User>();
+					
+					Boolean found = false;
+
+					while (resultSet.next()) {
+						found = true;
+
+						User u = new User();
+						loadUser(u, resultSet, 1);
+						result.add(u);
+					}
+
+					// check if the title was found
+					if (!found) {
+						System.out.println("<" + name + "> users list is empty");
+					}
+
+					return result;
+
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
+				}
+			}
+		});
+	}
 	
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
@@ -77,6 +279,17 @@ public class DerbyDatabase {
 		conn.setAutoCommit(false);
 
 		return conn;
+	}
+	
+	//these build the collections to return to the servlets, controlles
+	private void loadUser(User user, ResultSet resultSet, int index) throws SQLException {
+		user.setUserID(resultSet.getInt(index++));
+		user.setUsername(resultSet.getString(index++));
+		user.setPassword(resultSet.getString(index++));
+		user.setEmailAddress(resultSet.getString(index++));
+		user.setAccountType(resultSet.getString(index++));
+		user.setFirstName(resultSet.getString(index++));
+		user.setLastName(resultSet.getString(index++));
 	}
 	
 	public void createTables() {
