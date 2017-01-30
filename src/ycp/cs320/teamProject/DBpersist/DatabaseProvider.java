@@ -1,4 +1,4 @@
-package DBpersist;
+package ycp.cs320.teamProject.DBpersist;
 
 public class DatabaseProvider {
 	private static IDatabase theInstance;
