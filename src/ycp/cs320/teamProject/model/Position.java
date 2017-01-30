@@ -1,4 +1,4 @@
-package model;
+package ycp.cs320.teamProject.model;
 
 public class Position {
 	private String PositionName; 

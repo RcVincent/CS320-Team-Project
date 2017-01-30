@@ -1,4 +1,4 @@
-package model;
+package ycp.cs320.teamProject.model;
 
 //import java.util.ArrayList;
 import java.util.Queue;
