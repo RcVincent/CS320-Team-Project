@@ -13,7 +13,7 @@ import java.util.List;
 
 import ycp.cs320.teamProject.model.*;
 
-public class DerbyDatabase {
+public class DerbyDatabase implements IDatabase {
 	static {
 		try {
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
