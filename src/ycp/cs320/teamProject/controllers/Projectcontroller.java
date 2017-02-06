@@ -2,6 +2,7 @@ package ycp.cs320.teamProject.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 import ycp.cs320.teamProject.DBpersist.*;
 import ycp.cs320.teamProject.model.*;
@@ -9,6 +10,7 @@ import ycp.cs320.teamProject.model.*;
 
 public class Projectcontroller {
 	private IDatabase db;
+	private PriorityQueue p; 
 	
 	public Projectcontroller() {
 		DatabaseProvider.setInstance(new DerbyDatabase());
@@ -56,7 +58,11 @@ public class Projectcontroller {
 	
 	
 	//utility methods 
-	public void pushToPriorityQueue(){
-		
+	public Queue<SOP> pushToPriorityQueue(SOP sopID){
+		Queue<SOP> priorityQueue = null;
+		if(sopID.getPriority() >= 7) {
+			priorityQueue = p.pushToQueue(sopID);
+		}
+		return priorityQueue;
 	}
 }

@@ -17,7 +17,12 @@ public class SOPListToComplete {
 		trainingList.add(sop);
 	}
 	
+	//this will be a search function, possibly add a search criteria to the model/controller 
 	public void find(/* find a search criteria tag for searching through the training list */) {
+		
+	}
+	
+	public void escalate() {
 		
 	}
 	

@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import ycp.cs320.teamProject.model.*;
+import ycp.cs320.teamProject.model.User;
+
 
 public class DerbyDatabase implements IDatabase {
 	static {
@@ -36,7 +37,7 @@ public class DerbyDatabase implements IDatabase {
 		}
 	}
 
-
+	@Override
 	public List<User> getAccountInfo(final String name) {
 		
 		return executeTransaction(new Transaction<List<User>>() {
@@ -77,6 +78,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
 	public List<User> matchUsernameWithPassword(final String name) {
 		
 		return executeTransaction(new Transaction<List<User>>() {
@@ -123,7 +125,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	
+	@Override
 	public List<User> addUserToDatabase(final String name, final String pswd, final String email, final String type, final String first,
 			final String last) {
 		return executeTransaction(new Transaction<List<User>>() {
@@ -182,6 +184,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
 	public List<User> DeleteUserFromDatabase(final String name, final String pswd) {
 		return executeTransaction(new Transaction<List<User>>() {
 			@Override
@@ -237,6 +240,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
 	public List<User> changeUsername(final String name, final String newName, final String pswd) {
 		return executeTransaction(new Transaction<List<User>>() {
 			@Override
@@ -369,7 +373,34 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	public void createTables() {
+			executeTransaction(new Transaction<Boolean>() {
+			
+				@Override
+				public Boolean execute(Connection conn) throws SQLException {
+					PreparedStatement stmt1 = null;
+					try {
+						stmt1 = conn.prepareStatement(
+								"create table users (" +
+										"	user_id integer primary key " +
+										"		generated always as identity (start with 1, increment by 1), " +									
+										"	user_userName varchar(40),"     +
+										"	user_passWord varchar(40), "     +
+										"   user_email varchar(40), "        +
+										"   user_accountType varchar(30), " +
+										"    user_firstName varchar(50), "  +
+										"    user_lastNAme varchar(50) "    +
+										")"
+								);	
+						stmt1.executeUpdate();
+						return true;
+				
+					} finally {
+						DBUtil.closeQuietly(stmt1);
+				
+					}
+				}	
 		
+			});
 	}
 	
 	public void loadInitialData() {

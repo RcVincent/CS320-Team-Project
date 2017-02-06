@@ -13,10 +13,15 @@ public class PriorityQueue {
 		 
 	 }
 	 
-	 /* Commenting this out because it might be added to the controller as a controller method. 
-	 public void pushToQueue(SOP sopID) {
-		 
-	 }*/
+	// this method may be a part of the controller  
+	 public Queue<SOP> pushToQueue(SOP sopID) {
+		 if(sopID.getPriority() >= 7) {
+			 priorityQueue.add(sopID); 
+		 }
+		return priorityQueue;
+	 }
+	 
+	 
 
 	public int getQueueOwnerID() {
 		return queueOwnerID;
