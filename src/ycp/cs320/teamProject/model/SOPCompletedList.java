@@ -3,13 +3,13 @@ package ycp.cs320.teamProject.model;
 import java.util.ArrayList;
 import java.util.Collections; 
 
-public class SOPListToComplete {
+public class SOPCompletedList {
 	
 	private ArrayList<SOP> trainingList = new ArrayList<SOP>();
 	//SOP sop;
 	
 	
-	public SOPListToComplete() {
+	public SOPCompletedList() {
 		
 	}
 	

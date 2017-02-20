@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Position {
-	private String PositionName; 
 	
-	//find a key for finding the required level of training
+	private String PositionName; 
 	private int positionID;
 	private List<Integer> regulatingSOPs = new ArrayList<Integer>();
 	
+	//find a key for finding the required level of training
 	public Position() {
 		
 	}
@@ -53,5 +53,11 @@ public class Position {
 		
 		return referenceID;
 	}
+	
+	public void addRegulatorySOP(SOP sopToAdd) {
+		regulatingSOPs.add(sopToAdd.getSopIdNumber());
+	}
+	
+	
 	
 }

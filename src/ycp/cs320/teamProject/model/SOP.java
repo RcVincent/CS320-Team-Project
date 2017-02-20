@@ -1,5 +1,7 @@
 package ycp.cs320.teamProject.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class SOP {
@@ -9,13 +11,25 @@ public class SOP {
 	private int authorIDnumber;
 	private int priority;
 	
+	private List<Position> positionsAffected = new ArrayList<Position>(); 
 	
 	//to generate the unique SOP ID numbers. 
 	Random rand;
 	
 	public SOP() {
-		rand = new Random();
-		setSopIdNumber(rand.nextInt(100000));
+		//rand = new Random();
+		//setSopIdNumber(rand.nextInt(100000));
+	}
+	
+	public ArrayList<Position> showPositionsAffected(int PositionID) {
+		ArrayList<Position> positions = new ArrayList<Position>();
+		
+		for(int i = 0; i < positionsAffected.size(); i++) {
+			if(positionsAffected.get(i).getPositionID() == PositionID) {
+				positions.add(positionsAffected.get(i));
+			}
+		}
+		return positions;
 	}
 	
 	 public int getPriority() {
@@ -47,5 +61,13 @@ public class SOP {
 	}
 	public void setAuthorIDnumber(int authorIDnumber) {
 		this.authorIDnumber = authorIDnumber;
+	}
+
+	public List<Position> getPositionsAffected() {
+		return positionsAffected;
+	}
+
+	public void setPositionsAffected(List<Position> positionsAffected) {
+		this.positionsAffected = positionsAffected;
 	}
 }
