@@ -11,7 +11,7 @@ public class User {
 		private String lastName; 
 		private String emailAddress;
 		
-		private String accountType;
+		private boolean accountType;
 		private boolean loginStatus = false;
 		
 		//to generate a unique user ID
@@ -92,11 +92,11 @@ public class User {
 			this.emailAddress = emailAddress;
 		}
 
-		public String isAccountType() {
+		public boolean isAccountType() {
 			return accountType;
 		}
 
-		public void setAccountType(String accountType) {
+		public void setAccountType(boolean accountType) {
 			this.accountType = accountType;
 		}
 }

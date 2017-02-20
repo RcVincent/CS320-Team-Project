@@ -367,7 +367,7 @@ public class DerbyDatabase implements IDatabase {
 		user.setUsername(resultSet.getString(index++));
 		user.setPassword(resultSet.getString(index++));
 		user.setEmailAddress(resultSet.getString(index++));
-		user.setAccountType(resultSet.getString(index++));
+		//user.setAccountType(resultSet.getString(index++));
 		user.setFirstName(resultSet.getString(index++));
 		user.setLastName(resultSet.getString(index++));
 	}

@@ -2,31 +2,57 @@ package model;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 import ycp.cs320.teamProject.model.*; 
 
 public class ModelTests {
+	 //test users
 	 private User user;
 	 private User Admin;
-	
+	 private boolean isAdmin;
+	 //test SOP
+	 
 	 private SOP sop;
+	 
+	 //Test positions
+	 private Position admin;
+	 private Position Manager;
+	 private Position regularUser;
+	 private ArrayList<Position> positionsAffected;
+	 private ArrayList<SOP> sopsAffected; 
 	 
 	 @Before
 	 public void setUp() {
 		 user = new User();
-		 user.setAccountType("user");
+		 user.setAccountType(isAdmin = false);
+		 
 		 user.setUsername("Sir Robin");
 		 user.setPassword("bravebravebrave");
 		 user.setUserAccountInformation("Eric", "Idle", "junkTrons@junkworld.com");
 		 
+		 
 		 Admin = new User();
-		 Admin.setAccountType("Administrator");
+		 Admin.setAccountType(isAdmin = true);
 		 Admin.setUsername("Bruce");
 		 Admin.setPassword("noPuftas");
 		 Admin.setUserAccountInformation("Bruce", "Bruce", "australiaWeLoveYouAmen@email.aus");
 		 
+		 
 		 sop= new SOP();
+		 sop.setAuthorIDnumber(1002456);
+		 sop.setSopName("K.I.S.S");
+		 sop.setSopIdNumber(1025649);
+		 sop.setPriority(7);
+		 positionsAffected = new ArrayList<Position>();
+		 
+		 //for(int i = 0; i < 3; i++) {
+		 positionsAffected.add(Manager);
+		 positionsAffected.add(admin);
+		 positionsAffected.add(regularUser);
+		 //}
 		 
 	 }
 	 
@@ -65,8 +91,25 @@ public class ModelTests {
 		 assertEquals("australiaWeLoveYouAmen@email.aus", email);
 	 }
 	 
-	 
+	 @Test
 	 public void testAccountType() {
+		 boolean use = user.isAccountType();
+		 boolean admin = Admin.isAccountType();
 		 
+		 assertTrue(admin);
+		 assertFalse(use);
+	 }
+	 
+	 //@Test
+	 public void testSOP() {
+		 int authorID = sop.getAuthorIDnumber();
+		 String sopName = sop.getSopName();
+		 int priority = sop.getPriority();
+		 int id = sop.getSopIdNumber();
+		 
+		 assertEquals("K.I.S.S", sopName);
+		 assertEquals(7, priority);
+		 assertEquals(1002456, authorID);
+		 assertEquals(1025649, id);
 	 }
 }
