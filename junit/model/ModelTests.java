@@ -48,11 +48,20 @@ public class ModelTests {
 		 sop.setPriority(7);
 		 positionsAffected = new ArrayList<Position>();
 		 
-		 //for(int i = 0; i < 3; i++) {
+		 
 		 positionsAffected.add(Manager);
 		 positionsAffected.add(admin);
 		 positionsAffected.add(regularUser);
-		 //}
+		 
+		 admin.setPositionID(1025682);
+		 admin.setPositionName("Administrator");
+		 
+		 regularUser.setPositionID(1102597);
+		 regularUser.setPositionName("User");
+		 
+		 Manager.setPositionID(1200349);
+		 Manager.setPositionName("Manager");
+		
 		 
 	 }
 	 
@@ -100,7 +109,7 @@ public class ModelTests {
 		 assertFalse(use);
 	 }
 	 
-	 //@Test
+	 @Test
 	 public void testSOP() {
 		 int authorID = sop.getAuthorIDnumber();
 		 String sopName = sop.getSopName();
@@ -111,5 +120,19 @@ public class ModelTests {
 		 assertEquals(7, priority);
 		 assertEquals(1002456, authorID);
 		 assertEquals(1025649, id);
+	 }
+	 
+	 @Test
+	 public void testPositionsAffected() {
+		 positionsAffected = new ArrayList<Position>();
+		 positionsAffected.add(Manager);
+		 positionsAffected.add(admin);
+		 positionsAffected.add(regularUser);
+		 
+		 assertEquals(3, positionsAffected.size());
+	 }
+	 @Test
+	 public void testPosition() {
+		 
 	 }
 }
