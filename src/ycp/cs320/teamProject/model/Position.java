@@ -7,9 +7,10 @@ public class Position {
 	
 	private String PositionName; 
 	private int positionID;
-	private List<Integer> regulatingSOPs = new ArrayList<Integer>();
+	private List<SOP> regulatingSOPs = new ArrayList<SOP>();
 	
 	//find a key for finding the required level of training
+	
 	public Position() {
 		
 	}
@@ -31,33 +32,36 @@ public class Position {
 		this.positionID = positionID;
 	}
 
-	public List<Integer> getRegulatingSOPs() {
+	public List<SOP> getRegulatingSOPs() {
 		return regulatingSOPs;
 	}
 
-	public void setRegulatingSOPs(List<Integer> regulatingSOPs) {
+	public void setRegulatingSOPs(List<SOP> regulatingSOPs) {
 		this.regulatingSOPs = regulatingSOPs;
 	}
 	
-	public void addRegulatedSOP(int SOPID) {
-		regulatingSOPs.add(SOPID);
+	public void addRegulatedSOP(SOP sop) {
+		regulatingSOPs.add(sop);
 	}
 	
-	public int findRelevantSOP(int SOPID) {
+	public int findRelevantSOP(int sopID) {
 		int referenceID = 0; 
 		for(int i = 0; i < regulatingSOPs.size(); i++) {
-			if(regulatingSOPs.get(i).equals(SOPID)) {
-				referenceID = regulatingSOPs.get(i);
+			if(regulatingSOPs.get(i).getSopIdNumber() == sopID) {
+				referenceID = regulatingSOPs.get(i).getSopIdNumber();
 			}
 		}
 		
 		return referenceID;
 	}
 	
-	public void addRegulatorySOP(SOP sopToAdd) {
-		regulatingSOPs.add(sopToAdd.getSopIdNumber());
+	public ArrayList<SOP> findRelevantSOPs(Position position) {
+		ArrayList<SOP> sops = new ArrayList<SOP>();
+		
+		for(int i = 0; i < regulatingSOPs.size(); i++) {
+			if(position.getPositionID() == regulatingSOPs.get(i).getPositionsAffected().get(i).getPositionID());
+		}
+		
+		return sops;
 	}
-	
-	
-	
 }
