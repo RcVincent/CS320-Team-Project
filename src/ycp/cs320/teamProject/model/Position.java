@@ -49,6 +49,7 @@ public class Position {
 		for(int i = 0; i < regulatingSOPs.size(); i++) {
 			if(regulatingSOPs.get(i).getSopIdNumber() == sopID) {
 				referenceID = regulatingSOPs.get(i).getSopIdNumber();
+				break;
 			}
 		}
 		
@@ -59,7 +60,9 @@ public class Position {
 		ArrayList<SOP> sops = new ArrayList<SOP>();
 		
 		for(int i = 0; i < regulatingSOPs.size(); i++) {
-			if(position.getPositionID() == regulatingSOPs.get(i).getPositionsAffected().get(i).getPositionID());
+			if(position.getPositionID() == regulatingSOPs.get(i).getPositionsAffected().get(i).getPositionID()) {
+				
+			}
 		}
 		
 		return sops;
