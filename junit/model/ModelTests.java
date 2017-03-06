@@ -26,6 +26,10 @@ public class ModelTests {
 	 private ArrayList<Position> positionsAffected;
 	 private ArrayList<SOP> sopsAffected; 
 	 
+	 private TrainingHistory userhistory;
+	 private TrainingHistory adminhistory;
+	 private TrainingHistory Managerhistory;
+	 
 	 @Before
 	 public void setUp() {
 		 user = new User();
@@ -79,7 +83,21 @@ public class ModelTests {
 		 Manager = new Position();
 		 Manager.setPositionID(1200349);
 		 Manager.setPositionName("Manager");
-		
+		 
+		 userhistory = new TrainingHistory();
+		 userhistory.addToCompleted(sop);
+		 userhistory.addToTodoList(sop2);
+		 userhistory.addToTodoList(sop3);
+		 
+		 adminhistory = new TrainingHistory();
+		 adminhistory.addToCompleted(sop);
+		 adminhistory.addToCompleted(sop2);
+		 adminhistory.addToCompleted(sop3);
+		 
+		 Managerhistory = new TrainingHistory();
+		 Managerhistory.addToCompleted(sop);
+		 Managerhistory.addToCompleted(sop2);
+		 Managerhistory.addToTodoList(sop3);
 		 
 	 }
 	 
@@ -142,7 +160,7 @@ public class ModelTests {
 	 
 	 @Test
 	 public void testPositionsAffected() {
-		// positionsAffected = new ArrayList<Position>();
+		 positionsAffected = new ArrayList<Position>();
 		
 		 positionsAffected.add(Manager);
 		 positionsAffected.add(admin);
@@ -194,8 +212,18 @@ public class ModelTests {
 		assertEquals("User", name2);
 		assertEquals("Administrator", name3);
 		
-		
-		
+	 }
+	 
+	 @Test
+	 public void testTrainingHistories() {
+		 int hist1 = userhistory.TrainingHistorySize();
+		 int hist2 = adminhistory.TrainingHistorySize();
+		 int hist3 = Managerhistory.TrainingHistorySize();
+		 
+		 assertEquals(3, hist1);
+		 assertEquals(3, hist2);
+		 assertEquals(3, hist3);
+		 
 	 }
 	 
 }

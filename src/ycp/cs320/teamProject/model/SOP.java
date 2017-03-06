@@ -11,6 +11,7 @@ public class SOP {
 	private int authorIDnumber;
 	private int priority;
 	
+	private boolean IsComplete;
 	private List<Position> positionsAffected = new ArrayList<Position>(); 
 	
 	//to generate the unique SOP ID numbers. 
@@ -69,5 +70,13 @@ public class SOP {
 
 	public void setPositionsAffected(List<Position> positionsAffected) {
 		this.positionsAffected = positionsAffected;
+	}
+
+	public boolean isIsComplete() {
+		return IsComplete;
+	}
+
+	public void setIsComplete(boolean isComplete) {
+		IsComplete = isComplete;
 	}
 }
