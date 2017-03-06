@@ -21,11 +21,11 @@ public class SOP {
 		//setSopIdNumber(rand.nextInt(100000));
 	}
 	
-	public ArrayList<Position> showPositionsAffected(int PositionID) {
+	public ArrayList<Position> showPositionsAffected(int sopID) {
 		ArrayList<Position> positions = new ArrayList<Position>();
 		
 		for(int i = 0; i < positionsAffected.size(); i++) {
-			if(positionsAffected.get(i).getPositionID() == PositionID) {
+			if(positionsAffected.get(i).getRegulatingSOPs().get(i).getSopIdNumber() == sopID) {
 				positions.add(positionsAffected.get(i));
 			}
 		}

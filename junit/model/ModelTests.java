@@ -16,6 +16,8 @@ public class ModelTests {
 	 //test SOP
 	 
 	 private SOP sop;
+	 private SOP sop2;
+	 private SOP sop3;
 	 
 	 //Test positions
 	 private Position admin;
@@ -48,11 +50,22 @@ public class ModelTests {
 		 sop.setPriority(7);
 		 positionsAffected = new ArrayList<Position>();
 		 
+		 sop2 = new SOP();
+		 sop2.setAuthorIDnumber(1002456);
+		 sop2.setSopName("Dosument Editing");
+		 sop2.setSopIdNumber(1025650);
+		 
+		 sop3 = new SOP();
+		 sop3.setAuthorIDnumber(1002568);
+		 sop3.setSopName("Stretching Work");
+		 sop3.setSopIdNumber(1025651);
+		 
 		 
 		 positionsAffected.add(Manager);
 		 positionsAffected.add(admin);
 		 positionsAffected.add(regularUser);
 		 
+		 /*
 		 admin.setPositionID(1025682);
 		 admin.setPositionName("Administrator");
 		 
@@ -61,7 +74,7 @@ public class ModelTests {
 		 
 		 Manager.setPositionID(1200349);
 		 Manager.setPositionName("Manager");
-		
+		*/
 		 
 	 }
 	 
@@ -130,9 +143,29 @@ public class ModelTests {
 		 positionsAffected.add(regularUser);
 		 
 		 assertEquals(3, positionsAffected.size());
-	 }
-	 @Test
-	 public void testPosition() {
 		 
+		 //assertEquals(3, sop.showPositionsAffected(1002456));
 	 }
+	 
+	 /*
+	 @Test
+	 public void testPositionRegulation() {
+		 Manager.addRegulatedSOP(sop);
+		 Manager.addRegulatedSOP(sop3);
+		 
+		 assertEquals(2, Manager.getRegulatingSOPs().size());
+		 
+		 admin.addRegulatedSOP(sop);
+		 admin.addRegulatedSOP(sop2);
+		 
+		 assertEquals(2, admin.getRegulatingSOPs().size());
+		 
+		 int testsopID = Manager.findRelevantSOP(sop.getSopIdNumber());
+		 assertEquals(testsopID, sop.getSopIdNumber());
+		 
+		 int testsopID2 = admin.findRelevantSOP(sop2.getSopIdNumber());
+		 assertEquals(testsopID2,sop.getSopIdNumber());
+		 
+	 }*/
+	 
 }

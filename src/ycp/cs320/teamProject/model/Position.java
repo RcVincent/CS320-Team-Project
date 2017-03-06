@@ -61,7 +61,7 @@ public class Position {
 		
 		for(int i = 0; i < regulatingSOPs.size(); i++) {
 			if(position.getPositionID() == regulatingSOPs.get(i).getPositionsAffected().get(i).getPositionID()) {
-				
+				sops.add(regulatingSOPs.get(i));
 			}
 		}
 		
