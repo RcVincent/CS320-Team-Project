@@ -65,16 +65,19 @@ public class ModelTests {
 		 positionsAffected.add(admin);
 		 positionsAffected.add(regularUser);
 		 
-		 /*
+		 
+		 admin = new Position();
 		 admin.setPositionID(1025682);
 		 admin.setPositionName("Administrator");
 		 
+		 regularUser = new Position();
 		 regularUser.setPositionID(1102597);
 		 regularUser.setPositionName("User");
 		 
+		 Manager = new Position();
 		 Manager.setPositionID(1200349);
 		 Manager.setPositionName("Manager");
-		*/
+		
 		 
 	 }
 	 
@@ -147,7 +150,7 @@ public class ModelTests {
 		 //assertEquals(3, sop.showPositionsAffected(1002456));
 	 }
 	 
-	 /*
+	 
 	 @Test
 	 public void testPositionRegulation() {
 		 Manager.addRegulatedSOP(sop);
@@ -164,8 +167,8 @@ public class ModelTests {
 		 assertEquals(testsopID, sop.getSopIdNumber());
 		 
 		 int testsopID2 = admin.findRelevantSOP(sop2.getSopIdNumber());
-		 assertEquals(testsopID2,sop.getSopIdNumber());
+		 assertEquals(testsopID2,sop2.getSopIdNumber());
 		 
-	 }*/
+	 }
 	 
 }
