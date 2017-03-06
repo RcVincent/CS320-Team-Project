@@ -29,7 +29,7 @@ public class ModelTests {
 	 @Before
 	 public void setUp() {
 		 user = new User();
-		 user.setAccountType(isAdmin = false);
+		 user.setAdmin(isAdmin = false);
 		 
 		 user.setUsername("Sir Robin");
 		 user.setPassword("bravebravebrave");
@@ -37,7 +37,7 @@ public class ModelTests {
 		 
 		 
 		 Admin = new User();
-		 Admin.setAccountType(isAdmin = true);
+		 Admin.setAdmin(isAdmin = true);
 		 Admin.setUsername("Bruce");
 		 Admin.setPassword("noPuftas");
 		 Admin.setUserAccountInformation("Bruce", "Bruce", "australiaWeLoveYouAmen@email.aus");
@@ -61,9 +61,11 @@ public class ModelTests {
 		 sop3.setSopIdNumber(1025651);
 		 
 		 
+		 /*positionsAffected = new ArrayList<Position>();
+		
 		 positionsAffected.add(Manager);
 		 positionsAffected.add(admin);
-		 positionsAffected.add(regularUser);
+		 positionsAffected.add(regularUser);*/
 		 
 		 
 		 admin = new Position();
@@ -118,8 +120,8 @@ public class ModelTests {
 	 
 	 @Test
 	 public void testAccountType() {
-		 boolean use = user.isAccountType();
-		 boolean admin = Admin.isAccountType();
+		 boolean use = user.isAdmin();
+		 boolean admin = Admin.isAdmin();
 		 
 		 assertTrue(admin);
 		 assertFalse(use);
@@ -140,13 +142,15 @@ public class ModelTests {
 	 
 	 @Test
 	 public void testPositionsAffected() {
-		 positionsAffected = new ArrayList<Position>();
+		// positionsAffected = new ArrayList<Position>();
+		
 		 positionsAffected.add(Manager);
 		 positionsAffected.add(admin);
 		 positionsAffected.add(regularUser);
 		 
 		 assertEquals(3, positionsAffected.size());
 		 
+		 //need to find how to get this test to pass 
 		 //assertEquals(3, sop.showPositionsAffected(1002456));
 	 }
 	 
@@ -169,6 +173,29 @@ public class ModelTests {
 		 int testsopID2 = admin.findRelevantSOP(sop2.getSopIdNumber());
 		 assertEquals(testsopID2,sop2.getSopIdNumber());
 		 
+		 
+	 }
+	 
+	 @Test
+	 public void testPositions() {
+		int positionID1 = Manager.getPositionID();
+		int positionID2 = regularUser.getPositionID();
+		int positionID3 = admin.getPositionID();
+		
+		assertEquals(1200349, positionID1);
+		assertEquals(1102597, positionID2);
+		assertEquals(1025682, positionID3);
+		
+		String name1 = Manager.getPositionName();
+		String name2 = regularUser.getPositionName();
+		String name3 = admin.getPositionName();
+		
+		assertEquals("Manager", name1);
+		assertEquals("User", name2);
+		assertEquals("Administrator", name3);
+		
+		
+		
 	 }
 	 
 }
