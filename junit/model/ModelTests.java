@@ -13,8 +13,8 @@ public class ModelTests {
 	 private User user;
 	 private User Admin;
 	 private boolean isAdmin;
-	 //test SOP
-	 
+	
+	 //test SOPs
 	 private SOP sop;
 	 private SOP sop2;
 	 private SOP sop3;
@@ -26,6 +26,7 @@ public class ModelTests {
 	 private ArrayList<Position> positionsAffected;
 	 private ArrayList<SOP> sopsAffected; 
 	 
+	 //Test histories 
 	 private TrainingHistory userhistory;
 	 private TrainingHistory adminhistory;
 	 private TrainingHistory Managerhistory;
