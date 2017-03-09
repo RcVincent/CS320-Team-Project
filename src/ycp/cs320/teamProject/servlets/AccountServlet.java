@@ -12,8 +12,6 @@ import ycp.cs320.teamProject.model.*;
 
 
 public class AccountServlet extends HttpServlet{
-	//tester
-	private int Tester;
 	private static final long serialVersionUID = 1L;
 	//private getAccountInfo user = null;
 	@Override
