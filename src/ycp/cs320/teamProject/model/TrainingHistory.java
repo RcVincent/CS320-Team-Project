@@ -3,8 +3,6 @@ package ycp.cs320.teamProject.model;
 import java.util.ArrayList;
 
 public class TrainingHistory {
-	//push test post fetch setup
-	private int test;
 	private int UserID;
 	
 	ArrayList<SOP> completedSOPs = new ArrayList<SOP>(); 
