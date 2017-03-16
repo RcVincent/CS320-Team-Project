@@ -6,6 +6,84 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
 	<!--  Servlets -->
+	
+	<servlet>
+		<servlet-name> IndexServlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.IndexServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>AccountServlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.AccountServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>changePasswordServlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.changePasswordServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>CreateAccountServlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.CreateAccountServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.LoginServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>MainPageServlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.MainPageServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>retrychangePassword</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.retrychangePassword</servlet-class>
+	</servlet>
+	
     <!--  Servlet Mappings -->     
+    
+    <servlet-mapping>
+    	<servlet-name>IndexServlet</servlet-name>
+    	<url-pattern>index</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+    	<servlet-name>AccountServlet</servlet-name>
+    	<url-pattern>MyAccount</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+    	<servlet-name>changePasswordServlet</servlet-name>
+    	<url-pattern>changePassword</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+    	<servlet-name>CreateAccountServlet</servlet-name>
+    	<url-pattern>createAccount</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+    	<servlet-name>LoginServlet</servlet-name>
+    	<url-pattern>Login</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+    	<servlet-name>MainPageServlet</servlet-name>
+    	<url-pattern>homepage</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+    	<servlet-name>retrychangePassword</servlet-name>
+    	<url-pattern>retry</url-pattern>
+    </servlet-mapping>
+   <!--  
+    <servlet-mapping>
+    	<servlet-name></servlet-name>
+    	<url-pattern></url-pattern>
+    </servlet-mapping>--> 
+    
+    
     
 </web-app>

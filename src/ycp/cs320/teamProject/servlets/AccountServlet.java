@@ -24,6 +24,8 @@ public class AccountServlet extends HttpServlet{
 			return;
 
 		}
+		
+		//added afterwards 
 		String password = (String) req.getSession().getAttribute("password");
 		String password2 = (String) req.getSession().getAttribute("password2");
 		if (password != password2){

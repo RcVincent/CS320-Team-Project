@@ -44,7 +44,7 @@ public class Projectcontroller {
 	}
 	
 	
-	public void changeUserName(String Username, String newUsername, String password) {
+	public void changeUserPassword(String Username, String newUsername, String password) {
 		
 	}
 	
