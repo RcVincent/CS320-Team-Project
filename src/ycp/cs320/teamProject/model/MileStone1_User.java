@@ -2,27 +2,20 @@ package ycp.cs320.teamProject.model;
 
 //import java.util.Random;
 
-public class User {
+public class MileStone1_User {
 
-		private int UserID;
-		private String Username;
-		private String Password;
-		private String firstName;
-		private String lastName; 
-		private String emailAddress;
+		private int UserID = 0013;
+		private String Username = "JSnow";
+		private String Password = "Winter1sComing";
+		private String firstName = "John";
+		private String lastName = "Snow"; 
+		private String emailAddress = "KingOfTheNorth@CastleBlack.com";
 		
-		private boolean isAdmin;
-		private boolean loginStatus = false;
 		
-		//I think this should be the same as the employee number, not random, will also help to search by emp. #
-		//to generate a unique user ID
-		//Random rand;
-		/*
-		public User(){
-			this.rand = new Random();
-			setUserID(rand.nextInt(900000000));
-		}
-		*/
+		private boolean isAdmin = true;//you bet the lord commander is an Admin
+		private boolean loginStatus = true;
+		
+
 		public void setUserNumber(int EmpNumb){
 			this.UserID = EmpNumb;
 		}
