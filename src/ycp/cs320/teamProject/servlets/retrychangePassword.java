@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import ycp.cs320.teamProject.model.User;
 
 
-public class AccountServlet extends HttpServlet{
+public class retrychangePassword extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	//private getAccountInfo user = null;
 	@Override
@@ -32,19 +32,10 @@ public class AccountServlet extends HttpServlet{
 		}
 		model.setPassword(password);
 
-		int UserNumber = (int) req.getSession().getAttribute("UserID");
-		model.setUserID(UserNumber);
-		String FirstName = (String) req.getSession().getAttribute("FirstName");
-		model.setFirstName(FirstName);
-		String LastName = (String) req.getSession().getAttribute("LastName");
-		model.setLastName(LastName);
-		String Email = (String) req.getSession().getAttribute("Email");
-		model.setEmailAddress(Email);
+		
 		
 		req.getRequestDispatcher("/_view/retrychangePassword.jsp").forward(req, resp);
-		req.getRequestDispatcher("/_view/changePassword.jsp").forward(req, resp);
-		req.getRequestDispatcher("/_view/CreateAccount.jsp").forward(req, resp);
-		req.getRequestDispatcher("/_view/Account.jsp").forward(req, resp);
+
 	}
 
 
