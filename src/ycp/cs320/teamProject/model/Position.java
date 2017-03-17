@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Position {
 	
-	private String PositionName; 
-	private int positionID;
+	private String PositionName = "Lord Commander"; 
+	private int positionID = 001;
 	private List<SOP> regulatingSOPs = new ArrayList<SOP>();
 	
 	//find a key for finding the required level of training

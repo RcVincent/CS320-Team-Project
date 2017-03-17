@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ycp.cs320.teamProject.model.User;
-
+////WHAT is this servlet page do, is this not what mainPage is???
 
 public class AccountServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -16,6 +16,8 @@ public class AccountServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		req.getRequestDispatcher("/_view/account.jsp").forward(req, resp);
+		
 		String user = (String) req.getSession().getAttribute("User.username");
 		User model = new User();
 		if (user == null) {

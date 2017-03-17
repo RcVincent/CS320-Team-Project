@@ -7,38 +7,36 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ycp.cs320.teamProject.model.User;
+
+import ycp.cs320.teamProject.model.SOP;
 
 
-public class retrychangePassword extends HttpServlet{
+
+public class SOPservlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	//private getAccountInfo user = null;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/retrychangePassword.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/createSOP.jsp").forward(req, resp);
 		String user = (String) req.getSession().getAttribute("User.username");
-		User model = new User();
+		SOP model = new SOP();
 		if (user == null) {
 			// user is not logged in, or the session expired
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 
 		}
-		String password = (String) req.getSession().getAttribute("password");
-		String password2 = (String) req.getSession().getAttribute("password2");
-		if (password != password2){
-			//Passwords don't match
-			resp.sendRedirect(req.getContextPath()+ "/retrychangePassword");
-		}
-		model.setPassword(password);
+	}
+		protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+				throws ServletException, IOException {
+			SOP model = new SOP();
+		
 
-		
-		
-		req.getRequestDispatcher("/_view/retrychangePassword.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/SOP.jsp").forward(req, resp);
 
 	}
 
 
-
+	
 }
