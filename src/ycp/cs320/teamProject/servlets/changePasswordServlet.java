@@ -16,6 +16,7 @@ public class changePasswordServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		req.getRequestDispatcher("/_view/changePassword.jsp").forward(req, resp);
 		String user = (String) req.getSession().getAttribute("User.username");
 		User model = new User();
 		if (user == null) {

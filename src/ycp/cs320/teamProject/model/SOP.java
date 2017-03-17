@@ -7,9 +7,10 @@ import java.util.Random;
 public class SOP {
 	private int sopIdNumber; 
 	private String sopName; 
-	private String SOPAuthor;
+	private String sopAuthor;
 	private int authorIDnumber;
 	private int priority;
+	private int revision;
 	
 	private boolean IsComplete;
 	private List<Position> positionsAffected = new ArrayList<Position>(); 
@@ -52,10 +53,10 @@ public class SOP {
 		this.sopName = sopName;
 	}
 	public String getSOPAuthor() {
-		return SOPAuthor;
+		return sopAuthor;
 	}
 	public void setSOPAuthor(String sOPAuthor) {
-		SOPAuthor = sOPAuthor;
+		sopAuthor = sOPAuthor;
 	}
 	public int getAuthorIDnumber() {
 		return authorIDnumber;
@@ -78,5 +79,13 @@ public class SOP {
 
 	public void setIsComplete(boolean isComplete) {
 		IsComplete = isComplete;
+	}
+
+	public int getRevision() {
+		return revision;
+	}
+
+	public void setRevision(int revision) {
+		this.revision = revision;
 	}
 }

@@ -16,6 +16,7 @@ public class CreateAccountServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		req.getRequestDispatcher("/_view/CreateAccount.jsp").forward(req, resp);
 		String user = (String) req.getSession().getAttribute("User.username");
 		User model = new User();
 		if (user == null) {
@@ -24,8 +25,8 @@ public class CreateAccountServlet extends HttpServlet{
 			return;
 
 		}
-		
-	
+
+
 		int UserNumber = (int) req.getSession().getAttribute("UserID");
 		model.setUserID(UserNumber);
 		String FirstName = (String) req.getSession().getAttribute("FirstName");
@@ -34,10 +35,10 @@ public class CreateAccountServlet extends HttpServlet{
 		model.setLastName(LastName);
 		String Email = (String) req.getSession().getAttribute("Email");
 		model.setEmailAddress(Email);
-		
+
 
 		req.getRequestDispatcher("/_view/CreateAccount.jsp").forward(req, resp);
-	
+
 	}
 
 

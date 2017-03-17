@@ -21,7 +21,6 @@ Last Name: <input type="text" name="LastName"><br>
 E-Mail: <input type="text" name="Email"><br>
 </form>
 
-<p><b>Note:</b> The characters in a password field are masked (shown as asterisks or circles).</p>
 
 </body>
 </html>
