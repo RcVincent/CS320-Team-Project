@@ -27,6 +27,8 @@ public class LoginServlet {
 		
 		username = req.getParameter("username");
 		password = req.getParameter("password");
+		
+		//Authenticate here/match user with password 
 	}
 
 }
