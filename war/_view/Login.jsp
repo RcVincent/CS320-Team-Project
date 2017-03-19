@@ -61,16 +61,10 @@
 				<td><input type = "Submit" name = "submit" value = "Login" /> </td>
 				</form>
 			</tr>
-			
-			<form action="${pageContext.servletContext.contextPath}/CreateAccount" method="get">
-			<tr>
-				<td><input type="Submit" name="submit" value="Create Account" /></td>
-			</tr>
-				</form>
+	
 				
 		</table>
 		</div>
 	
 	</body>
 </html>		
-<!-- Priority #1 -->

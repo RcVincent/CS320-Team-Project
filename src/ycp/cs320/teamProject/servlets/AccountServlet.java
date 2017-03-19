@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ycp.cs320.teamProject.model.User;
-////WHAT is this servlet page do, is this not what mainPage is???
+
 
 public class AccountServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -26,15 +26,6 @@ public class AccountServlet extends HttpServlet{
 			return;
 
 		}
-		
-		//added afterwards 
-		String password = (String) req.getSession().getAttribute("password");
-		String password2 = (String) req.getSession().getAttribute("password2");
-		if (password != password2){
-			//Passwords don't match
-			resp.sendRedirect(req.getContextPath()+ "/retrychangePassword");
-		}
-		model.setPassword(password);
 
 		int UserNumber = (int) req.getSession().getAttribute("UserID");
 		model.setUserID(UserNumber);
@@ -45,9 +36,7 @@ public class AccountServlet extends HttpServlet{
 		String Email = (String) req.getSession().getAttribute("Email");
 		model.setEmailAddress(Email);
 		
-		req.getRequestDispatcher("/_view/retrychangePassword.jsp").forward(req, resp);
-		req.getRequestDispatcher("/_view/changePassword.jsp").forward(req, resp);
-		req.getRequestDispatcher("/_view/CreateAccount.jsp").forward(req, resp);
+
 		req.getRequestDispatcher("/_view/Account.jsp").forward(req, resp);
 	}
 
