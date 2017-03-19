@@ -31,6 +31,7 @@ public class Projectcontroller {
 		return users;
 	}
 	
+	//allow a user, or an admin to access a users account information 
 	public ArrayList<User> getAccountInformation(String username){
 		List<User> userList = db.getAccountInfo(username);
 		
@@ -43,15 +44,17 @@ public class Projectcontroller {
 		return users;
 	}
 	
-	
+	//Allowing a user to change their password 
 	public void changeUserPassword(String Username, String newUsername, String password) {
 		
 	}
 	
+	//adding a user to the database 
 	public void addUserToDatabase(String userName, String passWord, String email, String type, String firstName, String lastname) {
 		db.addUserToDatabase(userName, passWord, email, type, firstName, lastname);
 	}
 	
+	//need to work out how to change this to archive user, not delete 
 	public void DeleteUserFromDatabase(String Username, String password){
 		db.DeleteUserFromDatabase(Username, password);
 	}
