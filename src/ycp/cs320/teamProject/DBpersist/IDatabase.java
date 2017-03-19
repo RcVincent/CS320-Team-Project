@@ -22,7 +22,8 @@ public interface IDatabase {
 	 //SOP related methods implemented in derby database
 	 //*******************
 	 
-	 //arhive sop
+	 //pull sop based on SOP id number 
+	 //archive sop
 	 
 	 //*******************
 	 //Training History related methods implemented in derby database

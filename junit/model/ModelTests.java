@@ -85,6 +85,8 @@ public class ModelTests {
 		 Manager.setPositionID(1200349);
 		 Manager.setPositionName("Manager");
 		 
+		 
+		 //test training histories 
 		 userhistory = new TrainingHistory();
 		 userhistory.addToCompleted(sop);
 		 userhistory.addToTodoList(sop2);
@@ -128,6 +130,7 @@ public class ModelTests {
 		 String Email = user.getEmailAddress();
 		 String email = Admin.getEmailAddress();
 		 
+		 
 		 assertEquals("Eric", Firstname);
 		 assertEquals("Idle", Lastname);
 		 assertEquals("junkTrons@junkworld.com", Email);
@@ -144,6 +147,10 @@ public class ModelTests {
 		 
 		 assertTrue(admin);
 		 assertFalse(use);
+	 }
+	 
+	 public void testLoginAndFirstTimeStatus() {
+		 
 	 }
 	 
 	 @Test
@@ -225,6 +232,9 @@ public class ModelTests {
 		 assertEquals(3, hist2);
 		 assertEquals(3, hist3);
 		 
+		 
 	 }
+	 
+	 
 	 
 }

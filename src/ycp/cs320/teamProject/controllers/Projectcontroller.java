@@ -59,6 +59,7 @@ public class Projectcontroller {
 		db.DeleteUserFromDatabase(Username, password);
 	}
 	
+	//need a method for pulling an SOP out of the DB based on the SOP number
 	
 	//utility methods 
 	public Queue<SOP> pushToPriorityQueue(SOP sopID){

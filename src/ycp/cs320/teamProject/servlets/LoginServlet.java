@@ -37,6 +37,9 @@ public class LoginServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/MainPage");
 			
 		}
+		//after we changed this to handle the DB, we will add a reference to go to the check electronic
+		//signature page. 
+		
 		req.getRequestDispatcher("/_view/Login.jsp").forward(req, resp);
 	}
 
