@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import ycp.cs320.teamProject.model.SOP;
 import ycp.cs320.teamProject.model.User;
 
 
@@ -304,6 +304,38 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(stmt2);
 				}
+			}
+		});
+	}
+	
+	@Override
+	public List<SOP> pullSOP(final int sopID) {
+		return executeTransaction(new Transaction<List<SOP>>() {
+			@Override
+			public List<SOP> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from SOPs" +
+							"where SOP_id = ?"	
+							);
+					stmt.setInt(1, sopID);
+					System.out.print("");
+					
+					return null;
+				}
+				
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
 			}
 		});
 	}

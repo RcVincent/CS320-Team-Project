@@ -16,13 +16,14 @@ public interface IDatabase {
 	 List<User> changeUsername(final String name, final String newName, final String pswd);
 	 //possibly change 'changeUsername' to 'changePassword'
 	 //rework 'delete users from database' to archive 'usersInDatabase'
+	
 	 
 	 
 	 //*******************
 	 //SOP related methods implemented in derby database
 	 //*******************
 	 
-	 //pull sop based on SOP id number 
+	 List<SOP> pullSOP(int sopID); 
 	 //archive sop
 	 
 	 //*******************
