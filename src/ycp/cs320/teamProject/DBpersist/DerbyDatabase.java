@@ -335,7 +335,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	public List<SOP> addSOP(final int sopID, final String sopName, final int priority) {
+	public List<SOP> addSOP(final int sopID, final String sopName, final int authorID, final String authorName, final int priority, final int revision) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
 			public List<SOP> execute(Connection conn) throws SQLException {
@@ -346,9 +346,48 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							"insert into SOPs(sop_id, sopName, "
+							"insert into SOPs(sop_id, sop_Name, sop_authorID, sop_authorName, sop_priority, sop_revision) " +
+									"values (?, ?, ?, ?, ?, ?)"
 							
 							);
+					stmt.setInt(1, sopID);
+					stmt.setString(2, sopName);
+					stmt.setInt(3, authorID);
+					stmt.setString(4, authorName);
+					stmt.setInt(5, priority);
+					stmt.setInt(6, revision);
+					
+					stmt.executeUpdate();
+					
+					stmt2 = conn.prepareStatement(
+							"select * from sops" +
+									"where sop_id = ?" + 
+									"and sopName = ? " +
+									"and sop_authorID = ?"
+							);
+					
+					stmt2.setInt(1, sopID);
+					stmt2.setString(2, sopName);
+					stmt2.setInt(3, authorID);
+					
+					resultSet = stmt2.executeQuery();
+					
+					Boolean found = false;
+					List<SOP> result = new ArrayList<SOP>();
+					
+					while(resultSet.next()) {
+						found = true;
+						SOP s = new SOP();
+						loadSOP(s, resultSet, 1);
+						result.add(s);
+					}
+					
+					//check if the SOP was found
+					if(!found) {
+						System.out.println("<" + sopName + "was not found in the database" );
+					}
+					
+					return result;
 				}
 				finally {
 					DBUtil.closeQuietly(conn);
@@ -356,10 +395,19 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(resultSet);
 				}
-				return null;
 			}
 		});
 	}
+	
+	
+	public List<SOP> changePriority(final int sopID, final int newPriority){
+		
+	}
+	
+	public List<SOP> reviseSOP(final int sopID, final int newVersion) {
+		
+	}
+	
 	
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
