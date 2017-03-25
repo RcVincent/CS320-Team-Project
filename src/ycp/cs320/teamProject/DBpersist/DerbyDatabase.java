@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import sqldemo.DButil;
 import ycp.cs320.teamProject.model.SOP;
 import ycp.cs320.teamProject.model.User;
 
@@ -29,14 +30,7 @@ public class DerbyDatabase implements IDatabase {
 
 	private static final int MAX_ATTEMPTS = 100;
 	
-	static {
-		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-		} catch (Exception e) {
-			throw new IllegalStateException("Could not load Derby driver");
-		}
-	}
-
+	//Get user account Information
 	@Override
 	public List<User> getAccountInfo(final String name) {
 		
@@ -78,6 +72,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	//Match user with password, for the purposes of logging in and authentication
 	@Override
 	public List<User> matchUsernameWithPassword(final String name) {
 		
@@ -88,8 +83,6 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet = null;
 
 				try {
-
-
 					stmt = conn.prepareStatement(
 							"select * from Users " +
 									" where user_userName = ? "
@@ -125,6 +118,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	//Add a new user to the system 
 	@Override
 	public List<User> addUserToDatabase(final String name, final String pswd, final String email, final String type, final String first,
 			final String last) {
@@ -184,6 +178,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	//this one may be tricky to work out 
 	@Override
 	public List<User> DeleteUserFromDatabase(final String name, final String pswd) {
 		return executeTransaction(new Transaction<List<User>>() {
@@ -241,7 +236,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
-	public List<User> changeUsername(final String name, final String newName, final String pswd) {
+	public List<User> changePassword(final String name, final String pswd, final String newPassword) {
 		return executeTransaction(new Transaction<List<User>>() {
 			@Override
 			public List<User> execute(Connection conn) throws SQLException {
@@ -255,16 +250,16 @@ public class DerbyDatabase implements IDatabase {
 					
 					stmt = conn.prepareStatement(
 							"update users " +
-									" set user_userName = ? " +
+									" set user_passWord = ? " +
 									" where user_userName = ? " +
 									" and user_passWord = ? "
 							);
 
-					stmt.setString(1, newName);
+					stmt.setString(1, newPassword);
 					stmt.setString(2, name);
 					stmt.setString(3, pswd);
 					stmt.executeUpdate();
-					System.out.printf("Querry Completed: Update user's name");
+					System.out.printf("Querry Completed: Update user's password");
 
 					// return all users and see that the one entered was deleted
 					
@@ -273,7 +268,7 @@ public class DerbyDatabase implements IDatabase {
 									" where user_userName = ? "
 							);
 					//ensure new userName is in database
-					stmt2.setString(1, newName);
+					stmt2.setString(1, newPassword);
 
 					resultSet2 = stmt2.executeQuery();
 					System.out.printf("Where does the query die?");
@@ -336,6 +331,32 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(resultSet);
 				}
 				
+			}
+		});
+	}
+	
+	public List<SOP> addSOP(final int sopID, final String sopName, final int priority) {
+		return executeTransaction(new Transaction<List<SOP>>() {
+			@Override 
+			public List<SOP> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"insert into SOPs(sop_id, sopName, "
+							
+							);
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DButil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(resultSet);
+				}
+				return null;
 			}
 		});
 	}
@@ -410,6 +431,7 @@ public class DerbyDatabase implements IDatabase {
 				@Override
 				public Boolean execute(Connection conn) throws SQLException {
 					PreparedStatement stmt1 = null;
+					PreparedStatement stmt2 = null;
 					try {
 						stmt1 = conn.prepareStatement(
 								"create table users (" +
@@ -428,6 +450,7 @@ public class DerbyDatabase implements IDatabase {
 				
 					} finally {
 						DBUtil.closeQuietly(stmt1);
+						DBUtil.closeQuietly(stmt2);
 				
 					}
 				}	
