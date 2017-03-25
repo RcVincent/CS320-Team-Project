@@ -420,11 +420,20 @@ public class DerbyDatabase implements IDatabase {
 		user.setUsername(resultSet.getString(index++));
 		user.setPassword(resultSet.getString(index++));
 		user.setEmailAddress(resultSet.getString(index++));
-		//user.setAccountType(resultSet.getString(index++));
+		user.setAdmin(resultSet.getString(index++));
 		user.setFirstName(resultSet.getString(index++));
 		user.setLastName(resultSet.getString(index++));
 	}
 	
+	private void loadSOP(SOP sop, ResultSet resultSet, int index) throws SQLException {
+		sop.setSopIdNumber(resultSet.getInt(index++));
+		sop.setSopName(resultSet.getString(index++));
+		sop.setAuthorIDnumber(resultSet.getInt(index++));
+		sop.setSOPAuthor(resultSet.getString(index++));
+		sop.setPriority(resultSet.getInt(index++));
+		sop.setRevision(resultSet.getInt(index++));
+		//sop.setPositionsAffected();
+	}
 	public void createTables() {
 			executeTransaction(new Transaction<Boolean>() {
 			
@@ -446,6 +455,20 @@ public class DerbyDatabase implements IDatabase {
 										")"
 								);	
 						stmt1.executeUpdate();
+						
+						stmt2 = conn.prepareStatement(
+								"create table sops (" +
+										"sop_id integer primary key" +
+										"	generated always as identity (start with 100, increment by 2), " +
+										"sop_name varchar(40), " +
+										"sop_authorID integer" +
+										"sop_authorName varchar(40)"+
+										"sop_priority integer" +
+										"sop_revision integer" +
+										")"
+								);
+						stmt2.executeQuery();
+						
 						return true;
 				
 					} finally {

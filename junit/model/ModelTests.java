@@ -34,7 +34,7 @@ public class ModelTests {
 	 @Before
 	 public void setUp() {
 		 user = new User();
-		 user.setAdmin(isAdmin = false);
+		 user.setAdmin("user");
 		 
 		 user.setUsername("Sir Robin");
 		 user.setPassword("bravebravebrave");
@@ -42,7 +42,7 @@ public class ModelTests {
 		 
 		 
 		 Admin = new User();
-		 Admin.setAdmin(isAdmin = true);
+		 Admin.setAdmin("Admin");
 		 Admin.setUsername("Bruce");
 		 Admin.setPassword("noPuftas");
 		 Admin.setUserAccountInformation("Bruce", "Bruce", "australiaWeLoveYouAmen@email.aus");
@@ -142,11 +142,11 @@ public class ModelTests {
 	 
 	 @Test
 	 public void testAccountType() {
-		 boolean use = user.isAdmin();
-		 boolean admin = Admin.isAdmin();
+		 String use = user.isAdmin();
+		 String admin = Admin.isAdmin();
 		 
-		 assertTrue(admin);
-		 assertFalse(use);
+		 assertEquals(use, "user");
+		 assertEquals(admin, "Admin");
 	 }
 	 
 	 public void testLoginAndFirstTimeStatus() {

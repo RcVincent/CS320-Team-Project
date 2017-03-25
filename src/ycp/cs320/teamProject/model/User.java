@@ -11,7 +11,7 @@ public class User {
 		private String lastName; 
 		private String emailAddress;
 		
-		private boolean isAdmin;
+		private String isAdmin;
 		private boolean loginStatus = false;
 		
 		//will act as a first time user in other programs 
@@ -102,11 +102,11 @@ public class User {
 		}
 
 
-		public boolean isAdmin() {
+		public String isAdmin() {
 			return isAdmin;
 		}
 
-		public void setAdmin(boolean isAdmin) {
+		public void setAdmin(String isAdmin) {
 			this.isAdmin = isAdmin;
 		}
 
