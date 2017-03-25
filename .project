@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/ycp/cs320/teamProject/projectdb/persist/res/Users.csv</name>
+			<type>1</type>
+			<location>C:/Users/Ryan/Documents/Users.csv</location>
+		</link>
+	</linkedResources>
 </projectDescription>
