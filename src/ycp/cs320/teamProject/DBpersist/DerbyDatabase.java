@@ -335,6 +335,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
 	public List<SOP> addSOP(final int sopID, final String sopName, final int authorID, final String authorName, final int priority, final int revision) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
@@ -401,11 +402,57 @@ public class DerbyDatabase implements IDatabase {
 	
 	
 	public List<SOP> changePriority(final int sopID, final int newPriority){
-		
+		return executeTransaction(new Transaction<List<SOP>>() {
+			@Override 
+			public List<SOP> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				
+				ResultSet resultSet = null;
+				
+				try {
+					
+				}
+				
+				finally {
+					DBUtil.closeQuietly(conn);
+					DButil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				
+				return null;
+				
+			}
+			
+		});
 	}
 	
 	public List<SOP> reviseSOP(final int sopID, final int newVersion) {
-		
+		return executeTransaction(new Transaction<List<SOP>>() {
+			@Override 
+			public List<SOP> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				
+				ResultSet resultSet = null;
+				
+				try {
+					
+				}
+				
+				finally {
+					DBUtil.closeQuietly(conn);
+					DButil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(resultSet);
+				}
+				return null;
+				
+			}
+			
+		});
 	}
 	
 	
