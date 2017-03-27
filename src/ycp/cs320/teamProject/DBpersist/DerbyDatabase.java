@@ -303,6 +303,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	//pull out the SOP requested 
 	@Override
 	public List<SOP> pullSOP(final int sopID) {
 		return executeTransaction(new Transaction<List<SOP>>() {
@@ -335,6 +336,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	//add an SOP to the database 
 	@Override
 	public List<SOP> addSOP(final int sopID, final String sopName, final int authorID, final String authorName, final int priority, final int revision) {
 		return executeTransaction(new Transaction<List<SOP>>() {
@@ -400,7 +402,8 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	
+	//change the priority of an SOP in the DB
+	//@Override
 	public List<SOP> changePriority(final int sopID, final int newPriority){
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
@@ -429,6 +432,8 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	//change the version number and 'edit' the SOP in the DB
+	//@Override 
 	public List<SOP> reviseSOP(final int sopID, final int newVersion) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
@@ -527,6 +532,7 @@ public class DerbyDatabase implements IDatabase {
 		sop.setSOPAuthor(resultSet.getString(index++));
 		sop.setPriority(resultSet.getInt(index++));
 		sop.setRevision(resultSet.getInt(index++));
+		//need to work out how to apply lists in SQL
 		//sop.setPositionsAffected();
 	}
 	public void createTables() {
