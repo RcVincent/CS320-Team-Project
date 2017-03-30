@@ -1,13 +1,13 @@
 package ycp.cs320.teamProject.model;
 
 import java.util.ArrayList;
-
+import java.util.PriorityQueue;
 public class TrainingHistory {
 	private int UserID;
 	
 	ArrayList<SOP> completedSOPs = new ArrayList<SOP>(); 
 	//BinaryHeap<SOP> sopsToComplete = new BinaryHeap<SOP>();
-	ArrayList<SOP> sopsToComplete = new ArrayList<SOP>();
+	PriorityQueue<SOP> sopsToComplete = new PriorityQueue<SOP>();
 	
 	public TrainingHistory() {
 		
@@ -19,21 +19,6 @@ public class TrainingHistory {
 	
 	public void addToTodoList(SOP sop) {
 		sopsToComplete.add(sop);
-	}
-	
-	public void pushFromTodoToCompleted(SOP sop){
-		for(int i = 0; i < sopsToComplete.size(); i++) {
-			if(sopsToComplete.get(i).getSopIdNumber() == sop.getSopIdNumber()) {
-				completedSOPs.add(sop);
-				sopsToComplete.remove(sop);
-			}
-		}
-	}
-	
-	public void pushFromCompletedToTodo(SOP sop){
-		for(int i = 0; i < completedSOPs.size(); i++) {
-			if(completedSOPs.get(i).getSopIdNumber() == sop.getSopIdNumber());
-		}
 	}
 	
 	public int TrainingHistorySize() {
