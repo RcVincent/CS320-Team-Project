@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet = null;
 				try {
 					stmt = conn.prepareStatement(
-							"select * from Users " +
+							" select * from Users " +
 									" where user_userName = ? "
 							);
 					stmt.setString(1, name);
@@ -84,7 +83,7 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(
-							"select * from Users " +
+							" select * from Users " +
 									" where user_userName = ? "
 							);
 					stmt.setString(1, name);
@@ -131,7 +130,7 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(
-							"insert into users(user_userName, user_passWord, user_email, user_accountType, user_firstName, user_lastName) " +
+							" insert into users(user_userName, user_passWord, user_email, user_accountType, user_firstName, user_lastName) " +
 									" values(?, ?, ?, ?, ?, ?) "
 							);
 					stmt.setString(1, name);
@@ -143,7 +142,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt.executeUpdate();
 					
 					stmt2 = conn.prepareStatement(
-							"select * " +
+							" select * " +
 									" from users " +
 									" where user_userName = ?"
 							);
@@ -192,7 +191,7 @@ public class DerbyDatabase implements IDatabase {
 
 
 					stmt = conn.prepareStatement(
-							"delete from users " +
+							" delete from users " +
 									" where user_userName = ? " +
 									" and user_passWord = ? "
 							);
@@ -203,7 +202,7 @@ public class DerbyDatabase implements IDatabase {
 					// return all users and see that the one entered was deleted
 					
 					stmt2 = conn.prepareStatement(
-							"select * from users " 		
+							" select * from users " 		
 							);
 					resultSet = stmt2.executeQuery();
 					List<User> result = new ArrayList<User>();
@@ -249,7 +248,7 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					
 					stmt = conn.prepareStatement(
-							"update users " +
+							" update users " +
 									" set user_passWord = ? " +
 									" where user_userName = ? " +
 									" and user_passWord = ? "
@@ -264,7 +263,7 @@ public class DerbyDatabase implements IDatabase {
 					// return all users and see that the one entered was deleted
 					
 					stmt2 = conn.prepareStatement(
-							"select * from users " 	+
+							" select * from users " 	+
 									" where user_userName = ? "
 							);
 					//ensure new userName is in database
@@ -316,8 +315,8 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							"select * from SOPs" +
-							"where SOP_id = ?"	
+							" select * from SOPs " +
+							" where SOP_id = ? "	
 							);
 					stmt.setInt(1, sopID);
 					System.out.print("");
@@ -349,8 +348,8 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							"insert into SOPs(sop_id, sop_Name, sop_authorID, sop_authorName, sop_priority, sop_revision) " +
-									"values (?, ?, ?, ?, ?, ?)"
+							" insert into SOPs(sop_id, sop_Name, sop_authorID, sop_authorName, sop_priority, sop_revision) " +
+									" values (?, ?, ?, ?, ?, ?) "
 							
 							);
 					stmt.setInt(1, sopID);
@@ -363,10 +362,10 @@ public class DerbyDatabase implements IDatabase {
 					stmt.executeUpdate();
 					
 					stmt2 = conn.prepareStatement(
-							"select * from sops" +
-									"where sop_id = ?" + 
-									"and sopName = ? " +
-									"and sop_authorID = ?"
+							" select * from sops " +
+									" where sop_id = ? " + 
+									" and sopName = ? " +
+									" and sop_authorID = ? "
 							);
 					
 					stmt2.setInt(1, sopID);
@@ -544,7 +543,7 @@ public class DerbyDatabase implements IDatabase {
 					PreparedStatement stmt2 = null;
 					try {
 						stmt1 = conn.prepareStatement(
-								"create table users (" +
+								" create table users ( " +
 										"	user_id integer primary key " +
 										"		generated always as identity (start with 1, increment by 1), " +									
 										"	user_userName varchar(40),"     +
@@ -553,20 +552,20 @@ public class DerbyDatabase implements IDatabase {
 										"   user_accountType varchar(30), " +
 										"    user_firstName varchar(50), "  +
 										"    user_lastNAme varchar(50) "    +
-										")"
+										") "
 								);	
 						stmt1.executeUpdate();
 						
 						stmt2 = conn.prepareStatement(
-								"create table sops (" +
-										"sop_id integer primary key" +
+								" create table sops (" +
+										" sop_id integer primary key " +
 										"	generated always as identity (start with 100, increment by 2), " +
-										"sop_name varchar(40), " +
-										"sop_authorID integer" +
-										"sop_authorName varchar(40)"+
-										"sop_priority integer" +
-										"sop_revision integer" +
-										")"
+										" sop_name varchar(40), " +
+										" sop_authorID integer" +
+										" sop_authorName varchar(40) "+
+										" sop_priority integer" +
+										" sop_revision integer " +
+										") "
 								);
 						stmt2.executeQuery();
 						
@@ -592,10 +591,8 @@ public class DerbyDatabase implements IDatabase {
 			System.out.println("Creating tables...");
 			DerbyDatabase db = new DerbyDatabase();
 			db.createTables();
+			
 			System.out.println("Loading initial data...");
 			db.loadInitialData();
-			System.out.println("loaded intial data");
-			System.out.println("austin got it the first time, you never will");
-			System.out.println("you got it this time, dont get cocky");
 		}
 }
