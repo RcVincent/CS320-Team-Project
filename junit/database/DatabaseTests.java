@@ -70,7 +70,7 @@ public class DatabaseTests {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void MatchUsernameWithPasswordTest() {
 		System.out.println("Testing Matching users with their passwords");
 		String userPassword = "ManuEl!";
@@ -91,7 +91,7 @@ public class DatabaseTests {
 		}
 	}
 	
-	@Test 
+	//@Test 
 	public void deleteUserFromDatabaseTest(){
 		System.out.println("Testing removing users from the database");
 		
@@ -122,5 +122,24 @@ public class DatabaseTests {
 	//will wait to develop this test case. 
 	public void ChangeUsernameTest() {
 		//will work on this when the database is populated, 
+	}
+	
+	@Test
+	public void getAccountInfoTest() throws Exception {
+		String Username1 = "Jsnow";
+		String Username2 = "CrazedHotelOwner";
+		
+		users = db.getAccountInfo(Username1);
+		users = db.getAccountInfo(Username2);
+		
+		if(users.isEmpty()) {
+			System.out.println("There are no users to retrieve information for");
+			fail("Need more users");
+		}
+		else {
+			for (User u: users) {
+				System.out.println(u.getUsername() +"," + u.getUserID() +"," + u.getEmailAddress() +"," + u.getFirstName() +"," + u.getLastName());
+			}
+		}
 	}
 }
