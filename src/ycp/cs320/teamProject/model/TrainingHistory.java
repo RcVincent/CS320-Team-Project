@@ -34,4 +34,5 @@ public class TrainingHistory {
 		UserID = userID;
 	}
 	
+	//possibly adding methods here to add and remove SOPs from their respective lists
 }

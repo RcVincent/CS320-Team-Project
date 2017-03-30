@@ -23,8 +23,8 @@ public interface IDatabase {
 	 //SOP related methods implemented in derby database
 	 //*******************
 	 
-	 List<SOP> pullSOP(int sopID); 
-	 List<SOP> addSOP(final int sopID, final String sopName, final int authorID, final String authorName, final int priority, final int revision);
+	 //List<SOP> pullSOP(int sopID); 
+	 //List<SOP> addSOP(final int sopID, final String sopName, final int authorID, final String authorName, final int priority, final int revision);
 	 //archive sop
 	
 	 

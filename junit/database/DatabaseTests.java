@@ -70,10 +70,10 @@ public class DatabaseTests {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void MatchUsernameWithPasswordTest() {
 		System.out.println("Testing Matching users with their passwords");
-		String userPassword = "password";
+		String userPassword = "ManuEl!";
 		
 		userList = db.matchUsernameWithPassword(userPassword);
 		
@@ -91,7 +91,7 @@ public class DatabaseTests {
 		}
 	}
 	
-	//@Test 
+	@Test 
 	public void deleteUserFromDatabaseTest(){
 		System.out.println("Testing removing users from the database");
 		
