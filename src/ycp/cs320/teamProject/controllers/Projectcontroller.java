@@ -64,6 +64,17 @@ public class Projectcontroller {
 		
 	}
 	
+	public static boolean authenticate(User u, String pswd)
+	{
+		boolean real = false;
+		if(u.getPassword().equals(pswd)){
+
+			real = true;
+		}
+		
+		return real;
+	}
+	
 	//utility methods 
 	/*public Queue<SOP> pushToPriorityQueue(SOP sopID){
 		Queue<SOP> priorityQueue = null;
