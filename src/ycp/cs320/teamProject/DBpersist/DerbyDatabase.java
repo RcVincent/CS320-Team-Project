@@ -336,8 +336,6 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	*/
-	//add an SOP to the database 
-	@Override
 	public List<SOP> addSOP(final int sopID, final String sopName, final int authorID, final String authorFirstName, String authorLastName, final int priority, final int revision) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
@@ -356,7 +354,9 @@ public class DerbyDatabase implements IDatabase {
 							+ " and user.lastname = ? "
 							);
 					
-					stmt3.setString();
+					stmt3.setString(1, authorFirstName);
+					stmt3.setString(2, authorLastName);
+					
 					
 					stmt = conn.prepareStatement(
 							" insert into SOPs(sop_id, sop_Name, sop_authorID, sop_authorName, sop_priority, sop_revision) " +
@@ -443,8 +443,8 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	//change the version number and 'edit' the SOP in the DB
-	//@Override 
-	public List<SOP> reviseSOP(final int sopID, final int newVersion) {
+	@Override 
+	public List<SOP> reviseSOP(final int sopID, final int version, final int newVersion) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
 			public List<SOP> execute(Connection conn) throws SQLException {
@@ -455,6 +455,47 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					
+					//update the SOPS version number in the database
+					stmt = conn.prepareStatement(
+							" update sops " +
+									" set revision = ? " +
+									" where sopid = ? " +
+									" and revision = ? "
+							);
+					
+					stmt.setInt(1, newVersion);
+					stmt.setInt(2, sopID);
+					stmt.setInt(3, version);
+					stmt.executeUpdate();
+					
+					//pull out the edited SOP
+					stmt2 = conn.prepareStatement(
+							" select sops.* " +
+									" from sops " +
+									" where sops.sopid = ?"
+							);
+					
+					stmt2.setInt(1, sopID);
+					
+					resultSet = stmt2.executeQuery();
+					
+					List<SOP> result = new ArrayList<SOP>();
+					
+					Boolean found = false;
+					while(resultSet.next()) {
+						found = true;
+						
+						SOP s = new SOP();
+						loadSOP(s, resultSet, 1);
+						result.add(s);
+					}
+					
+					if (!found) {
+						System.out.println("<" + sopID + "> was not in the SOP list");
+					}
+					
+					
+					return result;
 				}
 				
 				finally {
@@ -463,7 +504,7 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(resultSet);
 				}
-				return null;
+				
 				
 			}
 			
@@ -599,9 +640,10 @@ public class DerbyDatabase implements IDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				
 				List<User> userList;
-				
-				try {
+				List<SOP> sopList;
+ 				try {
 					userList = InitialData.getUsers();
+					sopList = InitialData.getSOPs();
 				}
 				catch (IOException e){
 					throw new SQLException("Couldn't read initial data", e);
