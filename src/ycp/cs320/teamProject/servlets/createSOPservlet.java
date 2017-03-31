@@ -28,7 +28,7 @@ public class createSOPservlet extends HttpServlet{
 
 		}
 
-
+/*
 		int sopIdNumber = (int) req.getSession().getAttribute("sopIDNumber");
 		model.setSopIdNumber(sopIdNumber);
 		String sopName = (String) req.getSession().getAttribute("sopName");
@@ -38,7 +38,7 @@ public class createSOPservlet extends HttpServlet{
 		int priority = (int) req.getSession().getAttribute("priority");
 		model.setPriority(priority);
 		model.setRevision(1);
-
+*/
 		req.getRequestDispatcher("/_view/createSOP.jsp").forward(req, resp);
 
 	}

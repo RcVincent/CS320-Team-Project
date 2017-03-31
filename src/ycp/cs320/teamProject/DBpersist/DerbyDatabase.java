@@ -346,7 +346,7 @@ public class DerbyDatabase implements IDatabase {
 					
 					return result;
 					
-					return null;
+					
 				}
 				
 				finally {
