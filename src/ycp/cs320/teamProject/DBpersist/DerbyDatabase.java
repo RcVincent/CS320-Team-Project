@@ -44,8 +44,10 @@ public class DerbyDatabase implements IDatabase {
 									" where user_userName = ? "
 							);
 					stmt.setString(1, name);
-					List<User> result = new ArrayList<User>();
 					resultSet = stmt.executeQuery();
+					
+					//if anything is found, return it in a list format
+					List<User> result = new ArrayList<User>();
 					Boolean found = false;
 					while (resultSet.next()) {
 						found = true;
@@ -90,7 +92,7 @@ public class DerbyDatabase implements IDatabase {
 					List<User> result = new ArrayList<User>();
 					resultSet = stmt.executeQuery();
 
-					// for testing that a result was returned
+					//if anything is found, return it in a list formatd
 					Boolean found = false;
 
 					while (resultSet.next()) {
@@ -150,7 +152,7 @@ public class DerbyDatabase implements IDatabase {
 					
 					resultSet = stmt2.executeQuery();
 
-					// for testing that a result was returned
+					//if anything is found, return it in a list format
 					Boolean found = false;
 					List<User> result = new ArrayList<User>();
 					while (resultSet.next()) {
@@ -205,6 +207,8 @@ public class DerbyDatabase implements IDatabase {
 							" select * from users " 		
 							);
 					resultSet = stmt2.executeQuery();
+					
+					//if anything is found, return it in a list format
 					List<User> result = new ArrayList<User>();
 					
 					Boolean found = false;
@@ -270,8 +274,9 @@ public class DerbyDatabase implements IDatabase {
 					stmt2.setString(1, newPassword);
 
 					resultSet2 = stmt2.executeQuery();
-					System.out.printf("Where does the query die?");
-
+					
+					
+					//if anything is found, return it in a list format
 					List<User> result = new ArrayList<User>();
 					
 					Boolean found = false;
@@ -302,7 +307,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	/*
+	
 	//pull out the SOP requested 
 	@Override
 	public List<SOP> pullSOP(final int sopID) {
@@ -320,7 +325,26 @@ public class DerbyDatabase implements IDatabase {
 							" where SOP_id = ? "	
 							);
 					stmt.setInt(1, sopID);
-					System.out.print("");
+					resultSet = stmt.executeQuery();
+					
+					//if anything is found, return it in a list format
+					
+					Boolean found = false;
+					List<SOP> result = new ArrayList<SOP>();
+					
+					while(resultSet.next()) {
+						found = true;
+						SOP s = new SOP();
+						loadSOP(s, resultSet, 1);
+						result.add(s);
+					}
+					
+					//check if the SOP was found
+					if(!found) {
+						System.out.println("<" + sopID + "was not found in the database" );
+					}
+					
+					return result;
 					
 					return null;
 				}
@@ -335,7 +359,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	*/
+	
 	@Override
 	public List<SOP> addSOP(final int sopID, final String sopName, final String authorID, final String authorFirstName, String authorLastName, final String priority, final String revision) {
 		return executeTransaction(new Transaction<List<SOP>>() {
@@ -386,6 +410,7 @@ public class DerbyDatabase implements IDatabase {
 					
 					resultSet = stmt2.executeQuery();
 					
+					//if anything is found, return it in a list format
 					Boolean found = false;
 					List<SOP> result = new ArrayList<SOP>();
 					
@@ -435,6 +460,36 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setString(1, newPriority);
 					stmt.setInt(2, sopID);
 					stmt.setString(3, priority);
+					
+					stmt.executeUpdate();
+					
+					stmt2 = conn.prepareStatement(
+							" select sops.priority " +
+									" from sops " +
+									" where sops.sopid = ? " 
+							);
+					stmt2.setInt(1, sopID);
+					
+					resultSet = stmt2.executeQuery();
+					
+					List<SOP> result = new ArrayList<SOP>();
+					
+					//if anything is found, return it in a list format
+					Boolean found = false;
+					while(resultSet.next()) {
+						found = true;
+						
+						SOP s = new SOP();
+						loadSOP(s, resultSet, 1);
+						result.add(s);
+					}
+					
+					if (!found) {
+						System.out.println("<" + sopID + "> was not in the SOP list");
+					}
+					
+					
+					return result;
 				}
 				
 				finally {
@@ -443,9 +498,6 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				
-				return null;
 				
 			}
 			
@@ -489,6 +541,7 @@ public class DerbyDatabase implements IDatabase {
 					
 					resultSet = stmt2.executeQuery();
 					
+					//if anything is found, return it in a list format
 					List<SOP> result = new ArrayList<SOP>();
 					
 					Boolean found = false;
@@ -682,7 +735,7 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Users table populated");
 					
 					
-					insertSOPs = conn.prepareStatement("insert into sops (sop_name, sop_authorID, sop_authorID, sop_authorFirstName, sop_authorLastName, sop_priority, sop_revision ) "
+					insertSOPs = conn.prepareStatement("insert into sops (sop_name, sop_authorID, sop_authorFirstName, sop_authorLastName, sop_priority, sop_revision ) "
 							+ "		values (?, ?, ?, ?, ?, ?, ?) " );
 					
 					for(SOP s : sopList) {
