@@ -338,16 +338,26 @@ public class DerbyDatabase implements IDatabase {
 	*/
 	//add an SOP to the database 
 	@Override
-	public List<SOP> addSOP(final int sopID, final String sopName, final int authorID, final String authorName, final int priority, final int revision) {
+	public List<SOP> addSOP(final int sopID, final String sopName, final int authorID, final String authorFirstName, String authorLastName, final int priority, final int revision) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
 			public List<SOP> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
-				
+				PreparedStatement stmt3 = null;
 				ResultSet resultSet = null;
 				
 				try {
+					
+					stmt3 = conn.prepareStatement(
+							" select Users.userid "
+							+ " from users "
+							+ " where user.firstname = ? "
+							+ " and user.lastname = ? "
+							);
+					
+					stmt3.setString();
+					
 					stmt = conn.prepareStatement(
 							" insert into SOPs(sop_id, sop_Name, sop_authorID, sop_authorName, sop_priority, sop_revision) " +
 									" values (?, ?, ?, ?, ?, ?) "
@@ -356,7 +366,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setInt(1, sopID);
 					stmt.setString(2, sopName);
 					stmt.setInt(3, authorID);
-					stmt.setString(4, authorName);
+					stmt.setString(4, authorFirstName);
 					stmt.setInt(5, priority);
 					stmt.setInt(6, revision);
 					
@@ -546,7 +556,7 @@ public class DerbyDatabase implements IDatabase {
 						stmt1 = conn.prepareStatement(
 								" create table users ( " +
 										"	user_id integer primary key " +
-										"		generated always as identity (start with 1, increment by 1), " +									
+										"	generated always as identity (start with 1, increment by 1), " +									
 										"	user_userName varchar(40),"     +
 										"	user_passWord varchar(40), "     +
 										"   user_email varchar(40), "        +
@@ -560,10 +570,11 @@ public class DerbyDatabase implements IDatabase {
 						stmt2 = conn.prepareStatement(
 								" create table sops (" +
 										" sop_id integer primary key " +
-										"	generated always as identity (start with 100, increment by 2), " +
+										" generated always as identity (start with 100, increment by 2), " +
 										" sop_name varchar(40), " +
 										" sop_authorID integer" +
-										" sop_authorName varchar(40) "+
+										" sop_authorFirstName varchar(40) "+
+										" sop_authorLastName varchar(40) " +
 										" sop_priority integer" +
 										" sop_revision integer " +
 										") "
@@ -583,7 +594,43 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	public void loadInitialData() {
-		
+		executeTransaction(new Transaction<Boolean>() {
+			@Override
+			public Boolean execute(Connection conn) throws SQLException {
+				
+				List<User> userList;
+				
+				try {
+					userList = InitialData.getUsers();
+				}
+				catch (IOException e){
+					throw new SQLException("Couldn't read initial data", e);
+				}
+				
+				PreparedStatement insertUsers = null;
+				
+				try{
+					insertUsers = conn.prepareStatement("insert into users (user_userName, user_passWord, user_email, user_accountType, user_firstName, user_Lastname) "
+							+ "		values (?, ?, ?, ?, ?, ?)");
+					for (User u : userList) {
+						insertUsers.setString(1, u.getUsername());
+						insertUsers.setString(2, u.getPassword());
+						insertUsers.setString(3, u.getEmailAddress());
+						insertUsers.setString(4, u.isAdmin());
+						insertUsers.setString(5, u.getFirstName());
+						insertUsers.setString(6, u.getLastName());
+						insertUsers.addBatch();
+					}
+					insertUsers.executeBatch();
+					System.out.println("Users table populated");
+					return true;
+				}
+				
+				finally {
+					DBUtil.closeQuietly(insertUsers);
+				}
+			}
+		});
 	}
 	
 	
