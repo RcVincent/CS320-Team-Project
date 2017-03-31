@@ -336,7 +336,8 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	*/
-	public List<SOP> addSOP(final int sopID, final String sopName, final int authorID, final String authorFirstName, String authorLastName, final int priority, final int revision) {
+	@Override
+	public List<SOP> addSOP(final int sopID, final String sopName, final String authorID, final String authorFirstName, String authorLastName, final String priority, final String revision) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
 			public List<SOP> execute(Connection conn) throws SQLException {
@@ -365,10 +366,10 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt.setInt(1, sopID);
 					stmt.setString(2, sopName);
-					stmt.setInt(3, authorID);
+					stmt.setString(3, authorID);
 					stmt.setString(4, authorFirstName);
-					stmt.setInt(5, priority);
-					stmt.setInt(6, revision);
+					stmt.setString(5, priority);
+					stmt.setString(6, revision);
 					
 					stmt.executeUpdate();
 					
@@ -381,7 +382,7 @@ public class DerbyDatabase implements IDatabase {
 					
 					stmt2.setInt(1, sopID);
 					stmt2.setString(2, sopName);
-					stmt2.setInt(3, authorID);
+					stmt2.setString(3, authorID);
 					
 					resultSet = stmt2.executeQuery();
 					
@@ -413,8 +414,8 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	//change the priority of an SOP in the DB
-	//@Override
-	public List<SOP> changePriority(final int sopID, final int newPriority){
+	@Override
+	public List<SOP> changePriority(final int sopID, final String priority, final String newPriority){
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
 			public List<SOP> execute(Connection conn) throws SQLException {
@@ -424,7 +425,16 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet = null;
 				
 				try {
+					stmt = conn.prepareStatement(
+							" update sops " +
+									" set priority = ? "+
+									" where sopid = ? "+
+									" and priority = ? "
+							);
 					
+					stmt.setString(1, newPriority);
+					stmt.setInt(2, sopID);
+					stmt.setString(3, priority);
 				}
 				
 				finally {
@@ -444,7 +454,7 @@ public class DerbyDatabase implements IDatabase {
 	
 	//change the version number and 'edit' the SOP in the DB
 	@Override 
-	public List<SOP> reviseSOP(final int sopID, final int version, final int newVersion) {
+	public List<SOP> reviseSOP(final int sopID, final String version, final String newVersion) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
 			public List<SOP> execute(Connection conn) throws SQLException {
@@ -463,9 +473,9 @@ public class DerbyDatabase implements IDatabase {
 									" and revision = ? "
 							);
 					
-					stmt.setInt(1, newVersion);
+					stmt.setString(1, newVersion);
 					stmt.setInt(2, sopID);
-					stmt.setInt(3, version);
+					stmt.setString(3, version);
 					stmt.executeUpdate();
 					
 					//pull out the edited SOP
@@ -579,10 +589,11 @@ public class DerbyDatabase implements IDatabase {
 	private void loadSOP(SOP sop, ResultSet resultSet, int index) throws SQLException {
 		sop.setSopIdNumber(resultSet.getInt(index++));
 		sop.setSopName(resultSet.getString(index++));
-		sop.setAuthorIDnumber(resultSet.getInt(index++));
-		sop.setSOPAuthor(resultSet.getString(index++));
-		sop.setPriority(resultSet.getInt(index++));
-		sop.setRevision(resultSet.getInt(index++));
+		sop.setAuthorIDnumber(resultSet.getString(index++));
+		sop.setSopAuthorFirstname(resultSet.getString(index++));
+		sop.setSopAuthorLastname(resultSet.getString(index++));
+		sop.setPriority(resultSet.getString(index++));
+		sop.setRevision(resultSet.getString(index++));
 		//need to work out how to apply lists in SQL
 		//sop.setPositionsAffected();
 	}
@@ -594,6 +605,8 @@ public class DerbyDatabase implements IDatabase {
 					PreparedStatement stmt1 = null;
 					PreparedStatement stmt2 = null;
 					try {
+						
+						//create the user table 
 						stmt1 = conn.prepareStatement(
 								" create table users ( " +
 										"	user_id integer primary key " +
@@ -602,22 +615,23 @@ public class DerbyDatabase implements IDatabase {
 										"	user_passWord varchar(40), "     +
 										"   user_email varchar(40), "        +
 										"   user_accountType varchar(30), " +
-										"    user_firstName varchar(50), "  +
-										"    user_lastNAme varchar(50) "    +
+										"   user_firstName varchar(50), "  +
+										"   user_lastName varchar(50) "    +
 										") "
 								);	
 						stmt1.executeUpdate();
 						
+						//create the sop table
 						stmt2 = conn.prepareStatement(
 								" create table sops (" +
 										" sop_id integer primary key " +
 										" generated always as identity (start with 100, increment by 2), " +
 										" sop_name varchar(40), " +
-										" sop_authorID integer" +
+										" sop_authorID varchar(10)" +
 										" sop_authorFirstName varchar(40) "+
 										" sop_authorLastName varchar(40) " +
-										" sop_priority integer" +
-										" sop_revision integer " +
+										" sop_priority varchar(2)" +
+										" sop_revision varchar(5)" +
 										") "
 								);
 						stmt2.executeUpdate();
@@ -650,9 +664,10 @@ public class DerbyDatabase implements IDatabase {
 				}
 				
 				PreparedStatement insertUsers = null;
-				
+				PreparedStatement insertSOPs = null;
 				try{
-					insertUsers = conn.prepareStatement("insert into users (user_userName, user_passWord, user_email, user_accountType, user_firstName, user_Lastname) "
+					
+					insertUsers = conn.prepareStatement("insert into users (user_userName, user_passWord, user_email, user_accountType, user_firstName, user_lastname) "
 							+ "		values (?, ?, ?, ?, ?, ?)");
 					for (User u : userList) {
 						insertUsers.setString(1, u.getUsername());
@@ -665,6 +680,23 @@ public class DerbyDatabase implements IDatabase {
 					}
 					insertUsers.executeBatch();
 					System.out.println("Users table populated");
+					
+					
+					insertSOPs = conn.prepareStatement("insert into sops (sop_name, sop_authorID, sop_authorID, sop_authorFirstName, sop_authorLastName, sop_priority, sop_revision ) "
+							+ "		values (?, ?, ?, ?, ?, ?, ?) " );
+					
+					for(SOP s : sopList) {
+						insertSOPs.setString(1, s.getSopName());
+						insertSOPs.setString(2, s.getAuthorIDnumber());
+						insertSOPs.setString(3, s.getSopAuthorFirstname());
+						insertSOPs.setString(4, s.getSopAuthorLastname());
+						insertSOPs.setString(5, s.getPriority());
+						insertSOPs.setString(6, s.getRevision());
+						insertSOPs.addBatch();
+					}
+					
+					insertSOPs.executeBatch();
+					System.out.println("Sops table populated");
 					return true;
 				}
 				

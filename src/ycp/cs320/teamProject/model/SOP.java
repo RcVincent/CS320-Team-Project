@@ -7,7 +7,8 @@ import java.util.Random;
 public class SOP {
 	private int sopIdNumber; 
 	private String sopName; 
-	private String sopAuthor;
+	private String sopAuthorFirstname;
+	private String sopAuthorLastname;
 	private String authorIDnumber;
 	private String priority;
 	private String revision;
@@ -33,8 +34,9 @@ public class SOP {
 		}
 		return positions;
 	}
-	
-	 public String getPriority() {
+
+	//Auto generated methods 
+	public String getPriority() {
 		return priority;
 	}
 	public void setPriority(String priority) {
@@ -51,12 +53,6 @@ public class SOP {
 	}
 	public void setSopName(String sopName) {
 		this.sopName = sopName;
-	}
-	public String getSOPAuthor() {
-		return sopAuthor;
-	}
-	public void setSOPAuthor(String sOPAuthor) {
-		sopAuthor = sOPAuthor;
 	}
 	public String getAuthorIDnumber() {
 		return authorIDnumber;
@@ -87,5 +83,21 @@ public class SOP {
 
 	public void setRevision(String revision) {
 		this.revision = revision;
+	}
+
+	public String getSopAuthorFirstname() {
+		return sopAuthorFirstname;
+	}
+
+	public void setSopAuthorFirstname(String sopAuthorFirstname) {
+		this.sopAuthorFirstname = sopAuthorFirstname;
+	}
+
+	public String getSopAuthorLastname() {
+		return sopAuthorLastname;
+	}
+
+	public void setSopAuthorLastname(String sopAuthorLastname) {
+		this.sopAuthorLastname = sopAuthorLastname;
 	}
 }
