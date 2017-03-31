@@ -335,7 +335,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+	*/
 	//add an SOP to the database 
 	@Override
 	public List<SOP> addSOP(final int sopID, final String sopName, final int authorID, final String authorName, final int priority, final int revision) {
@@ -458,7 +458,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 			
 		});
-	}*/
+	}
 	
 	
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
@@ -524,7 +524,7 @@ public class DerbyDatabase implements IDatabase {
 		user.setFirstName(resultSet.getString(index++));
 		user.setLastName(resultSet.getString(index++));
 	}
-	/*
+	
 	private void loadSOP(SOP sop, ResultSet resultSet, int index) throws SQLException {
 		sop.setSopIdNumber(resultSet.getInt(index++));
 		sop.setSopName(resultSet.getString(index++));
@@ -534,14 +534,14 @@ public class DerbyDatabase implements IDatabase {
 		sop.setRevision(resultSet.getInt(index++));
 		//need to work out how to apply lists in SQL
 		//sop.setPositionsAffected();
-	}*/
+	}
 	public void createTables() {
 			executeTransaction(new Transaction<Boolean>() {
 			
 				@Override
 				public Boolean execute(Connection conn) throws SQLException {
 					PreparedStatement stmt1 = null;
-					//PreparedStatement stmt2 = null;
+					PreparedStatement stmt2 = null;
 					try {
 						stmt1 = conn.prepareStatement(
 								" create table users ( " +
@@ -556,7 +556,7 @@ public class DerbyDatabase implements IDatabase {
 										") "
 								);	
 						stmt1.executeUpdate();
-						/*
+						
 						stmt2 = conn.prepareStatement(
 								" create table sops (" +
 										" sop_id integer primary key " +
@@ -569,12 +569,12 @@ public class DerbyDatabase implements IDatabase {
 										") "
 								);
 						stmt2.executeUpdate();
-						*/
+						
 						return true;
 				
 					} finally {
 						DBUtil.closeQuietly(stmt1);
-						//DBUtil.closeQuietly(stmt2);
+						DBUtil.closeQuietly(stmt2);
 				
 					}
 				}	
