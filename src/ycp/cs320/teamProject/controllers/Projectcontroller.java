@@ -55,8 +55,8 @@ public class Projectcontroller {
 	}
 	
 	//need to work out how to change this to archive user, not delete 
-	public void DeleteUserFromDatabase(String Username, String password){
-		db.DeleteUserFromDatabase(Username, password);
+	public void DeleteUserFromDatabase(String userName, String password){
+		db.DeleteUserFromDatabase(userName, password);
 	}
 	
 	//need a method for pulling an SOP out of the DB based on the SOP number

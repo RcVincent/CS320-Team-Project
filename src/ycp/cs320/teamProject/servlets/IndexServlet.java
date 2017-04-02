@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ycp.cs320.teamProject.model.MileStone1_User;
+
 public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -15,12 +17,25 @@ public class IndexServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		System.out.println("In the Index servlet");
-		
-	// :DO
-		
-		
-		
 		req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
 	}
+	
+	
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		
+		
+		
+		
+
+		req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
+	
+		}
+		
+		
+		
+		
+	
 }
+
 
