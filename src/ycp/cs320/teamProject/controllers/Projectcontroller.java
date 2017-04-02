@@ -10,7 +10,7 @@ import ycp.cs320.teamProject.model.*;
 
 public class Projectcontroller {
 	private IDatabase db;
-	private PriorityQueue p; 
+	private TrainingHistory t; 
 	
 	public Projectcontroller() {
 		DatabaseProvider.setInstance(new DerbyDatabase());
@@ -59,13 +59,28 @@ public class Projectcontroller {
 		db.DeleteUserFromDatabase(Username, password);
 	}
 	
+	//need a method for pulling an SOP out of the DB based on the SOP number
+	public void pullSOPfromDB(int sopNumber) {
+		
+	}
+	
+	public static boolean authenticate(User u, String pswd)
+	{
+		boolean real = false;
+		if(u.getPassword().equals(pswd)){
+
+			real = true;
+		}
+		
+		return real;
+	}
 	
 	//utility methods 
-	public Queue<SOP> pushToPriorityQueue(SOP sopID){
+	/*public Queue<SOP> pushToPriorityQueue(SOP sopID){
 		Queue<SOP> priorityQueue = null;
 		if(sopID.getPriority() >= 7) {
 			priorityQueue = p.pushToQueue(sopID);
 		}
 		return priorityQueue;
-	}
+	}*/
 }

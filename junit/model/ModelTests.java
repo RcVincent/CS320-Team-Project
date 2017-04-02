@@ -34,7 +34,7 @@ public class ModelTests {
 	 @Before
 	 public void setUp() {
 		 user = new User();
-		 user.setAdmin(isAdmin = false);
+		 user.setAdmin("user");
 		 
 		 user.setUsername("Sir Robin");
 		 user.setPassword("bravebravebrave");
@@ -42,26 +42,26 @@ public class ModelTests {
 		 
 		 
 		 Admin = new User();
-		 Admin.setAdmin(isAdmin = true);
+		 Admin.setAdmin("Admin");
 		 Admin.setUsername("Bruce");
 		 Admin.setPassword("noPuftas");
 		 Admin.setUserAccountInformation("Bruce", "Bruce", "australiaWeLoveYouAmen@email.aus");
 		 
 		 
 		 sop= new SOP();
-		 sop.setAuthorIDnumber(1002456);
+		 sop.setAuthorIDnumber("1002456");
 		 sop.setSopName("K.I.S.S");
 		 sop.setSopIdNumber(1025649);
-		 sop.setPriority(7);
+		 sop.setPriority("7");
 		 positionsAffected = new ArrayList<Position>();
 		 
 		 sop2 = new SOP();
-		 sop2.setAuthorIDnumber(1002456);
+		 sop2.setAuthorIDnumber("1002456");
 		 sop2.setSopName("Dosument Editing");
 		 sop2.setSopIdNumber(1025650);
 		 
 		 sop3 = new SOP();
-		 sop3.setAuthorIDnumber(1002568);
+		 sop3.setAuthorIDnumber("1002568");
 		 sop3.setSopName("Stretching Work");
 		 sop3.setSopIdNumber(1025651);
 		 
@@ -85,6 +85,8 @@ public class ModelTests {
 		 Manager.setPositionID(1200349);
 		 Manager.setPositionName("Manager");
 		 
+		 
+		 //test training histories 
 		 userhistory = new TrainingHistory();
 		 userhistory.addToCompleted(sop);
 		 userhistory.addToTodoList(sop2);
@@ -128,6 +130,7 @@ public class ModelTests {
 		 String Email = user.getEmailAddress();
 		 String email = Admin.getEmailAddress();
 		 
+		 
 		 assertEquals("Eric", Firstname);
 		 assertEquals("Idle", Lastname);
 		 assertEquals("junkTrons@junkworld.com", Email);
@@ -139,24 +142,28 @@ public class ModelTests {
 	 
 	 @Test
 	 public void testAccountType() {
-		 boolean use = user.isAdmin();
-		 boolean admin = Admin.isAdmin();
+		 String use = user.isAdmin();
+		 String admin = Admin.isAdmin();
 		 
-		 assertTrue(admin);
-		 assertFalse(use);
+		 assertEquals(use, "user");
+		 assertEquals(admin, "Admin");
+	 }
+	 
+	 public void testLoginAndFirstTimeStatus() {
+		 
 	 }
 	 
 	 @Test
 	 public void testSOP() {
-		 int authorID = sop.getAuthorIDnumber();
+		 String authorID = sop.getAuthorIDnumber();
 		 String sopName = sop.getSopName();
-		 int priority = sop.getPriority();
+		 String priority = sop.getPriority();
 		 int id = sop.getSopIdNumber();
 		 
 		 assertEquals("K.I.S.S", sopName);
-		 assertEquals(7, priority);
-		 assertEquals(1002456, authorID);
-		 assertEquals(1025649, id);
+		 assertEquals("7", priority);
+		 assertEquals("1002456", authorID);
+		 assertEquals("1025649", id);
 	 }
 	 
 	 @Test
@@ -225,6 +232,9 @@ public class ModelTests {
 		 assertEquals(3, hist2);
 		 assertEquals(3, hist3);
 		 
+		 
 	 }
+	 
+	 
 	 
 }

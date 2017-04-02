@@ -11,18 +11,18 @@ public class User {
 		private String lastName; 
 		private String emailAddress;
 		
-		private boolean isAdmin;
+		private String isAdmin;
 		private boolean loginStatus = false;
+		
+		//will act as a first time user in other programs 
+		private boolean electronicSignatureFlag = false;
 		
 		//I think this should be the same as the employee number, not random, will also help to search by emp. #
 		//to generate a unique user ID
-		//Random rand;
-		/*
 		public User(){
-			this.rand = new Random();
-			setUserID(rand.nextInt(900000000));
+			
 		}
-		*/
+		
 		public void setUserNumber(int EmpNumb){
 			this.UserID = EmpNumb;
 		}
@@ -43,6 +43,10 @@ public class User {
 			//working with authenticate in the controller 
 			if(loginStatus != true) {
 				loginStatus = true; 
+				
+				//this will be modified later to coincide with completing the training 
+				//probably set this up in a controller 
+				//electronicSignatureFlag = true;
 			}
 			
 			return loginStatus;
@@ -98,11 +102,19 @@ public class User {
 		}
 
 
-		public boolean isAdmin() {
+		public String isAdmin() {
 			return isAdmin;
 		}
 
-		public void setAdmin(boolean isAdmin) {
+		public void setAdmin(String isAdmin) {
 			this.isAdmin = isAdmin;
+		}
+
+		public boolean isElectronicSignatureFlag() {
+			return electronicSignatureFlag;
+		}
+
+		public void setElectronicSignatureFlag(boolean electronicSignatureFlag) {
+			this.electronicSignatureFlag = electronicSignatureFlag;
 		}
 }

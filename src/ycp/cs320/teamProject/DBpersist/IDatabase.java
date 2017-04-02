@@ -13,16 +13,24 @@ public interface IDatabase {
 	 List<User> matchUsernameWithPassword(String name);	
 	 List<User> addUserToDatabase(String name, String pswd, String email, String type, String first, String last);
 	 List<User> DeleteUserFromDatabase(String name, String pswd);
-	 List<User> changeUsername(final String name, final String newName, final String pswd);
-	 //possibly change 'changeUsername' to 'changePassword'
+	 List<User> changePassword(String name, String pswd, String newPassword);
 	 //rework 'delete users from database' to archive 'usersInDatabase'
+	
 	 
 	 
 	 //*******************
 	 //SOP related methods implemented in derby database
 	 //*******************
 	 
-	 //arhive sop
+	 List<SOP> pullSOP(int sopID); 
+	 List<SOP> addSOP(final int sopID, final String sopName, final String authorID, final String authorFirstName, final String authorLastName, final String priority, final String revision);
+	 List<SOP> changePriority(final int sopID, final String priority, final String newPriority);
+	 List<SOP> reviseSOP(final int sopID, final String version, final String newVersion);
+	 //archive sop
+	
+	 //*******************
+	 //Position related methods 
+	 //*******************
 	 
 	 //*******************
 	 //Training History related methods implemented in derby database

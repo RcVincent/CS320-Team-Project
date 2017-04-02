@@ -7,10 +7,11 @@ import java.util.Random;
 public class SOP {
 	private int sopIdNumber; 
 	private String sopName; 
-	private String sopAuthor;
-	private int authorIDnumber;
-	private int priority;
-	private int revision;
+	private String sopAuthorFirstname;
+	private String sopAuthorLastname;
+	private String authorIDnumber;
+	private String priority;
+	private String revision;
 	
 	private boolean IsComplete;
 	private List<Position> positionsAffected = new ArrayList<Position>(); 
@@ -33,11 +34,12 @@ public class SOP {
 		}
 		return positions;
 	}
-	
-	 public int getPriority() {
+
+	//Auto generated methods 
+	public String getPriority() {
 		return priority;
 	}
-	public void setPriority(int priority) {
+	public void setPriority(String priority) {
 		this.priority = priority;
 	}
 	public int getSopIdNumber() {
@@ -52,16 +54,10 @@ public class SOP {
 	public void setSopName(String sopName) {
 		this.sopName = sopName;
 	}
-	public String getSOPAuthor() {
-		return sopAuthor;
-	}
-	public void setSOPAuthor(String sOPAuthor) {
-		sopAuthor = sOPAuthor;
-	}
-	public int getAuthorIDnumber() {
+	public String getAuthorIDnumber() {
 		return authorIDnumber;
 	}
-	public void setAuthorIDnumber(int authorIDnumber) {
+	public void setAuthorIDnumber(String authorIDnumber) {
 		this.authorIDnumber = authorIDnumber;
 	}
 
@@ -81,11 +77,27 @@ public class SOP {
 		IsComplete = isComplete;
 	}
 
-	public int getRevision() {
+	public String getRevision() {
 		return revision;
 	}
 
-	public void setRevision(int revision) {
+	public void setRevision(String revision) {
 		this.revision = revision;
+	}
+
+	public String getSopAuthorFirstname() {
+		return sopAuthorFirstname;
+	}
+
+	public void setSopAuthorFirstname(String sopAuthorFirstname) {
+		this.sopAuthorFirstname = sopAuthorFirstname;
+	}
+
+	public String getSopAuthorLastname() {
+		return sopAuthorLastname;
+	}
+
+	public void setSopAuthorLastname(String sopAuthorLastname) {
+		this.sopAuthorLastname = sopAuthorLastname;
 	}
 }
