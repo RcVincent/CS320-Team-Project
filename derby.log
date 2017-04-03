@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sun Apr 02 22:44:05 EDT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-015b-31b2-af95-00000a78ee08 
+Sun Apr 02 22:46:35 EDT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-015b-31b4-f945-00000a787220 
 on database directory C:\Users\Ryan\git\CS320-Team-Project\test.db with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
 Loaded from file:/C:/Users/Ryan/workspace/CS320_Derby/lib/derby.jar
 java.vendor=Oracle Corporation
