@@ -44,9 +44,18 @@ public class Projectcontroller {
 		return users;
 	}
 	
+	
+	
+	//Changed the arguments to newpassword / oldpassword to signify the changing
+	//of password rather than username and added the same you had below with a new name~devin
+	
 	//Allowing a user to change their password 
-	public void changeUserPassword(String Username, String newUsername, String password) {
-		
+	public void changeUserPassword(String Username, String oldpassword, String newpassword)  {
+		 throw new UnsupportedOperationException();//useless exception is useless
+	}
+	//Allowing a user to change their username 
+	public void changeUsername(String Username, String newUsername, String password)  {
+		 throw new UnsupportedOperationException();//useless exception is useless
 	}
 	
 	//adding a user to the database 
