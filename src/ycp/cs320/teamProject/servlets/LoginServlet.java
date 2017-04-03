@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 				}
 				//If user is a patron send to the homepage
 				else{
-					resp.sendRedirect(req.getContextPath() + "/Homepage");
+					resp.sendRedirect(req.getContextPath() + "/MainPage");
 				}
 
 			}
