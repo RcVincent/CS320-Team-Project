@@ -656,7 +656,7 @@ public class DerbyDatabase implements IDatabase {
 				@Override
 				public Boolean execute(Connection conn) throws SQLException {
 					PreparedStatement stmt1 = null;
-					PreparedStatement stmt2 = null;
+					//PreparedStatement stmt2 = null;
 					try {
 						
 						//create the user table 
@@ -674,6 +674,8 @@ public class DerbyDatabase implements IDatabase {
 								);	
 						stmt1.executeUpdate();
 						
+						/*
+						//this is where the program is breaking. 
 						//create the sop table
 						stmt2 = conn.prepareStatement(
 								" create table sops (" +
@@ -688,12 +690,12 @@ public class DerbyDatabase implements IDatabase {
 										") "
 								);
 						stmt2.executeUpdate();
-						
+						*/
 						return true;
 				
 					} finally {
 						DBUtil.closeQuietly(stmt1);
-						DBUtil.closeQuietly(stmt2);
+						//DBUtil.closeQuietly(stmt2);
 				
 					}
 				}	
@@ -707,17 +709,17 @@ public class DerbyDatabase implements IDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				
 				List<User> userList;
-				List<SOP> sopList;
+				//List<SOP> sopList;
  				try {
 					userList = InitialData.getUsers();
-					sopList = InitialData.getSOPs();
+					//sopList = InitialData.getSOPs();
 				}
 				catch (IOException e){
 					throw new SQLException("Couldn't read initial data", e);
 				}
 				
 				PreparedStatement insertUsers = null;
-				PreparedStatement insertSOPs = null;
+				//PreparedStatement insertSOPs = null;
 				try{
 					
 					insertUsers = conn.prepareStatement("insert into users (user_userName, user_passWord, user_email, user_accountType, user_firstName, user_lastname) "
@@ -734,7 +736,7 @@ public class DerbyDatabase implements IDatabase {
 					insertUsers.executeBatch();
 					System.out.println("Users table populated");
 					
-					
+					/*
 					insertSOPs = conn.prepareStatement("insert into sops (sop_name, sop_authorID, sop_authorFirstName, sop_authorLastName, sop_priority, sop_revision ) "
 							+ "		values (?, ?, ?, ?, ?, ?, ?) " );
 					
@@ -749,7 +751,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 					
 					insertSOPs.executeBatch();
-					System.out.println("Sops table populated");
+					System.out.println("Sops table populated");*/
 					return true;
 				}
 				
