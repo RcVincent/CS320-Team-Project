@@ -361,7 +361,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
-	public List<SOP> addSOP(final int sopID, final String sopName, final String authorID, final String authorFirstName, String authorLastName, final String priority, final String revision) {
+	public List<SOP> addSOP(final int sopID, final String sopName, final String authorID, final String priority, final String revision) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
 			public List<SOP> execute(Connection conn) throws SQLException {
@@ -379,21 +379,18 @@ public class DerbyDatabase implements IDatabase {
 							+ " and user.lastname = ? "
 							);
 					
-					stmt3.setString(1, authorFirstName);
-					stmt3.setString(2, authorLastName);
 					
 					
 					stmt = conn.prepareStatement(
-							" insert into SOPs(sop_id, sop_Name, sop_authorID, sop_authorName, sop_priority, sop_revision) " +
+							" insert into SOPs(sop_id, sop_Name, sop_authorID, sop_priority, sop_revision) " +
 									" values (?, ?, ?, ?, ?, ?) "
 							
 							);
 					stmt.setInt(1, sopID);
 					stmt.setString(2, sopName);
 					stmt.setString(3, authorID);
-					stmt.setString(4, authorFirstName);
-					stmt.setString(5, priority);
-					stmt.setString(6, revision);
+					stmt.setString(4, priority);
+					stmt.setString(5, revision);
 					
 					stmt.executeUpdate();
 					
@@ -644,8 +641,6 @@ public class DerbyDatabase implements IDatabase {
 		sop.setSopIdNumber(resultSet.getInt(index++));
 		sop.setSopName(resultSet.getString(index++));
 		sop.setAuthorIDnumber(resultSet.getString(index++));
-		sop.setSopAuthorFirstname(resultSet.getString(index++));
-		sop.setSopAuthorLastname(resultSet.getString(index++));
 		sop.setPriority(resultSet.getString(index++));
 		sop.setRevision(resultSet.getString(index++));
 		//need to work out how to apply lists in SQL
@@ -684,8 +679,6 @@ public class DerbyDatabase implements IDatabase {
 										" generated always as identity (start with 100, increment by 2), " +
 										" sop_name varchar(40), " +
 										" sop_authorID varchar(10)" +
-										" sop_authorFirstName varchar(40) "+
-										" sop_authorLastName varchar(40) " +
 										" sop_priority varchar(2)" +
 										" sop_revision varchar(5)" +
 										") "
@@ -738,16 +731,14 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Users table populated");
 					
 					
-					insertSOPs = conn.prepareStatement("insert into sops (sop_name, sop_authorID, sop_authorFirstName, sop_authorLastName, sop_priority, sop_revision ) "
+					insertSOPs = conn.prepareStatement("insert into sops (sop_name, sop_authorID, sop_priority, sop_revision ) "
 							+ "		values (?, ?, ?, ?, ?, ?, ?) " );
 					
 					for(SOP s : sopList) {
 						insertSOPs.setString(1, s.getSopName());
 						insertSOPs.setString(2, s.getAuthorIDnumber());
-						insertSOPs.setString(3, s.getSopAuthorFirstname());
-						insertSOPs.setString(4, s.getSopAuthorLastname());
-						insertSOPs.setString(5, s.getPriority());
-						insertSOPs.setString(6, s.getRevision());
+						insertSOPs.setString(3, s.getPriority());
+						insertSOPs.setString(4, s.getRevision());
 						insertSOPs.addBatch();
 					}
 					

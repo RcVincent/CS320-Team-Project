@@ -23,7 +23,7 @@ public interface IDatabase {
 	 //*******************
 	 
 	 List<SOP> pullSOP(int sopID); 
-	 List<SOP> addSOP(final int sopID, final String sopName, final String authorID, final String authorFirstName, final String authorLastName, final String priority, final String revision);
+	 List<SOP> addSOP(final int sopID, final String sopName, final String authorID, final String priority, final String revision);
 	 List<SOP> changePriority(final int sopID, final String priority, final String newPriority);
 	 List<SOP> reviseSOP(final int sopID, final String version, final String newVersion);
 	 //archive sop

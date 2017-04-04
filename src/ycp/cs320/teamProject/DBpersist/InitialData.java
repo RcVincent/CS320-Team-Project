@@ -66,8 +66,6 @@ public class InitialData {
 					sop.setSopIdNumber(SOPId++);
 					sop.setSopName(i.next());
 					sop.setAuthorIDnumber(i.next());
-					sop.setSopAuthorFirstname(i.next());
-					sop.setSopAuthorLastname(i.next());
 					sop.setPriority(i.next());
 					sop.setRevision(i.next());
 					

@@ -7,8 +7,6 @@ import java.util.Random;
 public class SOP {
 	private int sopIdNumber; 
 	private String sopName; 
-	private String sopAuthorFirstname;
-	private String sopAuthorLastname;
 	private String authorIDnumber;
 	private String priority;
 	private String revision;
@@ -83,21 +81,5 @@ public class SOP {
 
 	public void setRevision(String revision) {
 		this.revision = revision;
-	}
-
-	public String getSopAuthorFirstname() {
-		return sopAuthorFirstname;
-	}
-
-	public void setSopAuthorFirstname(String sopAuthorFirstname) {
-		this.sopAuthorFirstname = sopAuthorFirstname;
-	}
-
-	public String getSopAuthorLastname() {
-		return sopAuthorLastname;
-	}
-
-	public void setSopAuthorLastname(String sopAuthorLastname) {
-		this.sopAuthorLastname = sopAuthorLastname;
 	}
 }
