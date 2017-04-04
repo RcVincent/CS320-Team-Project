@@ -44,9 +44,18 @@ public class Projectcontroller {
 		return users;
 	}
 	
+	
+	
+	//Changed the arguments to newpassword / oldpassword to signify the changing
+	//of password rather than username and added the same you had below with a new name~devin
+	
 	//Allowing a user to change their password 
-	public void changeUserPassword(String Username, String newUsername, String password) {
-		
+	public void changeUserPassword(String Username, String oldpassword, String newpassword)  {
+		 throw new UnsupportedOperationException();//useless exception is useless
+	}
+	//Allowing a user to change their username 
+	public void changeUsername(String Username, String newUsername, String password)  {
+		 throw new UnsupportedOperationException();//useless exception is useless
 	}
 	
 	//adding a user to the database 
@@ -55,8 +64,8 @@ public class Projectcontroller {
 	}
 	
 	//need to work out how to change this to archive user, not delete 
-	public void DeleteUserFromDatabase(String Username, String password){
-		db.DeleteUserFromDatabase(Username, password);
+	public void DeleteUserFromDatabase(String userName, String password){
+		db.DeleteUserFromDatabase(userName, password);
 	}
 	
 	//need a method for pulling an SOP out of the DB based on the SOP number
