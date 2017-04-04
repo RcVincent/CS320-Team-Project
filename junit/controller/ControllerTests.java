@@ -45,27 +45,27 @@ public class ControllerTests {
 		 Users.add(Normie);
 	 }
 	 
-	 @Test
+	 //@Test
 	 public void testMatchUserNameWithPassword(String username){
 		 
 	 }
 	 
-	 @Test
+	 //@Test
 	 public void testgetAccountInformation(String username){
 		 
 	 }
 	
-	 @Test
+	 //@Test
 	 public void changeUserPassword(String Username, String oldpassword, String newpassword){
 		 
 	 }
 	
-	 @Test
+	 //@Test
 	 public void changeUsername(String Username, String newUsername, String password)  {
 		 
 	 }
 	
-	 @Test
+	 //@Test
 	 public void addUserToDatabase(String userName, String passWord, String email, String type, String firstName, String lastname) {
 		 
 	 }
