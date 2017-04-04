@@ -159,6 +159,7 @@ public class DerbyDatabase implements IDatabase {
 						found = true;
 						User u = new User();
 						loadUser(u, resultSet, 1);
+						//right here we are getting a sql error: apparently SOP_priority is appearing here 
 						result.add(u);
 					}
 
@@ -367,18 +368,11 @@ public class DerbyDatabase implements IDatabase {
 			public List<SOP> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;
 				ResultSet resultSet = null;
 				
 				try {
 					
-					stmt3 = conn.prepareStatement(
-							" select Users.userid "
-							+ " from users "
-							+ " where user.firstname = ? "
-							+ " and user.lastname = ? "
-							);
-					
+									
 					
 					
 					stmt = conn.prepareStatement(
