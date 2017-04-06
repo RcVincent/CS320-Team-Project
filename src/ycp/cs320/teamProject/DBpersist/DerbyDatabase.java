@@ -652,7 +652,7 @@ public class DerbyDatabase implements IDatabase {
 		//sop.setPositionsAffected();
 	}
 	public void createTables() {
-			executeTransaction(new Transaction<Boolean>() {
+		executeTransaction(new Transaction<Boolean>() {
 			
 				@Override
 				public Boolean execute(Connection conn) throws SQLException {
@@ -683,10 +683,10 @@ public class DerbyDatabase implements IDatabase {
 										" sop_id integer primary key " +
 										" generated always as identity (start with 100, increment by 2), " +
 										" sop_name varchar(40), " +
-										" sop_authorID varchar(10)" +
-										" sop_authorFirstName varchar(40) "+
-										" sop_authorLastName varchar(40) " +
-										" sop_priority varchar(2)" +
+										" sop_authorID varchar(10)," +
+										" sop_authorFirstName varchar(40), "+
+										" sop_authorLastName varchar(40), " +
+										" sop_priority varchar(2), " +
 										" sop_revision varchar(5)" +
 										") "
 								);
@@ -712,8 +712,11 @@ public class DerbyDatabase implements IDatabase {
 				List<User> userList;
 				List<SOP> sopList;
  				try {
+ 					System.out.print("init userlist");
 					userList = InitialData.getUsers();
+					System.out.print("init SOPlist");
 					sopList = InitialData.getSOPs();
+					
 				}
 				catch (IOException e){
 					throw new SQLException("Couldn't read initial data", e);
@@ -722,7 +725,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertUsers = null;
 				PreparedStatement insertSOPs = null;
 				try{
-					
+					System.out.print("preparing intsert users");
 					insertUsers = conn.prepareStatement("insert into users (user_userName, user_passWord, user_email, user_accountType, user_firstName, user_lastname) "
 							+ "		values (?, ?, ?, ?, ?, ?)");
 					for (User u : userList) {
@@ -734,12 +737,13 @@ public class DerbyDatabase implements IDatabase {
 						insertUsers.setString(6, u.getLastName());
 						insertUsers.addBatch();
 					}
+					System.out.print("inserting users");
 					insertUsers.executeBatch();
 					System.out.println("Users table populated");
 					
-					
+					System.out.print("Prepparing SOP list");
 					insertSOPs = conn.prepareStatement("insert into sops (sop_name, sop_authorID, sop_authorFirstName, sop_authorLastName, sop_priority, sop_revision ) "
-							+ "		values (?, ?, ?, ?, ?, ?, ?) " );
+							+ "		values (?, ?, ?, ?, ?, ?) " );
 					
 					for(SOP s : sopList) {
 						insertSOPs.setString(1, s.getSopName());
@@ -750,7 +754,7 @@ public class DerbyDatabase implements IDatabase {
 						insertSOPs.setString(6, s.getRevision());
 						insertSOPs.addBatch();
 					}
-					
+					System.out.print("inserting SOPs");
 					insertSOPs.executeBatch();
 					System.out.println("Sops table populated");
 					return true;

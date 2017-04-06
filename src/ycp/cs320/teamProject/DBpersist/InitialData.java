@@ -13,34 +13,34 @@ public class InitialData {
 		//user db will be for authentication and hold a primary key for users and admins
 		public static List<User> getUsers() throws IOException {
 			//read the users file
-			List<User> UserList = new ArrayList<User>();
+			List<User> userList = new ArrayList<User>();
 			ReadCSV readUser = new ReadCSV("Users.csv");
 			
 			try {
 				// auto-generated primary key for table User
-				Integer UserId = 1;
+				Integer userId = 1;
 				while (true) {
 					List<String> tuple = readUser.next();
 					if (tuple == null) {
 						break;
 					}
 					Iterator<String> i = tuple.iterator();
-					User User = new User();
+					User user = new User();
 
 					// read User ID from CSV file, but don't use it
 					// auto-generate User ID, instead
-					User.setUserID(UserId++);				
-					User.setUsername(i.next());
-					User.setPassword(i.next());
-					User.setEmailAddress(i.next());
-					User.setAdmin(i.next());
-					User.setFirstName(i.next());
-					User.setLastName(i.next());
-					UserList.add(User);
+					user.setUserID(userId++);				
+					user.setUsername(i.next());
+					user.setPassword(i.next());
+					user.setEmailAddress(i.next());
+					user.setAdmin(i.next());
+					user.setFirstName(i.next());
+					user.setLastName(i.next());
+					userList.add(user);
 				}
 			
 				System.out.println("UserList loaded from CSV file");	
-				return UserList;
+				return userList;
 			} finally {
 				readUser.close();
 			}
@@ -50,11 +50,11 @@ public class InitialData {
 		public static List<SOP> getSOPs() throws IOException {
 			
 			//read the SOPs file
-			List<SOP> SopList = new ArrayList<SOP>();
+			List<SOP> sopList = new ArrayList<SOP>();
 			ReadCSV readSOP = new ReadCSV("SOPs.csv");
 			
 			try {
-				Integer SOPId = 1;
+				Integer sopId = 1;
 				while(true) {
 					List<String> tuple = readSOP.next();
 					if(tuple == null) {
@@ -63,7 +63,7 @@ public class InitialData {
 					Iterator<String> i = tuple.iterator();
 					SOP sop = new SOP();
 					
-					sop.setSopIdNumber(SOPId++);
+					sop.setSopIdNumber(sopId++);
 					sop.setSopName(i.next());
 					sop.setAuthorIDnumber(i.next());
 					sop.setSopAuthorFirstname(i.next());
@@ -71,11 +71,11 @@ public class InitialData {
 					sop.setPriority(i.next());
 					sop.setRevision(i.next());
 					
-					SopList.add(sop);
+					sopList.add(sop);
 					
 				}
 				System.out.println("SOPList loaded from the CSV file");
-				return SopList;
+				return sopList;
 			}
 			finally {
 				readSOP.close();
