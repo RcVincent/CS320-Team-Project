@@ -73,6 +73,32 @@ public class Projectcontroller {
 		
 	}
 	
+	//add an SOP to the DB 
+	public boolean addSOPtoDB(String sopName, int sopID, String authorID, String priority, String revision) {
+		
+		
+		List<SOP> sopid = db.addSOP(sopID, sopName, authorID, priority, revision);
+		
+		if(sopid.size() > 0) {
+			System.out.println("New SOP (ID: " + sopid + "entered into the database");
+			return true;
+		}
+		else {
+			System.out.println("Failed to add the new sop (ID: " + sopid + "to the DB");
+			return false;
+		}
+	}
+	
+	//revise an SOP in the DB
+	public void reversionSOP(int sopID, String version, String newVersion) {
+		db.reviseSOP(sopID, version, newVersion);
+	}
+	
+	//change an SOP's priority in the DB
+	public void changeSOPpriority(int sopID, String priority, String newPriority){
+		db.changePriority(sopID, priority, newPriority);
+	}
+	
 	public static boolean authenticate(User u, String pswd)
 	{
 		boolean real = false;

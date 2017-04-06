@@ -371,9 +371,6 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					
-									
-					
-					
 					stmt = conn.prepareStatement(
 							" insert into SOPs(sop_id, sop_Name, sop_authorID, sop_priority, sop_revision) " +
 									" values (?, ?, ?, ?, ?, ?) "
