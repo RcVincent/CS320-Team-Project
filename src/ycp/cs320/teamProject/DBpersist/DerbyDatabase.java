@@ -671,8 +671,8 @@ public class DerbyDatabase implements IDatabase {
 										" sop_id integer primary key " +
 										" generated always as identity (start with 100, increment by 2), " +
 										" sop_name varchar(40), " +
-										" sop_authorID varchar(10)" +
-										" sop_priority varchar(2)" +
+										" sop_authorID varchar(10)," +
+										" sop_priority varchar(2)," +
 										" sop_revision varchar(5)" +
 										") "
 								);
@@ -728,7 +728,7 @@ public class DerbyDatabase implements IDatabase {
 					
 					
 					insertSOPs = conn.prepareStatement("insert into sops (sop_name, sop_authorID, sop_priority, sop_revision ) "
-							+ "		values (?, ?, ?, ?, ?, ?, ?) " );
+							+ "		values (?, ?, ?, ?, ?, ?) " );
 					
 					for(SOP s : sopList) {
 						insertSOPs.setString(1, s.getSopName());

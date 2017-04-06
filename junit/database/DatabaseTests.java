@@ -39,7 +39,7 @@ public class DatabaseTests {
 	public void tearDown() throws Exception {
 	}
 	
-	//@Test
+	@Test
 	public void addUserToDatabaseTest() throws Exception {
 		
 		System.out.println("Testing adding users to the database");
@@ -70,7 +70,7 @@ public class DatabaseTests {
 		}
 	}
 	
-	//@Test
+	@Test
 	public void MatchUsernameWithPasswordTest() {
 		System.out.println("Testing Matching users with their passwords");
 		String userPassword = "ManuEl!";
@@ -91,7 +91,7 @@ public class DatabaseTests {
 		}
 	}
 	
-	//@Test 
+	@Test 
 	public void deleteUserFromDatabaseTest(){
 		System.out.println("Testing removing users from the database");
 		
