@@ -13,11 +13,13 @@ public class ReadCSV implements Closeable {
 	private BufferedReader reader;
 	
 	public ReadCSV(String resourceName) throws IOException {
-		InputStream in = this.getClass().getClassLoader().getResourceAsStream("edu/ycp/cs320/projectdb/persist/res/" + resourceName);
+		System.out.print(" about to Reading User csv");
+		InputStream in = this.getClass().getClassLoader().getResourceAsStream("ycp/cs320/teamProject/projectdb/persist/res/" + resourceName);
 		if (in == null) {
 			throw new IOException("Couldn't open " + resourceName);
 		}
 		this.reader = new BufferedReader(new InputStreamReader(in));
+		System.out.print("Read User csv");
 	}
 	
 	public List<String> next() throws IOException {
@@ -26,7 +28,7 @@ public class ReadCSV implements Closeable {
 			return null;
 		}
 		List<String> tuple = new ArrayList<String>();
-		StringTokenizer tok = new StringTokenizer(line, ",");
+		StringTokenizer tok = new StringTokenizer(line, "|");
 		while (tok.hasMoreTokens()) {
 			tuple.add(tok.nextToken().trim());
 		}

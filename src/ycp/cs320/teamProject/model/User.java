@@ -9,9 +9,9 @@ public class User {
 		private String Password;
 		private String firstName;
 		private String lastName; 
-		private String emailAddress;
-		
+		private String emailAddress;		
 		private String isAdmin;
+		
 		private boolean loginStatus = false;
 		
 		//will act as a first time user in other programs 

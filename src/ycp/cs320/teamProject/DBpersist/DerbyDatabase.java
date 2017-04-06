@@ -159,7 +159,6 @@ public class DerbyDatabase implements IDatabase {
 						found = true;
 						User u = new User();
 						loadUser(u, resultSet, 1);
-						//right here we are getting a sql error: apparently SOP_priority is appearing here 
 						result.add(u);
 					}
 
@@ -699,7 +698,9 @@ public class DerbyDatabase implements IDatabase {
 				List<User> userList;
 				List<SOP> sopList;
  				try {
+ 					System.out.print("init userlist");
 					userList = InitialData.getUsers();
+					System.out.print("init SOPlist");
 					sopList = InitialData.getSOPs();
 				}
 				catch (IOException e){
@@ -721,6 +722,7 @@ public class DerbyDatabase implements IDatabase {
 						insertUsers.setString(6, u.getLastName());
 						insertUsers.addBatch();
 					}
+					System.out.print("inserting users");
 					insertUsers.executeBatch();
 					System.out.println("Users table populated");
 					
