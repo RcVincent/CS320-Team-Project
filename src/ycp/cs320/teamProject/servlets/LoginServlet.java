@@ -19,18 +19,28 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+		System.out.println("\nLoginServlet: doGet");
+
 		req.getRequestDispatcher("/_view/Login.jsp").forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+		
 		String errorMessage = null;
 		String username = null;
 		String password = null;
 		username = req.getParameter("username");
 		password = req.getParameter("password");
 		
+		System.out.println("   Name: <" + username + "> PW: <" + password + ">");			
+
+		if (username == null || password == null || username.equals("") || password.equals("")) {
+			errorMessage = "Please specify both user name and password";
+		} else {
 		
 		ArrayList<User> user = null;
 		user = p.matchUserNameWithPassword(username);
@@ -68,6 +78,7 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 		req.getRequestDispatcher("/_view/Login.jsp").forward(req, resp);
+		}
 	}
 
 }

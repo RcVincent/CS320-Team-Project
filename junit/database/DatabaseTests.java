@@ -72,8 +72,16 @@ public class DatabaseTests {
 	
 	@Test
 	public void MatchUsernameWithPasswordTest() {
+		
 		System.out.println("Testing Matching users with their passwords");
+		String userName = "CrazedHotelOwner";
 		String userPassword = "ManuEl!";
+		String lastname = "Fawlty";
+		String firstname = "Basil";
+		String email = "fawltyTowerz@bedlum.com";
+		String type = "Admin";
+		
+		users = db.addUserToDatabase(userName, userPassword, email, type, firstname, lastname);
 		
 		userList = db.matchUsernameWithPassword(userPassword);
 		
@@ -87,6 +95,9 @@ public class DatabaseTests {
 				User userToAdd = u;
 				users.add(userToAdd);
 				System.out.println(u.getUsername() + ", " +u.getFirstName()+ ", " +u.getLastName());
+				
+				//remove the user from the db after the test 
+				users = db.DeleteUserFromDatabase(userName, userPassword);
 			}
 		}
 	}
@@ -103,7 +114,9 @@ public class DatabaseTests {
 		String type = "user";
 		
 		userList = db.addUserToDatabase(username, password, email, type, firstname, lastName);
-		 
+		
+		assertEquals(1, userList.size());
+		
 		if(userList.size() > 0) {
 			List<User> deletedUsers= db.DeleteUserFromDatabase(username, password);
 			
@@ -114,7 +127,7 @@ public class DatabaseTests {
 		else {
 			System.out.println("User" + deletedUsers.get(0).getUsername()+ "removed from the database. Yay.");
 		}
-		
+			
 		}
 		
 	}
@@ -126,9 +139,27 @@ public class DatabaseTests {
 	
 	@Test
 	public void getAccountInfoTest() throws Exception {
+		//Add user 1
 		String Username1 = "Jsnow";
-		String Username2 = "CrazedHotelOwner";
+		String userPassword1 = "Winter1sComing";
+		String lastname1 = "Snow";
+		String firstname1 = "John";
+		String email1 = "KingOfTheNorth@CastleBlack.com";
+		String type1 = "Admin";
 		
+		//Add user 2
+		String Username2 = "CrazedHotelOwner";
+		String userPassword2 = "ManuEl!";
+		String lastname2 = "Fawlty";
+		String firstname2 = "Basil";
+		String email2 = "fawltyTowerz@bedlum.com";
+		String type2 = "Admin";
+		
+		//add the users to the db
+		users = db.addUserToDatabase(Username1, userPassword1, email1, type1, firstname1, lastname1);
+		users = db.addUserToDatabase(Username2, userPassword2, email2, type2, firstname2, lastname2);
+		
+		//get account information 
 		users = db.getAccountInfo(Username1);
 		users = db.getAccountInfo(Username2);
 		
@@ -141,5 +172,8 @@ public class DatabaseTests {
 				System.out.println(u.getUsername() +"," + u.getUserID() +"," + u.getEmailAddress() +"," + u.getFirstName() +"," + u.getLastName());
 			}
 		}
+		
+		users = db.DeleteUserFromDatabase(Username1, userPassword1);
+		users = db.DeleteUserFromDatabase(Username2, userPassword2);
 	}
 }
