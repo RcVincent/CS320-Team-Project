@@ -79,7 +79,40 @@ public class InitialData {
 				readSOP.close();
 			}
 		}
+		//Position db will be for authentication and hold primary key for positions
+		public static List<Position> getPositions() throws IOException {
+							
+				//read the Position file
+				List<Position> positionList = new ArrayList<Position>();
+				ReadCSV readPosition = new ReadCSV("Position.csv");
+				
+				try {
+					Integer positionId = 1;
+					while(true) {
+						List<String> tuple = readPosition.next();
+						if(tuple == null) {
+							break;
+						}
+						Iterator<String> i = tuple.iterator();
+						Position position = new Position();
+						
+						position.setPositionID(positionId++);
+						position.setPositionName(i.next());
+						position.setPositionDuty(i.next());
+						
+						positionList.add(position);
+						
+						
+					}
+					System.out.println("position List loaded from the CSV file");
+					return positionList;
+				}
+				finally {
+					readPosition.close();
+				}
+			
+		}
 		
-		//space for the position method 
+		
 		
 }
