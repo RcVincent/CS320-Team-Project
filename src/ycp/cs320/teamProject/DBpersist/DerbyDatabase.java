@@ -752,7 +752,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt3 = null;
 				try {
 
-System.out.println("prepare statement for users");
+					System.out.println("prepare statement for users");
 					//create the user table 
 					stmt1 = conn.prepareStatement(
 							" create table users ( " +
@@ -790,13 +790,13 @@ System.out.println("prepare statement for users");
 					//create table for the position class
 					stmt3 = conn.prepareStatement(
 							" create table positions("+
-									"positionId integer primary key"+
-									"generated always as identity (start with 1, increment by 1), "+
-									"positionName varchar(40)"+
-									"positionDuty varchar(80)"+
+									" positionId integer primary key "+
+									" generated always as identity (start with 1, increment by 1), "+
+									" positionName varchar(40) "+
+									" positionDuty varchar(80) "+
 									") "
 							);
-					System.out.println("execute position");
+					System.out.println(" execute position ");
 					stmt3.executeUpdate();
 
 					return true;
