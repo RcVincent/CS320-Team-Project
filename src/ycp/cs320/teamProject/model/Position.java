@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Position {
 
-	private int positionID;
+	private int positionId;
 	private String positionName; 
 	private String positionDuty;
 	
@@ -28,11 +28,11 @@ public class Position {
 	}
 
 	public int getPositionID() {
-		return positionID;
+		return positionId;
 	}
 
-	public void setPositionID(int PositionID) {
-		this.positionID = PositionID;
+	public void setPositionID(int PositionId) {
+		this.positionId = PositionId;
 	}
 
 	public List<SOP> getRegulatingSOPs() {

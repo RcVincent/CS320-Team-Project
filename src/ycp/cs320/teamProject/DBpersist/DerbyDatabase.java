@@ -662,7 +662,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+
 
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
@@ -755,7 +755,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt3 = null;
 				try {
 
-System.out.println("prepare statement for users");
+					System.out.println("prepare statement for users");
 					//create the user table 
 					stmt1 = conn.prepareStatement(
 							" create table users ( " +
@@ -792,11 +792,11 @@ System.out.println("prepare statement for users");
 					System.out.println("prepare Position");
 					//create table for the position class
 					stmt3 = conn.prepareStatement(
-							" create table positions("+
-									"positionId integer primary key"+
-									"generated always as identity (start with 1, increment by 1), "+
-									"positionName varchar(40)"+
-									"positionDuty varchar(80)"+
+							" create table positions (" +
+									" positionId integer primary key " +
+									" generated always as identity (start with 1, increment by 1), " +
+									" positionName varchar(40)," +
+									" positionDuty varchar(100)" +
 									") "
 							);
 					System.out.println("execute position");
@@ -824,11 +824,11 @@ System.out.println("prepare statement for users");
 				List<SOP> sopList;
 				List<Position> positionList;
 				try {
-					System.out.print("init userlist");
+					System.out.println("init userlist");
 					userList = InitialData.getUsers();
-					System.out.print("init SOPlist");
+					System.out.println("init SOPlist");
 					sopList = InitialData.getSOPs();
-					System.out.print("init PositionList");
+					System.out.println("init PositionList");
 					positionList = InitialData.getPositions();
 				}
 				catch (IOException e){
@@ -851,13 +851,13 @@ System.out.println("prepare statement for users");
 						insertUsers.setString(6, u.getLastName());
 						insertUsers.addBatch();
 					}
-					System.out.print("inserting users");
+					System.out.println("inserting users");
 					insertUsers.executeBatch();
 					System.out.println("Users table populated");
 
-
+					System.out.println("preparing sop insert");
 					insertSOPs = conn.prepareStatement("insert into sops (sop_name, sop_authorID, sop_priority, sop_revision ) "
-							+ "		values (?, ?, ?, ?, ?, ?) " );
+							+ "		values (?, ?, ?, ?) " );
 
 					for(SOP s : sopList) {
 						insertSOPs.setString(1, s.getSopName());
@@ -866,13 +866,13 @@ System.out.println("prepare statement for users");
 						insertSOPs.setString(4, s.getRevision());
 						insertSOPs.addBatch();
 					}
-
+					System.out.println("inserting sops");
 					insertSOPs.executeBatch();
-					System.out.print("Sops table populated");
+					System.out.println("Sops table populated");
 
 					//insert the position csv file into the DB
-					insertPositions = conn.prepareStatement("insert into positions (posiionName, positionDuty))"
-							+ " values (?, ?)");
+					insertPositions = conn.prepareStatement("insert into positions (positionName, positionDuty )"
+							+ "		values (?, ?) " );
 
 					for(Position p : positionList){
 						insertPositions.setString(1, p.getPositionName());
@@ -880,7 +880,7 @@ System.out.println("prepare statement for users");
 					}
 
 					insertPositions.executeBatch();
-					System.out.print("Positions table populated");
+					System.out.println("Positions table populated");
 
 					return true;
 				}
