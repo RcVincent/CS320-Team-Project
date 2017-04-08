@@ -659,7 +659,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+
 
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
@@ -821,11 +821,11 @@ public class DerbyDatabase implements IDatabase {
 				List<SOP> sopList;
 				List<Position> positionList;
 				try {
-					System.out.print("init userlist");
+					System.out.println("init userlist");
 					userList = InitialData.getUsers();
-					System.out.print("init SOPlist");
+					System.out.println("init SOPlist");
 					sopList = InitialData.getSOPs();
-					System.out.print("init PositionList");
+					System.out.println("init PositionList");
 					positionList = InitialData.getPositions();
 				}
 				catch (IOException e){
@@ -848,13 +848,13 @@ public class DerbyDatabase implements IDatabase {
 						insertUsers.setString(6, u.getLastName());
 						insertUsers.addBatch();
 					}
-					System.out.print("inserting users");
+					System.out.println("inserting users");
 					insertUsers.executeBatch();
 					System.out.println("Users table populated");
 
-
+					System.out.println("preparing sop insert");
 					insertSOPs = conn.prepareStatement("insert into sops (sop_name, sop_authorID, sop_priority, sop_revision ) "
-							+ "		values (?, ?, ?, ?, ?, ?) " );
+							+ "		values (?, ?, ?, ?) " );
 
 					for(SOP s : sopList) {
 						insertSOPs.setString(1, s.getSopName());
@@ -863,13 +863,13 @@ public class DerbyDatabase implements IDatabase {
 						insertSOPs.setString(4, s.getRevision());
 						insertSOPs.addBatch();
 					}
-
+					System.out.println("inserting sops");
 					insertSOPs.executeBatch();
-					System.out.print("Sops table populated");
+					System.out.println("Sops table populated");
 
 					//insert the position csv file into the DB
-					insertPositions = conn.prepareStatement("insert into positions (posiionName, positionDuty))"
-							+ " values (?, ?)");
+					insertPositions = conn.prepareStatement("insert into positions (positionName, positionDuty )"
+							+ "		values (?, ?) " );
 
 					for(Position p : positionList){
 						insertPositions.setString(1, p.getPositionName());
@@ -877,7 +877,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 
 					insertPositions.executeBatch();
-					System.out.print("Positions table populated");
+					System.out.println("Positions table populated");
 
 					return true;
 				}

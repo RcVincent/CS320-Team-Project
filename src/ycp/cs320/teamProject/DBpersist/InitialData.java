@@ -48,7 +48,7 @@ public class InitialData {
 		
 		//Sop db will be for authentication and hold primary key for users and admins 
 		public static List<SOP> getSOPs() throws IOException {
-			
+			System.out.println("in getSOPs");
 			//read the SOPs file
 			List<SOP> sopList = new ArrayList<SOP>();
 			ReadCSV readSOP = new ReadCSV("SOPs.csv");
@@ -60,6 +60,9 @@ public class InitialData {
 					if(tuple == null) {
 						break;
 					}
+					
+					System.out.println("taking the data from ReadCSV and adding it");
+					
 					Iterator<String> i = tuple.iterator();
 					SOP sop = new SOP();
 					
@@ -84,7 +87,7 @@ public class InitialData {
 							
 				//read the Position file
 				List<Position> positionList = new ArrayList<Position>();
-				ReadCSV readPosition = new ReadCSV("Position.csv");
+				ReadCSV readPosition = new ReadCSV("Positions.csv");
 				
 				try {
 					Integer positionId = 1;

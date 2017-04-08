@@ -18,6 +18,8 @@ public class DatabaseTests {
 	
 	List<User> userList = null;
 	List<User> users = null;
+	List<SOP> sops = null;
+	List<SOP> sopList = null;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -156,14 +158,14 @@ public class DatabaseTests {
 		String type2 = "Admin";
 		
 		//add the users to the db
-		users = db.addUserToDatabase(Username1, userPassword1, email1, type1, firstname1, lastname1);
-		users = db.addUserToDatabase(Username2, userPassword2, email2, type2, firstname2, lastname2);
+		userList = db.addUserToDatabase(Username1, userPassword1, email1, type1, firstname1, lastname1);
+		userList = db.addUserToDatabase(Username2, userPassword2, email2, type2, firstname2, lastname2);
 		
 		//get account information 
 		users = db.getAccountInfo(Username1);
 		users = db.getAccountInfo(Username2);
 		
-		if(users.isEmpty()) {
+		if(userList.isEmpty()) {
 			System.out.println("There are no users to retrieve information for");
 			fail("Need more users");
 		}
@@ -176,4 +178,55 @@ public class DatabaseTests {
 		users = db.DeleteUserFromDatabase(Username1, userPassword1);
 		users = db.DeleteUserFromDatabase(Username2, userPassword2);
 	}
+	
+	public void testAddSOP() {
+		int sopID = 10;
+		String sopName = "Electronic Signature";
+		String authorID = "15";
+		String priority = "10";
+		String revision = "1";
+		
+		sopList = db.addSOP(sopID, sopName, authorID, priority, revision);
+		
+		if(sopList.isEmpty()) {
+			System.out.println("There are no SOPs in the table");
+			fail("Add more SOPs");
+		}else {
+			for(SOP s: sops) {
+				System.out.println(s.getSopIdNumber() + ", " + s.getSopName() + ", " + s.getAuthorIDnumber() + ", " + s.getPriority() + ", " + s.getRevision());
+			}
+		}
+		
+		
+	}
+	
+	public void testChanegSOPPriority() {
+		int sopID = 10;
+		String sopName = "Electronic Signature";
+		String authorID = "15";
+		String priority = "10";
+		String revision = "1";
+		
+		sopList = db.addSOP(sopID, sopName, authorID, priority, revision);
+		
+		if(sopList.isEmpty()) {
+			System.out.println("There are no SOPs in the table");
+			fail("Add more SOPs");
+		}else {
+			String newPriority = "9";
+			sopList = db.changePriority(sopID, priority, newPriority);
+			
+			assertEquals("9", sopList.get(0).getPriority());
+		}
+		
+	}
+	
+	public void testChangeSOPVersion() {
+		
+	}
+	
+	public void  testaddPosition() {
+		
+	}
+
 }
