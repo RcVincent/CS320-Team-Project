@@ -38,33 +38,26 @@
 	</head>
 	
 	<body>			
-	
+		<c:if test="${! empty errorMessage }">
+			<div class = "error"> ${errorMessage}</div>
+		</c:if>
+		<form action = "${pageContext.servletContext.contextPath}/Login" method = "post">
 		<div id = "PageName"> Welcome to the Compliance Training Monitor</div>
 		<div id = "logon">
 		<table>
 			<tr>
-				<form action = "${pageContext.servletContext.contextPath}/Login" method = "post"></form>
-					<c:if test="${! empty errorMessage }">
-						<div class = "error"> ${errorMessage}</div>
-					</c:if>
-					
 					<td class = "label"> Username: </td>
-					<td> <input type = "text" name = "username" size = "12" /> </td>
+					<td><input type="text" name="username" size="12" value="${username}" /></td>
 			</tr>
-			
 			<tr>
 					<td class = "label"> Password: </td>
-					<td><input type = "password" name = "password" size = "12"/></td>
+					<td><input type="password" name="password" size="12" value="${password}" /></td>
 			</tr>
+			</table>
+			<td><input type = "Submit" name = "submit" value = "Login" /> </td>
 			
-			<tr>
-				<td><input type = "Submit" name = "submit" value = "Login" /> </td>
-				</form>
-			</tr>
-	
-				
-		</table>
-		</div>
-	
+			
+			</div>
+		</form>
 	</body>
 </html>		

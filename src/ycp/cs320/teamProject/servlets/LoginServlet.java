@@ -28,11 +28,14 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+		System.out.println("\nLoginServlet: doPost");
 		
 		String errorMessage = null;
 		String username = null;
 		String password = null;
+		
+		
+		//get user and PW
 		username = req.getParameter("username");
 		password = req.getParameter("password");
 		
@@ -48,7 +51,7 @@ public class LoginServlet extends HttpServlet {
 			User u = user.get(0);
 		
 			//Authenticate the user
-			if(Projectcontroller.authenticate(u, password)){
+			if(Projectcontroller.authenticate(u, password)== true){
 				//Set the session true and set their username
 				req.getSession(true).setAttribute("username", username);
 				req.getSession().setAttribute("type", u.isAdmin());
@@ -76,6 +79,7 @@ public class LoginServlet extends HttpServlet {
 			req.setAttribute("errorMessage", errorMessage);
 			req.getRequestDispatcher("/_view/Login.jsp").forward(req, resp);
 		}
+		System.out.println("   Invalid login - returning to /Login");
 		
 		req.getRequestDispatcher("/_view/Login.jsp").forward(req, resp);
 		}
