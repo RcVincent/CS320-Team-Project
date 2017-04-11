@@ -18,21 +18,20 @@ public class Position {
 
 	}
 
+	public void setPositionName(String PositionName) {
+		positionName = PositionName;
+	}
 
 	public String getPositionName() {
 		return positionName;
 	}
 
-	public void setPositionName(String PositionName) {
-		positionName = PositionName;
-	}
-
-	public int getPositionID() {
-		return positionId;
-	}
-
 	public void setPositionID(int PositionId) {
 		this.positionId = PositionId;
+	}
+	
+	public int getPositionID() {
+		return positionId;
 	}
 
 	public List<SOP> getRegulatingSOPs() {
@@ -70,14 +69,13 @@ public class Position {
 
 		return sops;
 	}
-
+	
+	public void setPositionDuty(String PositionDuty) {
+		positionDuty = PositionDuty;
+	}
 
 	public String getPositionDuty() {
 		return positionDuty;
 	}
 
-
-	public void setPositionDuty(String PositionDuty) {
-		positionDuty = PositionDuty;
-	}
 }

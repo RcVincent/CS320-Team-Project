@@ -5,13 +5,12 @@
 <html>
 <body>
 
-<form action="${pageContext.servletContext.contextPath}/User" method="post">
-The number you are thinking of is ${game.guess}
+<form action="${pageContext.servletContext.contextPath}/MainPage" method="post">
 <div>
-Employee Number: ${MileStone1_User.UserID}<br>
-First Name: ${MileStone1_User.firstName}<br>
-Last Name: ${MileStone1_User.lastName}<br>
-E-Mail: ${MileStone1_User.emailAddress}<br>
+Employee Number: ${User.UserID}<br>
+First Name: ${User.firstName}<br>
+Last Name: ${User.lastName}<br>
+E-Mail: ${User.emailAddress}<br>
 </div>
 <div>
 /--This is where we need to list History --/

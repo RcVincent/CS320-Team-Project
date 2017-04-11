@@ -93,7 +93,7 @@ public class DerbyDatabase implements IDatabase {
 					List<User> result = new ArrayList<User>();
 					resultSet = stmt.executeQuery();
 
-					//if anything is found, return it in a list formatd
+					//if anything is found, return it in a list format
 					Boolean found = false;
 
 					while (resultSet.next()) {
@@ -774,7 +774,7 @@ public class DerbyDatabase implements IDatabase {
 					//create the sop table
 					System.out.println("prepare SOP");
 					stmt2 = conn.prepareStatement(
-							" create table sops (" +
+							" create table sops ( " +
 									" sop_id integer primary key " +
 									" generated always as identity (start with 100, increment by 2), " +
 									" sop_name varchar(40), " +
@@ -790,10 +790,10 @@ public class DerbyDatabase implements IDatabase {
 					//create table for the position class
 					stmt3 = conn.prepareStatement(
 							" create table positions("+
-									" positionId integer primary key "+
-									" generated always as identity (start with 1, increment by 1), "+
-									" positionName varchar(40) "+
-									" positionDuty varchar(80) "+
+									"	 positionId integer primary key "+
+									"	 generated always as identity (start with 1, increment by 1), "+
+									"	 positionName varchar(40), "+
+									"	 positionDuty varchar(100) "+
 									") "
 							);
 					System.out.println(" execute position ");
