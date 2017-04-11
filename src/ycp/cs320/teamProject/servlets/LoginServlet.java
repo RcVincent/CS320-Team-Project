@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
 		String username = null;
 		String password = null;
 		
-		
+		Projectcontroller p = new Projectcontroller();
 		//get user and PW
 		username = req.getParameter("username");
 		password = req.getParameter("password");
@@ -51,13 +51,13 @@ public class LoginServlet extends HttpServlet {
 			User u = user.get(0);
 		
 			//Authenticate the user
-			if(Projectcontroller.authenticate(u, password)== true){
+			if(Projectcontroller.authenticate(u, password) == true){
 				//Set the session true and set their username
 				req.getSession(true).setAttribute("username", username);
 				req.getSession().setAttribute("type", u.isAdmin());
 				req.getSession().setAttribute("userID", u.getUserID());
 				//If user is an owner send them to a page of their restaurants
-				if(u.isAdmin().equals("admin")){
+				if(u.isAdmin().equals("Admin")){
 					resp.sendRedirect(req.getContextPath() + "/Index");
 				}
 				//If user is a patron send to the homepage

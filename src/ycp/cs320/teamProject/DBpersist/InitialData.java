@@ -88,14 +88,17 @@ public class InitialData {
 				//read the Position file
 				List<Position> positionList = new ArrayList<Position>();
 				ReadCSV readPosition = new ReadCSV("Positions.csv");
-				
+				System.out.println("about to loop position csv");
 				try {
 					Integer positionId = 1;
 					while(true) {
 						List<String> tuple = readPosition.next();
 						if(tuple == null) {
+							System.out.println("breaking for empty");
 							break;
+							
 						}
+						System.out.println("Looping Position");
 						Iterator<String> i = tuple.iterator();
 						Position position = new Position();
 						

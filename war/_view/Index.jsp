@@ -4,7 +4,7 @@
 
 <html>
 	<head>
-	<title> Login </title>
+	<title> Index </title>
 	<style type = "text/css">
 	.error {
 			color: red;
@@ -37,26 +37,14 @@
 	
 	</head>
 	
-	<body>			
-	
+	<body>	
+	<c:if test="${! empty errorMessage }">
+						<div class = "error"> ${errorMessage}</div>
+					</c:if>		
+	<form action = "${pageContext.servletContext.contextPath}/Index" method = "post">
 		<div id = "PageName"> Welcome to the Compliance Training Monitor</div>
 		<div id = "index">
 		<table>
-			<tr>
-				<form action = "${pageContext.servletContext.contextPath}/Login" method = "post"></form>
-					<c:if test="${! empty errorMessage }">
-						<div class = "error"> ${errorMessage}</div>
-					</c:if>
-					
-					
-			
-			
-			
-			
-			
-			
-			
-			</tr>
 			<tr>
 			<input name="createAccount" type="submit" value="Create Account" />
 			</tr>
@@ -89,6 +77,6 @@
 				
 		</table>
 		</div>
-	
+	</form>
 	</body>
 </html>		
