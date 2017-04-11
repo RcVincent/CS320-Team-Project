@@ -22,7 +22,7 @@ public interface IDatabase {
 	//SOP related methods implemented in derby database
 	//*******************
 
-	List<SOP> pullSOP(int sopID); 
+	List<SOP> FindSOPByID(int sopID); 
 	List<SOP> addSOP(final int sopID, final String sopName, final String authorID, final String priority, final String revision);
 	List<SOP> changePriority(final int sopID, final String priority, final String newPriority);
 	List<SOP> reviseSOP(final int sopID, final String version, final String newVersion);
@@ -32,6 +32,7 @@ public interface IDatabase {
 	//*******************
 	//Position related methods 
 	//*******************
+	List<Position> getPositionByID(int positionId);
 	List<Position> getPositionInfo(String position);
 	List<Position> addPositionToDatabase(String name, String duty); 
 

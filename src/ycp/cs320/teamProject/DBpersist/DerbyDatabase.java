@@ -179,6 +179,93 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	
+	//find all users
+	//this is going to be an Admin only function
+	public List<User> findAllUsers() {
+		return executeTransaction(new Transaction<List<User>>() {
+
+			@Override
+			public List<User> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							" select * from users " +
+									" order by lastName asc, firstName asc "
+							);
+					List<User> result = new ArrayList<User>();
+					
+					resultSet = stmt.executeQuery();
+					
+					Boolean found = false;
+					while(resultSet.next()) {
+						found = true;
+						
+						User user = new User();
+						loadUser(user, resultSet, 1);
+						
+						result.add(user);
+					}
+					
+					if(!found) {
+						System.out.println("No users were found in the database");
+					}
+					
+				return result;	
+					
+				}finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				
+			}
+			
+		});
+		
+	}
+	
+	public List<User> findUserByLastName(String lastname) {
+		return executeTransaction(new Transaction<List<User>>() {
+
+			@Override
+			public List<User> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							" select users.* " +
+									" from users " +
+									" where users.lastname = ? "
+							);
+				
+					stmt.setString(1, lastname);
+					List<User> result = new ArrayList<User>();
+					
+					resultSet = stmt.executeQuery();
+					
+					while(resultSet.next()) {
+						User user = new User();
+						
+						loadUser(user, resultSet, 1);
+						
+						result.add(user);
+					}
+				return result;
+				}
+				finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				
+			}
+			
+		});
+	}
 
 	//this one may be tricky to work out 
 	@Override
@@ -311,7 +398,7 @@ public class DerbyDatabase implements IDatabase {
 
 	//pull out the SOP requested 
 	@Override
-	public List<SOP> pullSOP(final int sopID) {
+	public List<SOP> FindSOPByID(final int sopID) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override
 			public List<SOP> execute(Connection conn) throws SQLException {
@@ -360,7 +447,8 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-
+	
+	//Add an SOP to the DB
 	@Override
 	public List<SOP> addSOP(final int sopID, final String sopName, final String authorID, final String priority, final String revision) {
 		return executeTransaction(new Transaction<List<SOP>>() {
@@ -561,6 +649,51 @@ public class DerbyDatabase implements IDatabase {
 
 		});
 	}
+	//search for an sop based on its name 
+	//@Override
+	public List<SOP> findSOPByName(String sopName) {
+		return executeTransaction(new Transaction<List<SOP>>() {
+
+			@Override
+			public List<SOP> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					
+					stmt = conn.prepareStatement(
+							" select sops.* " +
+									" from sops " +
+									" where sops.sopName = ? "
+							
+							);
+					stmt.setString(1, sopName);
+					
+					resultSet = stmt.executeQuery();
+					
+					List<SOP> result = new ArrayList<SOP>();
+					
+					boolean found = true;
+					while(resultSet.next()) {
+						found = true;
+						SOP sop = new SOP();
+						
+						loadSOP(sop, resultSet, 1);
+						
+						result.add(sop);
+					}
+					
+					return result;
+				}finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+				
+				
+			}
+			
+		});
+	}
 	// Add the position methods
 	@Override
 	public List<Position> getPositionInfo(final String position) {
@@ -660,7 +793,88 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 
+	public List<Position> getPositionByID(int positionId) {
+		return executeTransaction(new Transaction<List<Position>>() {
 
+			@Override
+			public List<Position> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							" select positions.* " +
+									" from positions " +
+									" where positions.postionId = ? "
+							);
+					stmt.setInt(1, positionId);
+					
+					List<Position> result = new ArrayList<Position>();
+					
+					resultSet = stmt.executeQuery();
+					
+					while(resultSet.next()) {
+						Position position = new Position();
+						
+						loadPosition(position, resultSet, 1);
+						result.add(position);
+						
+					}
+					return result;
+				}
+			
+				
+				finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+				
+			}
+			
+		});
+	}
+	
+	public List<Position> findPositionByName(String positionName) { 
+		return executeTransaction(new Transaction<List<Position>>() {
+
+			@Override
+			public List<Position> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							" select positions.* " +
+									" from positions " +
+									" where positions.positionName = ? "
+							
+							);
+					
+					stmt.setString(1, positionName);
+					
+					List<Position> result = new ArrayList<Position>();
+					
+					resultSet = stmt.executeQuery();
+					boolean found = false;
+					
+					while(resultSet.next()) {
+						found = true;
+						
+						Position p = new Position();
+						loadPosition(p, resultSet, 1);
+						result.add(p);
+					}
+					return result;
+					
+				}finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+				
+			}
+			
+		});
+	}
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
 			return doExecuteTransaction(txn);
@@ -732,8 +946,7 @@ public class DerbyDatabase implements IDatabase {
 		sop.setAuthorIDnumber(resultSet.getString(index++));
 		sop.setPriority(resultSet.getString(index++));
 		sop.setRevision(resultSet.getString(index++));
-		//need to work out how to apply lists in SQL
-		//sop.setPositionsAffected();
+		
 	}
 	//load position
 	private void loadPosition(Position position, ResultSet resultSet, int index) throws SQLException {
