@@ -5,7 +5,7 @@
  
 <html>
 	<head>
-      <title>Create SOP</title>
+      <title> Create SOP </title>
 		<style type = "text/css">
           body{
            font-family: Verdan;
@@ -31,8 +31,8 @@
 <h3>Author ID Number: <input name="authorIDnumber" type="text" /></h3>
   
 <h3>Priority (1-10): <input name="priority" type="text" /><br /></h3>
-  <h3>Revision Number : 1</h4>
+  <h3>Revision Number : 1</h3>
   
-<h3>Select Files Associated with SOP: <input multiple="multiple" name="files" type="file" /> </h4>
- <h3> <input type="submit" /></h4>
+<h3>Select Files Associated with SOP: <input multiple="multiple" name="files" type="file" /> </h3>
+ <h3> <input type="submit" /></h3>
   </body>

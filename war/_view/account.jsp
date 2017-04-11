@@ -5,7 +5,7 @@
 
 <html>
 	<head>
-		<title> Your Account</title>
+		<title>Your Account</title>
 		<style type = "text/css">
 		.error {
 			background-color: red;
