@@ -3,6 +3,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
+<head>
+      <title>Create SOP</title>
+		<style type = "text/css">
+          body{
+           font-family: Verdan;
+          
+          background-color: lightblue
+          }
+          h1{
+          font-size: 40px;
+          }
+          h3{
+          font-size: 15px;
+          }
+        </style>
+      </head>
 <body>
 
 <form action="${pageContext.servletContext.contextPath}/Sop.jsp" method="post">

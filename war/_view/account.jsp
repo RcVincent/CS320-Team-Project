@@ -8,8 +8,20 @@
 		<title> Your Account</title>
 		<style type = "text/css">
 		.error {
-			color: red;
+			background-color: red;
+			font-color:black;
 		}
+		body{
+           font-family: Verdan;
+          
+          background-color: lightblue
+          }
+          h1{
+          font-size: 40px;
+          }
+          h3{
+          font-size: 15px;
+          }
 		
 		</style>
 	</head>
@@ -18,4 +30,3 @@
 	
 	</body>
 </html>
-<!--POOOOP--> 

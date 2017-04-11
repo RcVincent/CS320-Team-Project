@@ -7,7 +7,8 @@
 	<title> Login </title>
 	<style type = "text/css">
 	.error {
-			color: red;
+			background-color: red;
+			font-color:black;
 		}
 		
 	td.label{
@@ -18,6 +19,17 @@
 		margin-top: 2px;
 	}
 	
+	body{
+           font-family: Verdan;
+          
+          background-color: lightblue
+          }
+          h1{
+          font-size: 40px;
+          }
+          h3{
+          font-size: 15px;
+          }
 	#PageName {
 		color: white;
 		font-size: 250%;

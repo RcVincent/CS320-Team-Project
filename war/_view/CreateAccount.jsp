@@ -4,15 +4,21 @@
 
 <html>
 	<head>
-	<style type = "text/css">
-		.error {
-			color: red;
-		}
-		
-		</style>
-</head>
-
-<body>
+      <title>Create SOP</title>
+		<style type = "text/css">
+          body{
+           font-family: Verdan;
+          
+          background-color: lightblue
+          }
+          h1{
+          font-size: 40px;
+          }
+          h3{
+          font-size: 15px;
+          }
+        </style>
+      </head>
 
 <form action="${pageContext.servletContext.contextPath}/User" method="post">
 Employee Number: <input type ="text" name="UserID"><br>
