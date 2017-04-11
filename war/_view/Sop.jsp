@@ -5,7 +5,7 @@
 <html>
 <body>
 
-<form action="${pageContext.servletContext.contextPath}/User" method="post">
+<form action="${pageContext.servletContext.contextPath}/Sop.jsp" method="post">
 SOP ID Number: ${model.sopIdNumber} <br>
 SOP Title: ${model.sopName}<br>
 Author of SOP: ${model.sopAuthor}<br>

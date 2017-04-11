@@ -43,7 +43,7 @@
 		<div id = "index">
 		<table>
 			<tr>
-				<form action = "${pageContext.servletContext.contextPath}/Login" method = "post"></form>
+				<form action = "${pageContext.servletContext.contextPath}/Index" method = "post"></form>
 					<c:if test="${! empty errorMessage }">
 						<div class = "error"> ${errorMessage}</div>
 					</c:if>
