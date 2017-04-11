@@ -1,8 +1,8 @@
-<!--  &lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;
- &lt;%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %&gt; 
+<!DOCTYPE html>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
- This is a paragraph that was showing on the website so i removed it
-fromview with by commenting it out-->
+ 
 <html>
 	<head>
       <title>Create SOP</title>
