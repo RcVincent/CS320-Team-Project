@@ -1,25 +1,12 @@
-<!DOCTYPE html>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!--  &lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;
+ &lt;%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %&gt; 
 
-<html>
-<body>
-
-<form action="${pageContext.servletContext.contextPath}/User" method="post">
-SOP ID Number: <input type ="text" name="sopIDNumber"><br>
-SOP Title: <input type="text" name="sopName"><br>
-Author of SOP: <input type="text" name="sopAuthor"><br>
-Author ID Number: <input type="text" name="authorIDnumber"><br>
-Priority (1-10): <input type="text" name="priority"><br>
-Revision Number : 1
-
-<form action="/action_page.php">
-  Select Files Associated with SOP: <input type="file" name="files" multiple>
-  <input type="submit">
-</form>
-
-</form>
-
-
-</body>
-</html>
+ This is a paragraph that was showing on the website so i removed it
+from view with by commenting it out-->
+<h2 style="text-align: center;"><span style="text-decoration: underline;">Create SOP</span></h2>
+<h4>SOP ID Number: <input name="sopIDNumber" type="text" /></h4>
+<h4>SOP Title: <input name="sopName" type="text" /></h4>
+<h4>Author of SOP: <input name="sopAuthor" type="text" /></h4>
+<h4>Author ID Number: <input name="authorIDnumber" type="text" /></h4>
+<h4>Priority (1-10): <input name="priority" type="text" /><br /> Revision Number : 1</h4>
+<h4>Select Files Associated with SOP: <input multiple="multiple" name="files" type="file" /> <input type="submit" /></h4>
