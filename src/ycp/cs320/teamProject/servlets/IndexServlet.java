@@ -15,23 +15,28 @@ public class IndexServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException	{
 
+		req.getRequestDispatcher("/_view/Index.jsp").forward(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		System.out.println("In the Index servlet");
 		if (req.getParameter("account") != null) {
-			resp.sendRedirect(req.getContextPath() + "/account");//"http://localhost:8081/Dhartma9/addNumbers");
+			resp.sendRedirect(req.getContextPath() + "/account");
 		} else if (req.getParameter("createAccount") != null) {
-			resp.sendRedirect(req.getContextPath() + "/CreateAcount");//"http://localhost:8081/Dhartma9/multNumbers");
+			resp.sendRedirect(req.getContextPath() + "/CreateAccount");
 		} else if (req.getParameter("createSOP") != null) {
-			resp.sendRedirect(req.getContextPath() + "/createSOP");//"http://localhost:8081/Dhartma9/guessingGame");
+			resp.sendRedirect(req.getContextPath() + "/createSOP");
 		} else if (req.getParameter("mainPage") != null) {
-			resp.sendRedirect(req.getContextPath() + "/MainPage");//"http://localhost:8081/Dhartma9/guessingGame");
+			resp.sendRedirect(req.getContextPath() + "/MainPage");
 		} else if (req.getParameter("reviseSOP") != null) {
-			resp.sendRedirect(req.getContextPath() + "/reviseSOP");//"http://localhost:8081/Dhartma9/guessingGame");
+			resp.sendRedirect(req.getContextPath() + "/reviseSOP");
 		} else if (req.getParameter("sop") != null) {
-			resp.sendRedirect(req.getContextPath() + "/SOP");//"http://localhost:8081/Dhartma9/guessingGame");
+			resp.sendRedirect(req.getContextPath() + "/SOP");
 		} else if (req.getParameter("treaingHistory") != null) {
-			resp.sendRedirect(req.getContextPath() + "/Traininghistory");//"http://localhost:8081/Dhartma9/guessingGame");
+			resp.sendRedirect(req.getContextPath() + "/Traininghistory");
 		}
-		req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/Index.jsp").forward(req, resp);
 	}
 }
 

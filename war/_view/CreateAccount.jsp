@@ -20,11 +20,15 @@
         </style>
       </head>
 
-<form action="${pageContext.servletContext.contextPath}/User" method="post">
+<form action="${pageContext.servletContext.contextPath}/CreateAccount" method="post">
+User Name: <input type="text" name="username"><br>
+Password Name: <input type="text" name="password"><br>
 Employee Number: <input type ="text" name="UserID"><br>
 First Name: <input type="text" name="FirstName"><br>
 Last Name: <input type="text" name="LastName"><br>
 E-Mail: <input type="text" name="Email"><br>
+Admin: <input type="text" name="Admin"><br>
+<td><input type = "Submit" name = "submit" value = "Submit" /> </td>
 </form>
 
 
