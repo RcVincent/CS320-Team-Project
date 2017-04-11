@@ -13,9 +13,9 @@ First Name: ${MileStone1_User.firstName}<br>
 Last Name: ${MileStone1_User.lastName}<br>
 E-Mail: ${MileStone1_User.emailAddress}<br>
 </div>
-<div>
+<div id=list>
 /--This is where we need to list History --/
-<div>
+</div>
 
 </form>
 
