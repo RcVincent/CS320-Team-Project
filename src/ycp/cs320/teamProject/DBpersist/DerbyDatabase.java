@@ -963,6 +963,8 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
+				PreparedStatement stmt5 = null;
 				try {
 
 					System.out.println("prepare statement for users");
@@ -1011,7 +1013,16 @@ public class DerbyDatabase implements IDatabase {
 							);
 					System.out.println(" execute position ");
 					stmt3.executeUpdate();
-
+					
+					
+					//here will  be the SOPS-Positions table
+					
+					
+					
+					
+					//here will be the users-positions table 
+					
+					
 					return true;
 
 				} finally {
