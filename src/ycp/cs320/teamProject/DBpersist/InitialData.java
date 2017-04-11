@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javafx.util.Pair;
 import ycp.cs320.teamProject.DBpersist.ReadCSV;
 import ycp.cs320.teamProject.model.*;
 
@@ -68,7 +69,7 @@ public class InitialData {
 					
 					sop.setSopIdNumber(sopId++);
 					sop.setSopName(i.next());
-					sop.setAuthorIDnumber(i.next());
+					sop.setSopPurpose(i.next());
 					sop.setPriority(i.next());
 					sop.setRevision(i.next());
 					
@@ -119,6 +120,18 @@ public class InitialData {
 			
 		}
 		
+		public static List<Pair<Position, SOP>> getPositionsSOPsList() throws IOException {
+			
+			List<Pair<Position, SOP>> positionToSOPList = new ArrayList<Pair<Position, SOP>>();
+			
+			return positionToSOPList;
+		}
+		
+		public static List<Pair<User, Position>> getUserPositionList() throws IOException {
+			List<Pair<User, Position>> userPositionList = new ArrayList<Pair<User, Position>>();
+			
+			return userPositionList;
+		}
 		
 		
 }

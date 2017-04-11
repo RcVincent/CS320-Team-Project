@@ -7,7 +7,7 @@ import java.util.Random;
 public class SOP {
 	private int sopIdNumber; 
 	private String sopName; 
-	private String authorIDnumber;
+	private String sopPurpose;
 	private String priority;
 	private String revision;
 	
@@ -18,8 +18,6 @@ public class SOP {
 	Random rand;
 	
 	public SOP() {
-		//rand = new Random();
-		//setSopIdNumber(rand.nextInt(100000));
 	}
 	
 	public ArrayList<Position> showPositionsAffected(int sopID) {
@@ -52,13 +50,7 @@ public class SOP {
 	public void setSopName(String sopName) {
 		this.sopName = sopName;
 	}
-	public String getAuthorIDnumber() {
-		return authorIDnumber;
-	}
-	public void setAuthorIDnumber(String authorIDnumber) {
-		this.authorIDnumber = authorIDnumber;
-	}
-
+	
 	public List<Position> getPositionsAffected() {
 		return positionsAffected;
 	}
@@ -81,5 +73,13 @@ public class SOP {
 
 	public void setRevision(String revision) {
 		this.revision = revision;
+	}
+
+	public String getSopPurpose() {
+		return sopPurpose;
+	}
+
+	public void setSopPurpose(String sopPurpose) {
+		this.sopPurpose = sopPurpose;
 	}
 }

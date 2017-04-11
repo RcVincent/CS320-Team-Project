@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.util.Pair;
 import sqldemo.DButil;
 import ycp.cs320.teamProject.model.Position;
 import ycp.cs320.teamProject.model.SOP;
@@ -943,7 +944,7 @@ public class DerbyDatabase implements IDatabase {
 	private void loadSOP(SOP sop, ResultSet resultSet, int index) throws SQLException {
 		sop.setSopIdNumber(resultSet.getInt(index++));
 		sop.setSopName(resultSet.getString(index++));
-		sop.setAuthorIDnumber(resultSet.getString(index++));
+		sop.setSopPurpose(resultSet.getString(index++));
 		sop.setPriority(resultSet.getString(index++));
 		sop.setRevision(resultSet.getString(index++));
 		
@@ -993,7 +994,7 @@ public class DerbyDatabase implements IDatabase {
 									" sop_id integer primary key " +
 									" generated always as identity (start with 100, increment by 2), " +
 									" sop_name varchar(40), " +
-									" sop_authorID varchar(10)," +
+									" sop_purpose varchar(100)," +
 									" sop_priority varchar(2)," +
 									" sop_revision varchar(5)" +
 									") "
@@ -1044,6 +1045,9 @@ public class DerbyDatabase implements IDatabase {
 				List<User> userList;
 				List<SOP> sopList;
 				List<Position> positionList;
+				List<Pair<Position, SOP>> positionSOPList;
+				List<Pair<User, Position>> UserPositionList;
+				
 				try {
 					System.out.println("init userlist");
 					userList = InitialData.getUsers();
@@ -1051,6 +1055,13 @@ public class DerbyDatabase implements IDatabase {
 					sopList = InitialData.getSOPs();
 					System.out.println("init PositionList");
 					positionList = InitialData.getPositions();
+					
+					//will uncomment these when the methods are working 
+					//System.out.println("init Position To SOP List");
+					//positionSOPList = InitialData.getPositionsSOPsList();
+					//System.out.println("init User to Position List");
+					//UserPositionList = InitialData.getUserPositionList();
+					
 				}
 				catch (IOException e){
 					throw new SQLException("Couldn't read initial data", e);
@@ -1059,6 +1070,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertUsers = null;
 				PreparedStatement insertSOPs = null;
 				PreparedStatement insertPositions = null;
+				
 				try{
 
 					insertUsers = conn.prepareStatement("insert into users (user_userName, user_passWord, user_email, user_accountType, user_firstName, user_lastname) "
@@ -1072,17 +1084,18 @@ public class DerbyDatabase implements IDatabase {
 						insertUsers.setString(6, u.getLastName());
 						insertUsers.addBatch();
 					}
+					
 					System.out.println("inserting users");
 					insertUsers.executeBatch();
 					System.out.println("Users table populated");
 
 					System.out.println("preparing sop insert");
-					insertSOPs = conn.prepareStatement("insert into sops (sop_name, sop_authorID, sop_priority, sop_revision ) "
+					insertSOPs = conn.prepareStatement("insert into sops (sop_name, sop_purpose, sop_priority, sop_revision ) "
 							+ "		values (?, ?, ?, ?) " );
 
 					for(SOP s : sopList) {
 						insertSOPs.setString(1, s.getSopName());
-						insertSOPs.setString(2, s.getAuthorIDnumber());
+						insertSOPs.setString(2, s.getSopPurpose());
 						insertSOPs.setString(3, s.getPriority());
 						insertSOPs.setString(4, s.getRevision());
 						insertSOPs.addBatch();
@@ -1121,10 +1134,19 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("Creating tables...");
 		DerbyDatabase db = new DerbyDatabase();
 		db.createTables();
+		
+		System.out.println("Users");
+		System.out.println("SOPs");
+		System.out.println("Positions");
 
 		System.out.println("Loading initial data...");
 		db.loadInitialData();
+		
+		System.out.println("Users");
+		System.out.println("SOPs");
+		System.out.println("Positions");
 
+		
 		System.out.println("Sucess!");
 	}
 }
