@@ -49,19 +49,19 @@ public class ModelTests {
 		 
 		 
 		 sop= new SOP();
-		 sop.setAuthorIDnumber("1002456");
+		 sop.setSopPurpose("Keep it simple stupid");
 		 sop.setSopName("K.I.S.S");
 		 sop.setSopIdNumber(1025649);
 		 sop.setPriority("7");
 		 positionsAffected = new ArrayList<Position>();
 		 
 		 sop2 = new SOP();
-		 sop2.setAuthorIDnumber("1002456");
+		 
 		 sop2.setSopName("Dosument Editing");
 		 sop2.setSopIdNumber(1025650);
 		 
 		 sop3 = new SOP();
-		 sop3.setAuthorIDnumber("1002568");
+		 ;
 		 sop3.setSopName("Stretching Work");
 		 sop3.setSopIdNumber(1025651);
 		 
@@ -155,14 +155,14 @@ public class ModelTests {
 	 
 	 @Test
 	 public void testSOP() {
-		 String authorID = sop.getAuthorIDnumber();
+		 String sopPurpose = sop.getSopPurpose();
 		 String sopName = sop.getSopName();
 		 String priority = sop.getPriority();
 		 int id = sop.getSopIdNumber();
 		 
 		 assertEquals("K.I.S.S", sopName);
 		 assertEquals("7", priority);
-		 assertEquals("1002456", authorID);
+		 assertEquals("Keep it simple stupid", sopPurpose);
 		 assertEquals("1025649", id);
 	 }
 	 

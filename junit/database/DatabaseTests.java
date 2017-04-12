@@ -182,18 +182,18 @@ public class DatabaseTests {
 	public void testAddSOP() {
 		int sopID = 10;
 		String sopName = "Electronic Signature";
-		String authorID = "15";
+		String sopPurpose = "Electronic Signature ";
 		String priority = "10";
 		String revision = "1";
 		
-		sopList = db.addSOP(sopID, sopName, authorID, priority, revision);
+		sopList = db.addSOP(sopID, sopName, sopPurpose, priority, revision);
 		
 		if(sopList.isEmpty()) {
 			System.out.println("There are no SOPs in the table");
 			fail("Add more SOPs");
 		}else {
 			for(SOP s: sops) {
-				System.out.println(s.getSopIdNumber() + ", " + s.getSopName() + ", " + s.getAuthorIDnumber() + ", " + s.getPriority() + ", " + s.getRevision());
+				System.out.println(s.getSopIdNumber() + ", " + s.getSopName() + ", " + s.getSopPurpose() + ", " + s.getPriority() + ", " + s.getRevision());
 			}
 		}
 		
