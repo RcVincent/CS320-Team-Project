@@ -12,8 +12,10 @@ import java.util.List;
 import javafx.util.Pair;
 import sqldemo.DButil;
 import ycp.cs320.teamProject.model.Position;
+import ycp.cs320.teamProject.model.PositionSOP;
 import ycp.cs320.teamProject.model.SOP;
 import ycp.cs320.teamProject.model.User;
+import ycp.cs320.teamProject.model.UserPosition;
 
 
 public class DerbyDatabase implements IDatabase {
@@ -40,6 +42,8 @@ public class DerbyDatabase implements IDatabase {
 			public List<User> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
+
+				//TODO
 				try {
 					stmt = conn.prepareStatement(
 							" select * from Users " +
@@ -85,6 +89,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
+				//TODO
 				try {
 					stmt = conn.prepareStatement(
 							" select * from Users " +
@@ -132,6 +137,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt2 = null;
 				ResultSet resultSet = null;
 
+				//TODO
 				try {
 					stmt = conn.prepareStatement(
 							" insert into users(user_userName, user_passWord, user_email, user_accountType, user_firstName, user_lastName) " +
@@ -180,7 +186,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+
 	//find all users
 	//this is going to be an Admin only function
 	public List<User> findAllUsers() {
@@ -190,44 +196,45 @@ public class DerbyDatabase implements IDatabase {
 			public List<User> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
-				
+
+				//TODO
 				try {
 					stmt = conn.prepareStatement(
 							" select * from users " +
 									" order by lastName asc, firstName asc "
 							);
 					List<User> result = new ArrayList<User>();
-					
+
 					resultSet = stmt.executeQuery();
-					
+
 					Boolean found = false;
 					while(resultSet.next()) {
 						found = true;
-						
+
 						User user = new User();
 						loadUser(user, resultSet, 1);
-						
+
 						result.add(user);
 					}
-					
+
 					if(!found) {
 						System.out.println("No users were found in the database");
 					}
-					
-				return result;	
-					
+
+					return result;	
+
 				}finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				
+
+
 			}
-			
+
 		});
-		
+
 	}
-	
+
 	public List<User> findUserByLastName(String lastname) {
 		return executeTransaction(new Transaction<List<User>>() {
 
@@ -235,36 +242,37 @@ public class DerbyDatabase implements IDatabase {
 			public List<User> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
-				
+
+				//TODO
 				try {
 					stmt = conn.prepareStatement(
 							" select users.* " +
 									" from users " +
 									" where users.lastname = ? "
 							);
-				
+
 					stmt.setString(1, lastname);
 					List<User> result = new ArrayList<User>();
-					
+
 					resultSet = stmt.executeQuery();
-					
+
 					while(resultSet.next()) {
 						User user = new User();
-						
+
 						loadUser(user, resultSet, 1);
-						
+
 						result.add(user);
 					}
-				return result;
+					return result;
 				}
 				finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				
+
+
 			}
-			
+
 		});
 	}
 
@@ -280,7 +288,7 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 
-
+					//TODO
 					stmt = conn.prepareStatement(
 							" delete from users " +
 									" where user_userName = ? " +
@@ -340,6 +348,7 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 
+					//TODO
 					stmt = conn.prepareStatement(
 							" update users " +
 									" set user_passWord = ? " +
@@ -410,8 +419,9 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(
-							" select * from SOPs " +
-									" where SOP_id = ? "	
+							" select * from SOPs, sop_positions " +
+									" where sops.sop_id = sop_positions.sop_id " +
+									" and sop_id = ? "	
 							);
 					stmt.setInt(1, sopID);
 					resultSet = stmt.executeQuery();
@@ -448,7 +458,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+
 	//Add an SOP to the DB
 	@Override
 	public List<SOP> addSOP(final int sopID, final String sopName, final String authorID, final String priority, final String revision) {
@@ -460,7 +470,7 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet = null;
 
 				try {
-					
+					//TODO
 					stmt = conn.prepareStatement(
 							" insert into SOPs(sop_id, sop_Name, sop_authorID, sop_priority, sop_revision) " +
 									" values (?, ?, ?, ?, ?, ?) "
@@ -475,8 +485,9 @@ public class DerbyDatabase implements IDatabase {
 					stmt.executeUpdate();
 
 					stmt2 = conn.prepareStatement(
-							" select * from sops " +
-									" where sop_id = ? " + 
+							" select * from sops, sop_positions " +
+									" where sops.sop_id = sop_positions.sop_id " +
+									" and sop_id = ? " + 
 									" and sopName = ? " +
 									" and sop_authorID = ? "
 							);
@@ -526,9 +537,10 @@ public class DerbyDatabase implements IDatabase {
 
 				ResultSet resultSet = null;
 
+				//TODO
 				try {
 					stmt = conn.prepareStatement(
-							" update sops " +
+							" update sops, position_sops " +
 									" set priority = ? "+
 									" where sopid = ? "+
 									" and priority = ? "
@@ -592,6 +604,7 @@ public class DerbyDatabase implements IDatabase {
 
 				ResultSet resultSet = null;
 
+				//TODO
 				try {
 
 					//update the SOPS version number in the database
@@ -659,43 +672,50 @@ public class DerbyDatabase implements IDatabase {
 			public List<SOP> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
-				
+
+				//TODO
 				try {
-					
+
 					stmt = conn.prepareStatement(
 							" select sops.* " +
 									" from sops " +
 									" where sops.sopName = ? "
-							
+
 							);
 					stmt.setString(1, sopName);
-					
+
 					resultSet = stmt.executeQuery();
-					
+
 					List<SOP> result = new ArrayList<SOP>();
-					
+
 					boolean found = true;
 					while(resultSet.next()) {
 						found = true;
 						SOP sop = new SOP();
-						
+
 						loadSOP(sop, resultSet, 1);
-						
+
 						result.add(sop);
 					}
-					
+
+					if(!found) {
+						System.out.println("No sops found with name: " + sopName);
+					}
+
 					return result;
+
 				}finally {
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
-				
-				
+
+
 			}
-			
+
 		});
 	}
-	// Add the position methods
+
+	// get a positions information 
 	@Override
 	public List<Position> getPositionInfo(final String position) {
 
@@ -704,6 +724,8 @@ public class DerbyDatabase implements IDatabase {
 			public List<Position> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
+
+				//TODO
 				try {
 					stmt = conn.prepareStatement(
 							" select * from Positions " +
@@ -748,7 +770,8 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
 				ResultSet resultSet = null;
-
+				
+				//TODO
 				try {
 					stmt = conn.prepareStatement(
 							" insert intpositions(positionName, positionDuty) " +
@@ -801,40 +824,42 @@ public class DerbyDatabase implements IDatabase {
 			public List<Position> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
-				
+
 				try {
 					stmt = conn.prepareStatement(
 							" select positions.* " +
-									" from positions " +
-									" where positions.postionId = ? "
+									" from positions, position_sops, user_positions " +
+									" where positions.positionId = position_sops.positionId " +
+									" and positions.positionId = user_positions.positionId " +
+									" and positions.postionId = ? "
 							);
 					stmt.setInt(1, positionId);
-					
+
 					List<Position> result = new ArrayList<Position>();
-					
+
 					resultSet = stmt.executeQuery();
-					
+
 					while(resultSet.next()) {
 						Position position = new Position();
-						
+
 						loadPosition(position, resultSet, 1);
 						result.add(position);
-						
+
 					}
 					return result;
 				}
-			
-				
+
+
 				finally {
 					DBUtil.closeQuietly(resultSet);
 					DBUtil.closeQuietly(stmt);
 				}
-				
+
 			}
-			
+
 		});
 	}
-	
+
 	public List<Position> findPositionByName(String positionName) { 
 		return executeTransaction(new Transaction<List<Position>>() {
 
@@ -842,38 +867,45 @@ public class DerbyDatabase implements IDatabase {
 			public List<Position> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
-				
+
 				try {
 					stmt = conn.prepareStatement(
 							" select positions.* " +
 									" from positions " +
-									" where positions.positionName = ? "
-							
+									" where positions.positionId = position_sops.positionId " +
+									" and positions.positionId = user_positions.positionId " +
+									" and positions.positionName = ? "
+
 							);
-					
+
 					stmt.setString(1, positionName);
-					
+
 					List<Position> result = new ArrayList<Position>();
-					
+
 					resultSet = stmt.executeQuery();
 					boolean found = false;
-					
+
 					while(resultSet.next()) {
 						found = true;
-						
+
 						Position p = new Position();
 						loadPosition(p, resultSet, 1);
 						result.add(p);
 					}
+
+					if (!found) {
+						System.out.println("No positions were found with: " + positionName);
+					}
+
 					return result;
-					
+
 				}finally {
 					DBUtil.closeQuietly(resultSet);
 					DBUtil.closeQuietly(stmt);
 				}
-				
+
 			}
-			
+
 		});
 	}
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
@@ -947,13 +979,25 @@ public class DerbyDatabase implements IDatabase {
 		sop.setSopPurpose(resultSet.getString(index++));
 		sop.setPriority(resultSet.getString(index++));
 		sop.setRevision(resultSet.getString(index++));
-		
+
 	}
 	//load position
 	private void loadPosition(Position position, ResultSet resultSet, int index) throws SQLException {
 		position.setPositionID(resultSet.getInt(index++));
 		position.setPositionName(resultSet.getString(index++));
 		position.setPositionDuty(resultSet.getString(index++));	
+	}
+
+	//load position to sop junction
+	public void loadPositionSOPs(PositionSOP ps, ResultSet resultSet, int index) throws SQLException {
+		ps.setPositionID(resultSet.getInt(index++));
+		ps.setSopID(resultSet.getInt(index++));
+	}
+
+	//load user to position junction
+	public void loadUserPositions(UserPosition up, ResultSet resultSet, int index) throws SQLException{
+		up.setUserID(resultSet.getInt(index++));
+		up.setPositionID(resultSet.getInt(index++));
 	}
 
 	public void createTables() {
@@ -984,7 +1028,7 @@ public class DerbyDatabase implements IDatabase {
 							);	
 					System.out.println("execute users");
 					stmt1.executeUpdate();
-
+					System.out.println("Sucess!");
 
 					//this is where the program is breaking. 
 					//create the sop table
@@ -1001,6 +1045,7 @@ public class DerbyDatabase implements IDatabase {
 							);
 					System.out.println("execute SOP");
 					stmt2.executeUpdate();
+					System.out.println("Sucess!");
 
 					System.out.println("prepare Position");
 					//create table for the position class
@@ -1014,16 +1059,34 @@ public class DerbyDatabase implements IDatabase {
 							);
 					System.out.println(" execute position ");
 					stmt3.executeUpdate();
-					
-					
-					//here will  be the SOPS-Positions table
-					
-					
-					
-					
-					//here will be the users-positions table 
-					
-					
+					System.out.println("Sucess!");
+
+
+					//create the position and sop junction table 
+					System.out.println("prepare position to sop table");
+					stmt4 = conn.prepareStatement(
+							" create table position_sops( " +
+									"  positionId constraint positionId references positions, " + 
+									"  sop_id constraint sop_id references sops " +
+									")"
+							);
+
+					stmt4.executeUpdate();
+					System.out.println("Sucess!");
+
+
+					//create the user and position junction table 
+					System.out.println("prepare user to position table");
+					stmt5 = conn.prepareStatement(
+							"  create table user_positions " +
+									"  user_id constraint user_id references users, " +
+									"  positionId constraint positionId references positions " +
+									")"
+							);
+
+					stmt5.executeUpdate();
+					System.out.println("Sucess!");
+
 					return true;
 
 				} finally {
@@ -1045,9 +1108,9 @@ public class DerbyDatabase implements IDatabase {
 				List<User> userList;
 				List<SOP> sopList;
 				List<Position> positionList;
-				List<Pair<Position, SOP>> positionSOPList;
-				List<Pair<User, Position>> UserPositionList;
-				
+				List<PositionSOP> positionSOPList;
+				List<UserPosition> UserPositionList;
+
 				try {
 					System.out.println("init userlist");
 					userList = InitialData.getUsers();
@@ -1055,13 +1118,13 @@ public class DerbyDatabase implements IDatabase {
 					sopList = InitialData.getSOPs();
 					System.out.println("init PositionList");
 					positionList = InitialData.getPositions();
-					
+
 					//will uncomment these when the methods are working 
-					//System.out.println("init Position To SOP List");
-					//positionSOPList = InitialData.getPositionsSOPsList();
-					//System.out.println("init User to Position List");
-					//UserPositionList = InitialData.getUserPositionList();
-					
+					System.out.println("init Position To SOP List");
+					positionSOPList = InitialData.getPositionsSOPsList();
+					System.out.println("init User to Position List");
+					UserPositionList = InitialData.getUserPositionList();
+
 				}
 				catch (IOException e){
 					throw new SQLException("Couldn't read initial data", e);
@@ -1070,9 +1133,12 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertUsers = null;
 				PreparedStatement insertSOPs = null;
 				PreparedStatement insertPositions = null;
-				
-				try{
+				PreparedStatement insertPositionSOP = null;
+				PreparedStatement insertUserPosition = null;
 
+				try{
+					//add the user csv file into the DB
+					System.out.println("preparing users insert");
 					insertUsers = conn.prepareStatement("insert into users (user_userName, user_passWord, user_email, user_accountType, user_firstName, user_lastname) "
 							+ "		values (?, ?, ?, ?, ?, ?)");
 					for (User u : userList) {
@@ -1084,7 +1150,7 @@ public class DerbyDatabase implements IDatabase {
 						insertUsers.setString(6, u.getLastName());
 						insertUsers.addBatch();
 					}
-					
+
 					System.out.println("inserting users");
 					insertUsers.executeBatch();
 					System.out.println("Users table populated");
@@ -1113,16 +1179,50 @@ public class DerbyDatabase implements IDatabase {
 						insertPositions.setString(2, p.getPositionDuty());
 					}
 
+					System.out.println("inserting positions...");
 					insertPositions.executeBatch();
 					System.out.println("Positions table populated");
 
+					//insert the position to sop file into the DB
+					System.out.println("Preparing Position SOP junction");
+					insertPositionSOP = conn.prepareStatement(" insert into position_sops (positionId, sop_id) "
+							+ " 	values (?, ?) " );
+
+					for(PositionSOP posSop: positionSOPList) {
+						insertPositionSOP.setInt(1, posSop.getPositionID());
+						insertPositionSOP.setInt(2, posSop.getSopID());
+					}
+
+
+					System.out.println("inserting positions to sops...");
+					insertPositionSOP.executeBatch();
+					System.out.println("Position SOPs junction table populated");
+
+					//insert the user to position file into the DB
+					System.out.println("Preparing USer to SOP junction");
+					insertUserPosition = conn.prepareStatement(" insert into user_positions (user_id, positionId "
+							+ "		values (?, ?) " );
+
+					for(UserPosition userPosition: UserPositionList) {
+						insertUserPosition.setInt(1, userPosition.getUserID());
+						insertUserPosition.setInt(2, userPosition.getPositionID());
+					}
+
+					System.out.println("inserting users to positions...");
+					insertUserPosition.executeBatch();
+					System.out.println("User Positions junction table populated");
+
 					return true;
+
 				}
+
 
 				finally {
 					DBUtil.closeQuietly(insertUsers);
 					DBUtil.closeQuietly(insertSOPs);
 					DBUtil.closeQuietly(insertPositions);
+					DBUtil.closeQuietly(insertPositionSOP);
+					DBUtil.closeQuietly(insertUserPosition);
 				}
 			}
 		});
@@ -1134,19 +1234,19 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("Creating tables...");
 		DerbyDatabase db = new DerbyDatabase();
 		db.createTables();
-		
+
 		System.out.println("Users");
 		System.out.println("SOPs");
 		System.out.println("Positions");
 
 		System.out.println("Loading initial data...");
 		db.loadInitialData();
-		
+
 		System.out.println("Users");
 		System.out.println("SOPs");
 		System.out.println("Positions");
 
-		
+
 		System.out.println("Sucess!");
 	}
 }
