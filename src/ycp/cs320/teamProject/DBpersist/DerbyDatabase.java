@@ -43,12 +43,14 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
-				//TODO
-				try {
+				
+				try{
 					stmt = conn.prepareStatement(
-							" select * from Users " +
-									" where user_userName = ? "
+							" select * from users, user_positions " +
+									" where users.user_id = user_positions.user_id " +
+									" and user_userName = ? "
 							);
+					
 					stmt.setString(1, name);
 					resultSet = stmt.executeQuery();
 
@@ -89,12 +91,14 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
-				//TODO
+				
 				try {
 					stmt = conn.prepareStatement(
-							" select * from Users " +
-									" where user_userName = ? "
+							" select * from users, user_positions " +
+									" where users.user_id = user_positions.user_id " +
+								    " where user_userName = ? "
 							);
+					
 					stmt.setString(1, name);
 					List<User> result = new ArrayList<User>();
 					resultSet = stmt.executeQuery();
@@ -137,7 +141,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt2 = null;
 				ResultSet resultSet = null;
 
-				//TODO
+				//Don't need to edit this method to work with the junction
 				try {
 					stmt = conn.prepareStatement(
 							" insert into users(user_userName, user_passWord, user_email, user_accountType, user_firstName, user_lastName) " +
@@ -197,12 +201,14 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
-				//TODO
+				
 				try {
 					stmt = conn.prepareStatement(
-							" select * from users " +
+							" select * from users, user_positions " +
+									" where users.user_id = user_positions.user_id "+
 									" order by lastName asc, firstName asc "
 							);
+					
 					List<User> result = new ArrayList<User>();
 
 					resultSet = stmt.executeQuery();
@@ -243,11 +249,12 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
-				//TODO
+				
 				try {
 					stmt = conn.prepareStatement(
-							" select users.* " +
-									" from users " +
+							" select users.*, user_positions.* " +
+									" from users, user_positions, " +
+									" where users.user_id = user_positions.user_id" +
 									" where users.lastname = ? "
 							);
 
@@ -284,46 +291,64 @@ public class DerbyDatabase implements IDatabase {
 			public List<User> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null; 
+				PreparedStatement stmt3 = null;
+				
+				
 				ResultSet resultSet = null;
 
 				try {
 
-					//TODO
+				
 					stmt = conn.prepareStatement(
-							" delete from users " +
-									" where user_userName = ? " +
-									" and user_passWord = ? "
+							" select users.* " +
+									" from users, user_positions " +
+									" where users.user_id = user_positions.user_id " +
+									" and users_userName = ? " +
+									" and users_passWord = ? "
 							);
 					stmt.setString(1, name);
 					stmt.setString(2, pswd);
-					stmt.executeUpdate();
+					resultSet = stmt.executeQuery();
 
-					// return all users and see that the one entered was deleted
+				
+					//Using the remove book by title as a guide here
+					List<User> Users = new ArrayList<User>();
 
-					stmt2 = conn.prepareStatement(
-							" select * from users " 		
-							);
-					resultSet = stmt2.executeQuery();
-
-					//if anything is found, return it in a list format
-					List<User> result = new ArrayList<User>();
-
-					Boolean found = false;
+					
 
 					while (resultSet.next()) {
-						found = true;
-
 						User u = new User();
 						loadUser(u, resultSet, 1);
-						result.add(u);
+						Users.add(u);
 					}
 
 					// check if the title was found
-					if (!found) {
-						System.out.println("<" + name + "> users list is empty");
+					if (Users.size() == 0) {
+						System.out.println("<" + name + "> was not found: users list is empty");
 					}
 
-					return result;
+					stmt2 = conn.prepareStatement(
+							" delete from user_positions " +
+									"where user_id = ? "
+							);
+					stmt2.setInt(1, Users.get(0).getUserID());
+					stmt2.executeUpdate();
+					
+					System.out.println("Deleting the user from the junction table");
+					
+					stmt3 = conn.prepareStatement(
+							" delete from users " +
+									" where users.userName = ? " +
+									" and users.passWord = ? "
+							);
+					
+					stmt3.setString(1, name);
+					stmt3.setString(2, pswd);
+					stmt3.executeUpdate();
+					
+					
+					
+					return Users;
 
 
 				} finally {
@@ -348,7 +373,7 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 
-					//TODO
+					
 					stmt = conn.prepareStatement(
 							" update users " +
 									" set user_passWord = ? " +
@@ -365,8 +390,10 @@ public class DerbyDatabase implements IDatabase {
 					// return all users and see that the one entered was deleted
 
 					stmt2 = conn.prepareStatement(
-							" select * from users " 	+
-									" where user_userName = ? "
+							" select * from users, user_positions " 	+
+									" where users.user_id = user_positions.user_id " +
+									" and users_userName = ? " +
+									" and users_userPassword = ? "
 							);
 					//ensure new userName is in database
 					stmt2.setString(1, newPassword);
@@ -461,24 +488,27 @@ public class DerbyDatabase implements IDatabase {
 
 	//Add an SOP to the DB
 	@Override
-	public List<SOP> addSOP(final int sopID, final String sopName, final String authorID, final String priority, final String revision) {
+	public List<SOP> addSOP(final int sopID, final String sopName, final String sopPurpose, final String priority, final String revision) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
 			public List<SOP> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
+				
 				ResultSet resultSet = null;
-
+				ResultSet resultSet2 = null;
 				try {
-					//TODO
+
 					stmt = conn.prepareStatement(
-							" insert into SOPs(sop_id, sop_Name, sop_authorID, sop_priority, sop_revision) " +
+							" insert into SOPs(sop_id, sop_Name, sop_purpose, sop_priority, sop_revision) " +
 									" values (?, ?, ?, ?, ?, ?) "
 
 							);
 					stmt.setInt(1, sopID);
 					stmt.setString(2, sopName);
-					stmt.setString(3, authorID);
+					stmt.setString(3, sopPurpose);
 					stmt.setString(4, priority);
 					stmt.setString(5, revision);
 
@@ -488,16 +518,36 @@ public class DerbyDatabase implements IDatabase {
 							" select * from sops, sop_positions " +
 									" where sops.sop_id = sop_positions.sop_id " +
 									" and sop_id = ? " + 
-									" and sopName = ? " +
-									" and sop_authorID = ? "
+									" and sopName = ? "
 							);
 
 					stmt2.setInt(1, sopID);
 					stmt2.setString(2, sopName);
-					stmt2.setString(3, authorID);
-
+					
+					
 					resultSet = stmt2.executeQuery();
-
+					
+					stmt3 = conn.prepareStatement(
+							" select positions.positoinId " +
+									" from positions, position_sops " +
+									" where positions.positionId = position_sops.positionId " +
+									" and positions.sop_id = sops.sop_id " +
+									" and sop_id = ? "
+							);
+					
+					stmt3.setInt(1, sopID);
+					resultSet2 = stmt3.executeQuery();
+					
+					stmt4 = conn.prepareStatement(
+							" insert into position_sops (positionId, sop_id) " +
+									" values(?, ?) "
+							);
+					
+					stmt4.setInt(1, resultSet2.getInt(1));
+					stmt4.setInt(2, sopID);
+					
+					stmt4.executeUpdate();
+					
 					//if anything is found, return it in a list format
 					Boolean found = false;
 					List<SOP> result = new ArrayList<SOP>();
@@ -520,7 +570,9 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(conn);
 					DButil.closeQuietly(stmt);
 					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
 					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(resultSet2);
 				}
 			}
 		});

@@ -74,10 +74,10 @@ public class Projectcontroller {
 	}
 	
 	//add an SOP to the DB 
-	public boolean addSOPtoDB(String sopName, int sopID, String authorID, String priority, String revision) {
+	public boolean addSOPtoDB(String sopName, int sopID, String sopPurpose, String priority, String revision) {
 		
 		
-		List<SOP> sopid = db.addSOP(sopID, sopName, authorID, priority, revision);
+		List<SOP> sopid = db.addSOP(sopID, sopName, sopPurpose, priority, revision);
 		
 		if(sopid.size() > 0) {
 			System.out.println("New SOP (ID: " + sopid + "entered into the database");

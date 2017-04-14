@@ -44,32 +44,31 @@ public class createSOPservlet extends HttpServlet{
 		String sucessMessage = null;
 		
 		String sopName = null;
-		String sopAuthorId = null;
+		String sopPurpose = null;
 		String strsopID = null;
 		String priority = null;
 		String revision = null;
-		
 		int sopID = 0;
 		
 		sopName = req.getParameter("sop_name");
 		strsopID = req.getParameter("sop_id");
-		sopAuthorId = req.getParameter("sop_authorID");
+		sopPurpose = req.getParameter("sop_authorID");
 		priority = req.getParameter("sop_priority");
 		revision = req.getParameter("sop_revision");
 		
+		
 		if(sopName == null || sopName.equals("") ||
 		   strsopID == null || strsopID.equals("") ||
-		   sopAuthorId == null || sopAuthorId.equals("") ||
+		   sopPurpose == null || sopPurpose.equals("") ||
 		   priority == null || priority.equals("") ||
-		   revision == null || revision.equals("") ||
-		   sopAuthorId == null
+		   revision == null || revision.equals("") 
 				) {
 			errorMessage = "Please fill in all the require fields";
 		} else {
 			controller = new Projectcontroller();
 			sopID = Integer.parseInt(strsopID);
 			
-			if(controller.addSOPtoDB(sopName, sopID, sopAuthorId, priority, revision)) {
+			if(controller.addSOPtoDB(sopName, sopID, sopPurpose, priority, revision)) {
 				sucessMessage = sopName;
 			}
 			else {
@@ -79,7 +78,7 @@ public class createSOPservlet extends HttpServlet{
 		
 		req.setAttribute("sop_id", sopID);
 		req.setAttribute("sop_name", sopName);
-		req.setAttribute("sop_authorID", sopAuthorId);
+		req.setAttribute("sop_Purpose", sopPurpose);
 		req.setAttribute("sop_priority", priority);
 		req.setAttribute("sop_revision", revision);
 		
