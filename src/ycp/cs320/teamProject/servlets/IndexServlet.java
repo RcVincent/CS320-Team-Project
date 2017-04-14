@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ycp.cs320.teamProject.model.User;
+
 
 
 public class IndexServlet extends HttpServlet {
@@ -20,6 +22,14 @@ public class IndexServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		User model = new User();
+		String session = getSession(req, "seesionid");
+		model.setSessionid(session);
+		if (model.getSessionid()== null) {
+			// user is not logged in, or the session expired
+			resp.sendRedirect(req.getContextPath() + "/Login");
+			return;
+		}
 		System.out.println("In the Index servlet");
 		if (req.getParameter("account") != null) {
 			resp.sendRedirect(req.getContextPath() + "/account");
@@ -36,7 +46,13 @@ public class IndexServlet extends HttpServlet {
 		} else if (req.getParameter("treaingHistory") != null) {
 			resp.sendRedirect(req.getContextPath() + "/Traininghistory");
 		}
+		req.setAttribute("sessionid", model);
 		req.getRequestDispatcher("/_view/Index.jsp").forward(req, resp);
+	}
+	private String getSession(HttpServletRequest req, String name) {
+		// TODO Auto-generated method stub
+		return String.valueOf(req.getParameter(name));
+		//return Integer.parseInt(req.getParameter(name));
 	}
 }
 

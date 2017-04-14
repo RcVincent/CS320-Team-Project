@@ -11,6 +11,7 @@ public class User {
 		private String lastName; 
 		private String emailAddress;		
 		private String isAdmin;
+		private String sessionid;
 		
 		private boolean loginStatus = false;
 		
@@ -116,5 +117,13 @@ public class User {
 
 		public void setElectronicSignatureFlag(boolean electronicSignatureFlag) {
 			this.electronicSignatureFlag = electronicSignatureFlag;
+		}
+
+		public String getSessionid() {
+			return sessionid;
+		}
+
+		public void setSessionid(String sessionid) {
+			this.sessionid = sessionid;
 		}
 }

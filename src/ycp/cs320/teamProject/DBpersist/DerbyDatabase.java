@@ -125,13 +125,18 @@ public class DerbyDatabase implements IDatabase {
 	public List<User> addUserToDatabase(final String name, final String pswd, final String email, final String type, final String first,
 			final String last) {
 		return executeTransaction(new Transaction<List<User>>() {
+			int user_Id = -1;
 			@Override
 			public List<User> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
 				ResultSet resultSet = null;
-
+				
+				//to save employee number
+				
+				
 				try {
+					System.out.println("prepareStatement addUser");
 					stmt = conn.prepareStatement(
 							" insert into users(user_userName, user_passWord, user_email, user_accountType, user_firstName, user_lastName) " +
 									" values(?, ?, ?, ?, ?, ?) "
@@ -142,6 +147,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setString(4, type);
 					stmt.setString(5, first);
 					stmt.setString(6, last);
+					System.out.println("execure addUser");
 					stmt.executeUpdate();
 
 					stmt2 = conn.prepareStatement(
@@ -156,13 +162,24 @@ public class DerbyDatabase implements IDatabase {
 					//if anything is found, return it in a list format
 					Boolean found = false;
 					List<User> result = new ArrayList<User>();
+
+					/*//This doesn't seem to be working using example from lab 6 by D.Hake					
 					while (resultSet.next()) {
 						found = true;
 						User u = new User();
 						loadUser(u, resultSet, 1);
 						result.add(u);
 					}
-
+*/
+					if (resultSet.next())
+					{
+				 user_Id = resultSet.getInt(1);
+						System.out.println("New User <" + name + "> ID: " + user_Id);						
+					}
+					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
+					{
+						System.out.println("New user <" + name + "> not found in Users table (ID: " + user_Id);
+					}
 					// check if the title was found
 					if (!found) {
 						System.out.println("<" + name + "> was not found in the users table");
@@ -1080,15 +1097,17 @@ public class DerbyDatabase implements IDatabase {
 					insertSOPs.executeBatch();
 					System.out.println("Sops table populated");
 
+					System.out.println("prepareing to insert postions");
 					//insert the position csv file into the DB
-					insertPositions = conn.prepareStatement("insert into positions (positionName, positionDuty )"
+					insertPositions = conn.prepareStatement("insert into positions (positionName, positionDuty ) "
 							+ "		values (?, ?) " );
 
 					for(Position p : positionList){
 						insertPositions.setString(1, p.getPositionName());
 						insertPositions.setString(2, p.getPositionDuty());
+						insertPositions.addBatch();
 					}
-
+					System.out.println("inserting positions");
 					insertPositions.executeBatch();
 					System.out.println("Positions table populated");
 
