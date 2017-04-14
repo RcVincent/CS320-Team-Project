@@ -86,7 +86,7 @@ public class SQLDemo {
 					}
 				} else {
 					try {
-//						System.out.println("Executing SQL:");
+						System.out.println("Executing SQL:");
 //						System.out.println(sql);
 						executeSQL(conn, sql);
 					} catch (SQLException e) {

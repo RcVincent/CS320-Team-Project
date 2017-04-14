@@ -35,6 +35,7 @@ public class LoginServlet extends HttpServlet {
 		String password = null;
 		
 		Projectcontroller p = new Projectcontroller();
+		User model = new User();
 		//get user and PW
 		username = req.getParameter("username");
 		password = req.getParameter("password");
@@ -56,6 +57,7 @@ public class LoginServlet extends HttpServlet {
 				req.getSession(true).setAttribute("username", username);
 				req.getSession().setAttribute("type", u.isAdmin());
 				req.getSession().setAttribute("userID", u.getUserID());
+				model.setSessionid(req.getSession().getId());
 				//If user is an owner send them to a page of their restaurants
 				if(u.isAdmin().equals("Admin")){
 					resp.sendRedirect(req.getContextPath() + "/Index");
@@ -80,7 +82,7 @@ public class LoginServlet extends HttpServlet {
 			req.getRequestDispatcher("/_view/Login.jsp").forward(req, resp);
 		}
 		System.out.println("   Invalid login - returning to /Login");
-		
+		req.setAttribute("sessionid", model.getSessionid());
 		req.getRequestDispatcher("/_view/Login.jsp").forward(req, resp);
 		}
 	}

@@ -25,35 +25,41 @@ public class CreateAccountServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("CreateAccountServlet: doPost");
-		String user = (String) req.getSession().getAttribute("User.username");
 		User model = new User();
+		String session = getSession(req, "seesionid");
+		model.setSessionid(session);
 		Projectcontroller controller = new Projectcontroller();
-		if (user == null) {
+		if (model.getSessionid()== null) {
 			// user is not logged in, or the session expired
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 
 		}
 
-
-		int UserNumber = (int) req.getSession().getAttribute("UserID");
-		model.setUserID(UserNumber);
-		String UserName = (String) req.getSession().getAttribute("username");
+		//I'm taking this out because the DB will assign a user number
+		//int UserNumber = (int) req.getSession().getAttribute("UserID");
+		//model.setUserID(UserNumber);
+		String UserName = (String) req.getParameter("username");
 		model.setLastName(UserName);
-		String Password = (String) req.getSession().getAttribute("password");
+		String Password = (String) req.getParameter("password");
 		model.setLastName(Password);
-		String FirstName = (String) req.getSession().getAttribute("FirstName");
+		String FirstName = (String) req.getParameter("FirstName");
 		model.setFirstName(FirstName);
-		String LastName = (String) req.getSession().getAttribute("LastName");
+		String LastName = (String) req.getParameter("LastName");
 		model.setLastName(LastName);
-		String Email = (String) req.getSession().getAttribute("Email");
+		String Email = (String) req.getParameter("Email");
 		model.setEmailAddress(Email);
-		String isAdmin = (String) req.getSession().getAttribute("Admin");
+		String isAdmin = (String) req.getParameter("Admin");
 		model.setEmailAddress(isAdmin);
-		
+
 		controller.addUserToDatabase(UserName, Password, Email, isAdmin, FirstName, LastName);
+		req.setAttribute("sessionid", model);
 		req.getRequestDispatcher("/_view/CreateAccount.jsp").forward(req, resp);
 
+	}
+	private String getSession(HttpServletRequest req, String name) {
+		// TODO Auto-generated method stub
+		return String.valueOf(req.getParameter(name));
 	}
 
 
