@@ -25,6 +25,8 @@ public class CreateAccountServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("CreateAccountServlet: doPost");
+		
+		//session data 
 		User model = new User();
 		String session = getSession(req, "seesionid");
 		model.setSessionid(session);
@@ -54,6 +56,10 @@ public class CreateAccountServlet extends HttpServlet{
 
 		controller.addUserToDatabase(UserName, Password, Email, isAdmin, FirstName, LastName);
 		req.setAttribute("sessionid", model);
+		if (req.getParameter("index") != null) {
+			resp.sendRedirect(req.getContextPath() + "/Index");
+		}
+		
 		req.getRequestDispatcher("/_view/CreateAccount.jsp").forward(req, resp);
 
 	}

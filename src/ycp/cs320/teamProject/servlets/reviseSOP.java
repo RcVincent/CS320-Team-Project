@@ -7,6 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import ycp.cs320.teamProject.controllers.Projectcontroller;
+import ycp.cs320.teamProject.model.SOP;
 import ycp.cs320.teamProject.model.User;
 
 
@@ -17,30 +20,45 @@ public class reviseSOP extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		req.getRequestDispatcher("/_view/CreateAccount.jsp").forward(req, resp);
-		String user = (String) req.getSession().getAttribute("User.username");
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		System.out.println("reviseSOPservlet: doPost");
+
+		//session data 
 		User model = new User();
-		if (user == null) {
+		String session = getSession(req, "seesionid");
+		model.setSessionid(session);
+		Projectcontroller controller = new Projectcontroller();
+		if (model.getSessionid()== null) {
 			// user is not logged in, or the session expired
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 
 		}
+		SOP sop = new SOP();
+		String sopID = req.getParameter("sop_Id");
+		sop.setSopIdNumber(Integer.parseInt(sopID));
+		String sopVersion = (String) req.getParameter("version");
+		String newSOPVersion = (String) req.getParameter("newVersion");
+		
 
+		controller.reversionSOP(model.getUserID(), sopVersion, newSOPVersion);
+		
 
-		int UserNumber = (int) req.getSession().getAttribute("UserID");
-		model.setUserID(UserNumber);
-		String FirstName = (String) req.getSession().getAttribute("FirstName");
-		model.setFirstName(FirstName);
-		String LastName = (String) req.getSession().getAttribute("LastName");
-		model.setLastName(LastName);
-		String Email = (String) req.getSession().getAttribute("Email");
-		model.setEmailAddress(Email);
-
+		req.setAttribute("sessionid", model);
+		if (req.getParameter("index") != null) {
+			resp.sendRedirect(req.getContextPath() + "/Index");
+		}
 
 		req.getRequestDispatcher("/_view/CreateAccount.jsp").forward(req, resp);
 
 	}
 
-
+	private String getSession(HttpServletRequest req, String name) {
+		// TODO Auto-generated method stub
+		return String.valueOf(req.getParameter(name));
+	}
 
 }

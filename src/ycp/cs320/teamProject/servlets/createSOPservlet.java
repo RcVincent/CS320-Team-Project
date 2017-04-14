@@ -33,6 +33,7 @@ public class createSOPservlet extends HttpServlet{
 			return;
 
 		}
+		
 		req.getRequestDispatcher("/_view/createSOP.jsp").forward(req, resp);
 
 	}
@@ -40,6 +41,16 @@ public class createSOPservlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		User model = new User();
+		String session = getSession(req, "seesionid");
+		model.setSessionid(session);
+		Projectcontroller controller = new Projectcontroller();
+		if (model.getSessionid()== null) {
+			// user is not logged in, or the session expired
+			resp.sendRedirect(req.getContextPath() + "/Login");
+			return;
+
+		}
 		String errorMessage = null;
 		String sucessMessage = null;
 		
@@ -86,6 +97,14 @@ public class createSOPservlet extends HttpServlet{
 		req.setAttribute("errorMessage", errorMessage);
 		req.setAttribute("successMessage", sucessMessage);
 		
+		req.setAttribute("sessionid", model);
+		if (req.getParameter("index") != null) {
+			resp.sendRedirect(req.getContextPath() + "/Index");
+		}
 		req.getRequestDispatcher("/_view/createSOP.jsp").forward(req, resp);
+	}
+	private String getSession(HttpServletRequest req, String name) {
+		// TODO Auto-generated method stub
+		return String.valueOf(req.getParameter(name));
 	}
 }
