@@ -589,12 +589,13 @@ public class DerbyDatabase implements IDatabase {
 
 				ResultSet resultSet = null;
 
-				//TODO
+				
 				try {
 					stmt = conn.prepareStatement(
 							" update sops, position_sops " +
 									" set priority = ? "+
-									" where sopid = ? "+
+									" where sops.sop_id = position_sops.sop_id " +
+									" and sop_id = ? " +
 									" and priority = ? "
 							);
 
@@ -606,8 +607,9 @@ public class DerbyDatabase implements IDatabase {
 
 					stmt2 = conn.prepareStatement(
 							" select sops.priority " +
-									" from sops " +
-									" where sops.sopid = ? " 
+									" from sops, position_sops " +
+									" where sops.sop_id = position_sops.sop_id " +
+									" and sops.sop_id = ? "
 							);
 					stmt2.setInt(1, sopID);
 
@@ -656,14 +658,14 @@ public class DerbyDatabase implements IDatabase {
 
 				ResultSet resultSet = null;
 
-				//TODO
 				try {
 
 					//update the SOPS version number in the database
 					stmt = conn.prepareStatement(
 							" update sops " +
 									" set revision = ? " +
-									" where sopid = ? " +
+									" where sops.sop_id = position_sops.sop_id " +
+									" and sop_id = ? " +
 									" and revision = ? "
 							);
 
@@ -676,7 +678,8 @@ public class DerbyDatabase implements IDatabase {
 					stmt2 = conn.prepareStatement(
 							" select sops.* " +
 									" from sops " +
-									" where sops.sopid = ?"
+									" where sops.sop_id = position_sops.sop_id " +
+									" and sops.sop_id = ?"
 							);
 
 					stmt2.setInt(1, sopID);
@@ -725,13 +728,14 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
-				//TODO
+				
 				try {
 
 					stmt = conn.prepareStatement(
 							" select sops.* " +
-									" from sops " +
-									" where sops.sopName = ? "
+									" from sops, position_sops " +
+									" where sops.sop_id = position_sops.sop_id " +
+									" and sops.sopName = ? "
 
 							);
 					stmt.setString(1, sopName);
@@ -781,7 +785,9 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					stmt = conn.prepareStatement(
 							" select * from Positions " +
-									" where positionName = ? "
+									" where positions.positionId = position_sops.positionId" +
+									" and positions.positionId = user_positions.positionId "+
+									" and positionName = ? "
 							);
 					stmt.setString(1, position);
 					resultSet = stmt.executeQuery();
@@ -821,12 +827,15 @@ public class DerbyDatabase implements IDatabase {
 			public List<Position> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				
 				ResultSet resultSet = null;
+				
 				
 				//TODO
 				try {
 					stmt = conn.prepareStatement(
-							" insert intpositions(positionName, positionDuty) " +
+							" insert into positions(positionName, positionDuty) " +
 									" values(?, ?) "
 							);
 					stmt.setString(1, name);
@@ -834,14 +843,27 @@ public class DerbyDatabase implements IDatabase {
 					stmt.executeUpdate();
 
 					stmt2 = conn.prepareStatement(
-							" select * " +
-									" from positions " +
-									" where positionName = ?"
+							" select positions.positionId, position_sops.sop_id " +
+									" from positions, position_sops, user_positions " +
+									" where positions.positionId = position_sops.positionId " +
+									" and positions.positionId = user_positions.positionId " +
+									" and positionName = ?"
 							);
 					stmt2.setString(1, name);
-
+					
 					resultSet = stmt2.executeQuery();
-
+					
+					stmt3 = conn.prepareStatement(
+							" insert into position_sops(positionId, sop_id) " +
+									" values (?, ?) "
+							);
+					
+					stmt3.setInt(1, );
+					stmt3.setInt(2, );
+					//
+					//stmt3.setInt(1, resultSet.getInt(1));
+					//stmt3.setInt(1, resultSet.getInt(2));
+					
 					//if anything is found, return it in a list format
 					Boolean found = false;
 					List<Position> result = new ArrayList<Position>();
