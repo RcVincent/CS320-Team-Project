@@ -64,6 +64,7 @@ public class LoginServlet extends HttpServlet {
 				}
 				//If user is a patron send to the homepage
 				else{
+					req.setAttribute("userName", model.getUsername());
 					resp.sendRedirect(req.getContextPath() + "/MainPage");
 				}
 

@@ -56,6 +56,7 @@
 			</table>
 			<td><input type = "Submit" name = "submit" value = "Login" /> </td>
 			
+				<input type="hidden" name="userName" value="user.getUsername">			
 				<input type="hidden" name="sessionid" value="sessionid.getSessionid">
 			</div>
 		</form>

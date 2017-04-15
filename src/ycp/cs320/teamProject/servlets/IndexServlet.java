@@ -54,8 +54,7 @@ public class IndexServlet extends HttpServlet {
 	private String getSession(HttpServletRequest req, String name) {
 		// TODO Auto-generated method stub
 		return String.valueOf(req.getParameter(name));
-		//return Integer.parseInt(req.getParameter(name));
-	}
+		}
 }
 
 
