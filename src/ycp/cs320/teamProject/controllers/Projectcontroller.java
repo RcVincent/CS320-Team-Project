@@ -110,6 +110,12 @@ public class Projectcontroller {
 		return real;
 	}
 	
+	//positions methods
+	public void addPositionToDatabase(String name, String duty) {
+		db.addPositionToDatabase(name, duty);
+	}
+	
+	
 	//utility methods 
 	/*public Queue<SOP> pushToPriorityQueue(SOP sopID){
 		Queue<SOP> priorityQueue = null;

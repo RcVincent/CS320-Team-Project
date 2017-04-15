@@ -27,6 +27,11 @@
 		<servlet-class>ycp.cs320.teamProject.servlets.CreateAccountServlet</servlet-class>
 	</servlet>
 	
+		<servlet>
+		<servlet-name>createPositionServlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.createPositionServlet</servlet-class>
+	</servlet>
+	
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.LoginServlet</servlet-class>
@@ -62,6 +67,11 @@
     <servlet-mapping>
     	<servlet-name>CreateAccountServlet</servlet-name>
     	<url-pattern>CreateAccount</url-pattern>
+    </servlet-mapping>
+    
+        <servlet-mapping>
+    	<servlet-name>createPositinoServlet</servlet-name>
+    	<url-pattern>createPosition</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>

@@ -1145,7 +1145,7 @@ public class DerbyDatabase implements IDatabase {
 									"	 positionId integer primary key "+
 									"	 generated always as identity (start with 1, increment by 1), "+
 									"	 positionName varchar(40), "+
-									"	 positionDuty varchar(100) "+
+									"	 positionDuty varchar(200) "+
 									") "
 							);
 					System.out.println(" execute position ");

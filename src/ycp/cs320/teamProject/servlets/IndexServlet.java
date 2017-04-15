@@ -45,6 +45,8 @@ public class IndexServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/SOP");
 		} else if (req.getParameter("treaingHistory") != null) {
 			resp.sendRedirect(req.getContextPath() + "/Traininghistory");
+		} else if (req.getParameter("createPosition") != null) {
+			resp.sendRedirect(req.getContextPath() + "/createPosition");
 		}
 		req.setAttribute("sessionid", model);
 		req.getRequestDispatcher("/_view/Index.jsp").forward(req, resp);

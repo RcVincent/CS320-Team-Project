@@ -69,6 +69,8 @@
 			<tr>
 			<input name="trainingHistory" type="submit" value="Training History" />
 			</tr>
+			<input name="createPosition" type="submit" value="Create Position" />
+			</tr>
 			<tr>
 				<td><input type = "Submit" name = "submit" value = "Login" /> </td>
 				<input type="hidden" name="sessionid" value="sessionid.getSessionid">
