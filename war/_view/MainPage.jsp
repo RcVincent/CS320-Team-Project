@@ -7,15 +7,16 @@
 
 <form action="${pageContext.servletContext.contextPath}/MainPage" method="post">
 <div>
-Employee Number: ${User.UserID}<br>
-First Name: ${User.firstName}<br>
-Last Name: ${User.lastName}<br>
-E-Mail: ${User.emailAddress}<br>
+Employee Number: ${user.UserID}<br>
+First Name: ${user.firstName}<br>
+Last Name: ${user.lastName}<br>
+E-Mail: ${user.emailAddress}<br>
 </div>
 <div>
 /--This is where we need to list History --/
 <div>
-
+		<input type="hidden" name="userName" value="user.getUsername">			
+		<input type="hidden" name="sessionid" value="sessionid.getSessionid">
 </form>
 
 
