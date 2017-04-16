@@ -798,7 +798,6 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
-				//TODO
 				try {
 					stmt = conn.prepareStatement(
 							" select * from Positions " +
@@ -861,7 +860,7 @@ public class DerbyDatabase implements IDatabase {
 
 					stmt2 = conn.prepareStatement(
 							" select positions.positionId, position_sops.sop_id " +
-									" from positions, position_sops, user_positions " +
+									" from positions, sops, position_sops, user_positions " +
 									" where positions.positionId = position_sops.positionId " +
 									" and positions.positionId = user_positions.positionId " +
 									" and positionName = ?"
@@ -875,11 +874,11 @@ public class DerbyDatabase implements IDatabase {
 									" values (?, ?) "
 							);
 					
-					stmt3.setInt(1, );
-					stmt3.setInt(2, );
-					//
-					//stmt3.setInt(1, resultSet.getInt(1));
-					//stmt3.setInt(1, resultSet.getInt(2));
+					//stmt3.setInt(1, );
+					//stmt3.setInt(2, );
+					
+					stmt3.setInt(1, resultSet.getInt(1));
+					stmt3.setInt(1, resultSet.getInt(2));
 					
 					//if anything is found, return it in a list format
 					Boolean found = false;
