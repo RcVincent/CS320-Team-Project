@@ -1118,7 +1118,8 @@ public class DerbyDatabase implements IDatabase {
 							);	
 					System.out.println("execute users");
 					stmt1.executeUpdate();
-					System.out.println("Sucess!");
+					//Changed from success because that is the marker for the successful build of whole DB
+					System.out.println("user table created");
 
 					//this is where the program is breaking. 
 					//create the sop table
@@ -1135,7 +1136,7 @@ public class DerbyDatabase implements IDatabase {
 							);
 					System.out.println("execute SOP");
 					stmt2.executeUpdate();
-					System.out.println("Sucess!");
+					System.out.println("sop table created");
 
 					System.out.println("prepare Position");
 					//create table for the position class
@@ -1149,33 +1150,41 @@ public class DerbyDatabase implements IDatabase {
 							);
 					System.out.println(" execute position ");
 					stmt3.executeUpdate();
-					System.out.println("Sucess!");
+					System.out.println("position table created");
 
 
 					//create the position and sop junction table 
 					System.out.println("prepare position to sop table");
 					stmt4 = conn.prepareStatement(
 							" create table position_sops( " +
-									"  positionId constraint positionId references positions, " + 
-									"  sop_id constraint sop_id references sops " +
-									")"
+									"  positionId integer constraint positionId references positions, " + 
+									"  sop_id integer constraint sop_id references sops " +
+									") "
 							);
 
 					stmt4.executeUpdate();
-					System.out.println("Sucess!");
+					System.out.println("position to sop table created");
 
-
+					
 					//create the user and position junction table 
 					System.out.println("prepare user to position table");
 					stmt5 = conn.prepareStatement(
-							"  create table user_positions " +
-									"  user_id constraint user_id references users, " +
-									"  positionId constraint positionId references positions " +
-									")"
+							" create table user_positions( " +
+									"  user_id    integer constraint user_id references users, " + 
+									"  positionId integer constraint position_Id references positions " +
+									") "
 							);
-
+					/*	rewrote because something wasn't working and I couldn't see it, hoping it was a weird typo
+					stmt5 = conn.prepareStatement(
+							" create table user_positions (" +
+									"  user_id integer constraint user_id references users, " +
+									"  positionId integer constraint positionId references positions " +
+									") "
+							);
+							*/
+					System.out.println("about to execute user to position table");
 					stmt5.executeUpdate();
-					System.out.println("Sucess!");
+					System.out.println("user to position table created");
 
 					return true;
 
@@ -1183,6 +1192,8 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
+					DBUtil.closeQuietly(stmt5);
 
 				}
 			}	
@@ -1291,8 +1302,8 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Position SOPs junction table populated");
 
 					//insert the user to position file into the DB
-					System.out.println("Preparing USer to SOP junction");
-					insertUserPosition = conn.prepareStatement(" insert into user_positions (user_id, positionId "
+					System.out.println("Preparing USer to position junction");
+					insertUserPosition = conn.prepareStatement(" insert into user_positions (user_id, positionId) "
 							+ "		values (?, ?) " );
 
 					for(UserPosition userPosition: UserPositionList) {
