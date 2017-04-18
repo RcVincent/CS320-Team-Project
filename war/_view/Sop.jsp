@@ -28,13 +28,13 @@ Author of SOP: ${model.sopAuthor}<br>
 Author ID Number: ${model.authorIDnumber}<br>
 Priority (1-10): ${model.priority}<br>
 Revision Number: ${model.revision}
-
+</form>
 <form action="/action_page.php">
   Select Files Associated with SOP: <input type="file" name="files" multiple>
   <input type="submit">
 </form>
 
-</form>
+
 
 
 </body>
