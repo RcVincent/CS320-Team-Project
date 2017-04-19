@@ -12,12 +12,26 @@ First Name: ${User.firstName}<br>
 Last Name: ${User.lastName}<br>
 E-Mail: ${User.emailAddress}<br>
 </div>
-<div id=list>
-/--This is where we need to list History --/
-</div>
 
 </form>
-
-
+<table>
+<tr>                
+   <td>        
+   @using (Html.BeginCollectionItem("HoldThisL"))
+   {             
+            @Html.TextBoxFor(m => m.Description)
+            @Html.ValidationMessageFor(m => m.Description)                              
+        @:</td>
+        @:<td>
+            @Html.TextBoxFor(m => m.Quantity)        
+            @Html.ValidationMessageFor(m => m.Quantity)
+        @:</td>
+        @:<td>
+            @Html.TextBoxFor(m => m.Amount)          
+            @Html.ValidationMessageFor(m => m.Amount)       
+   }       
+   </td>
+</tr>
+</table>>
 </body>
 </html>
