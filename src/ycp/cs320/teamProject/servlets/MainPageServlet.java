@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ycp.cs320.teamProject.model.SOP;
 import ycp.cs320.teamProject.model.User;
 
 
@@ -24,8 +25,8 @@ public class MainPageServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		User model = new User();
-		
-		
+		ArrayList<SOP> Arrays = new ArrayList();
+	//	model.addAttribute("History", Arrays.asList("SOP1", "SOP2", "SOP3", "SOP4"));
 		
 
 		req.getRequestDispatcher("/_view/MainPage.jsp").forward(req, resp);
