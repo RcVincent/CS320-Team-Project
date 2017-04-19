@@ -27,8 +27,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffff', end
   
 
 <h3>Priority (1-10): <input name="priority" type="text" /><br /></h3>
-  <h3>Revision Number : </h4>
+  <h3>Revision Number : </h3>
   
-<h3>Select Files Associated with SOP: <input multiple="multiple" name="files" type="file" /> </h4>
- <h3> <input type="submit" /></h4>
+<h3>Select Files Associated with SOP: <input multiple="multiple" name="files" type="file" /> </h3>
+ <h3> <input type="submit" /></h3>
   </body>
