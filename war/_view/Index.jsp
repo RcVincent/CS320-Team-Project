@@ -52,9 +52,6 @@
 			<input name="account" type="submit" value="Account" />
 			</tr>
 			<tr>
-			<input name="createAccount" type="submit" value="Create Account" />
-			</tr>
-			<tr>
 			<input name="createSOP" type="submit" value="Create SOP" />
 			</tr>
 			<tr>

@@ -94,8 +94,11 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							" select * from users, user_positions " +
-									" where users.user_id = user_positions.user_id " +
+							" select * from users " +
+									//until we get the forgein key issue cleared up this is out due to not working
+									//I want to get the servlets working for the milestone
+									//" select * from users " +
+									//" where users.user_id = user_positions.user_id " +
 								    " where user_userName = ? "
 							);
 					
@@ -221,9 +224,11 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
+							//until we get the forgein key issue cleared up this is out due to not working
+							//I want to get the servlets working for the milestone
 							" select * from users, user_positions " +
-									" where users.user_id = user_positions.user_id "+
-									" order by lastName asc, firstName asc "
+							" where users.user_id = user_positions.user_id "+
+							" order by lastName asc, firstName asc "
 							);
 					
 					List<User> result = new ArrayList<User>();
@@ -269,10 +274,12 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
+							//until we get the forgein key issue cleared up this is out due to not working
+							//I want to get the servlets working for the milestone
 							" select users.*, user_positions.* " +
-									" from users, user_positions, " +
-									" where users.user_id = user_positions.user_id" +
-									" where users.lastname = ? "
+							" from users, user_positions, " +
+							" where users.user_id = user_positions.user_id" +
+							" where users.lastname = ? "
 							);
 
 					stmt.setString(1, lastname);
@@ -545,9 +552,9 @@ public class DerbyDatabase implements IDatabase {
 					resultSet = stmt2.executeQuery();
 					
 					stmt3 = conn.prepareStatement(
-							" select positions.positoinId " +
+							" select positions.positoinIdS " +
 									" from positions, position_sops " +
-									" where positions.positionId = position_sops.positionId " +
+									" where positions.positionIdS = position_sops.positionId " +
 									" and positions.sop_id = sops.sop_id " +
 									" and sop_id = ? "
 							);
@@ -800,9 +807,9 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(
-							" select * from Positions " +
-									" where positions.positionId = position_sops.positionId" +
-									" and positions.positionId = user_positions.positionId "+
+							" select * from Positions, pososition_sops, user_positions " +
+									" where positions.positionIdS = position_sops.positionId" +
+									" and positions.positionIdU = user_positions.positionId "+
 									" and positionName = ? "
 							);
 					stmt.setString(1, position);
@@ -859,16 +866,19 @@ public class DerbyDatabase implements IDatabase {
 					stmt.executeUpdate();
 
 					stmt2 = conn.prepareStatement(
-							" select positions.positionId, position_sops.sop_id " +
-									" from positions, sops, position_sops, user_positions " +
-									" where positions.positionId = position_sops.positionId " +
-									" and positions.positionId = user_positions.positionId " +
-									" and positionName = ?"
+							//until we get the forgein key issue cleared up this is out due to not working
+							//I want to get the servlets working for the milestone
+							" select positions.positionIdS, position_sops.sop_id " +
+							" from positions, sops, position_sops, user_positions " +
+							" where positions.positionIdS = position_sops.positionId " +
+							" and positions.positionIdU = user_positions.positionId " +
+							" and positionName = ?"
+
 							);
 					stmt2.setString(1, name);
 					
 					resultSet = stmt2.executeQuery();
-					
+					// took this out for now, at least till the errors with cross referencing are cleared
 					stmt3 = conn.prepareStatement(
 							" insert into position_sops(positionId, sop_id) " +
 									" values (?, ?) "
@@ -878,7 +888,7 @@ public class DerbyDatabase implements IDatabase {
 					//stmt3.setInt(2, );
 					
 					stmt3.setInt(1, resultSet.getInt(1));
-					stmt3.setInt(1, resultSet.getInt(2));
+					stmt3.setInt(2, resultSet.getInt(2));
 					
 					//if anything is found, return it in a list format
 					Boolean found = false;
@@ -919,9 +929,9 @@ public class DerbyDatabase implements IDatabase {
 					stmt = conn.prepareStatement(
 							" select positions.* " +
 									" from positions, position_sops, user_positions " +
-									" where positions.positionId = position_sops.positionId " +
-									" and positions.positionId = user_positions.positionId " +
-									" and positions.postionId = ? "
+									" where positions.positionIdS = position_sops.positionId " +
+									" and positions.positionIdU = user_positions.positionId " +
+									" and positions.postionIdU = ? "
 							);
 					stmt.setInt(1, positionId);
 
@@ -962,8 +972,8 @@ public class DerbyDatabase implements IDatabase {
 					stmt = conn.prepareStatement(
 							" select positions.* " +
 									" from positions " +
-									" where positions.positionId = position_sops.positionId " +
-									" and positions.positionId = user_positions.positionId " +
+									" where positions.positionIdS = position_sops.positionId " +
+									" and positions.positionIdU = user_positions.positionId " +
 									" and positions.positionName = ? "
 
 							);
@@ -1073,7 +1083,8 @@ public class DerbyDatabase implements IDatabase {
 	}
 	//load position
 	private void loadPosition(Position position, ResultSet resultSet, int index) throws SQLException {
-		position.setPositionID(resultSet.getInt(index++));
+		position.setPositionIDS(resultSet.getInt(index++));
+		position.setPositionIDU(resultSet.getInt(index++));
 		position.setPositionName(resultSet.getString(index++));
 		position.setPositionDuty(resultSet.getString(index++));	
 	}
@@ -1141,11 +1152,13 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("prepare Position");
 					//create table for the position class
 					stmt3 = conn.prepareStatement(
-							" create table positions("+
-									"	 positionId integer primary key "+
+							" create table positions ( "+
+									"	 positionIdS integer primary key "+
 									"	 generated always as identity (start with 1, increment by 1), "+
 									"	 positionName varchar(40), "+
-									"	 positionDuty varchar(200) "+
+									"	 positionDuty varchar(250), "+
+									"	 positionIdU integer "+
+									//"	 generated always (start with 1, increment by 1) "+
 									") "
 							);
 					System.out.println(" execute position ");
@@ -1157,7 +1170,7 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("prepare position to sop table");
 					stmt4 = conn.prepareStatement(
 							" create table position_sops( " +
-									"  positionId integer constraint positionId references positions, " + 
+									"  positionId integer constraint positionIdS references positions, " + 
 									"  sop_id integer constraint sop_id references sops " +
 									") "
 							);
@@ -1171,7 +1184,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt5 = conn.prepareStatement(
 							" create table user_positions( " +
 									"  user_id    integer constraint user_id references users, " + 
-									"  positionId integer constraint position_Id references positions " +
+									"  positionId integer constraint positionIdU references positions " +
 									") "
 							);
 					/*	rewrote because something wasn't working and I couldn't see it, hoping it was a weird typo
@@ -1273,12 +1286,13 @@ public class DerbyDatabase implements IDatabase {
 
 					System.out.println("prepareing to insert postions");
 					//insert the position csv file into the DB
-					insertPositions = conn.prepareStatement("insert into positions (positionName, positionDuty ) "
-							+ "		values (?, ?) " );
+					insertPositions = conn.prepareStatement("insert into positions (positionName, positionDuty, positionIdU ) "
+							+ "		values (?, ?, ?) " );
 
 					for(Position p : positionList){
 						insertPositions.setString(1, p.getPositionName());
 						insertPositions.setString(2, p.getPositionDuty());
+						insertPositions.setLong(3, p.getPositionIDU());
 						insertPositions.addBatch();
 					}
 					System.out.println("inserting positions");
@@ -1288,12 +1302,14 @@ public class DerbyDatabase implements IDatabase {
 
 					//insert the position to sop file into the DB
 					System.out.println("Preparing Position SOP junction");
-					insertPositionSOP = conn.prepareStatement(" insert into position_sops (positionId, sop_id) "
+					insertPositionSOP = conn.prepareStatement(" insert into position_sops (positionId, sop_id ) "
 							+ " 	values (?, ?) " );
 
 					for(PositionSOP posSop: positionSOPList) {
 						insertPositionSOP.setInt(1, posSop.getPositionID());
 						insertPositionSOP.setInt(2, posSop.getSopID());
+						//this was causing errors I figured I'd get the servlets we have up and running first
+						//insertPositionSOP.addBatch();
 					}
 
 
@@ -1309,6 +1325,8 @@ public class DerbyDatabase implements IDatabase {
 					for(UserPosition userPosition: UserPositionList) {
 						insertUserPosition.setInt(1, userPosition.getUserID());
 						insertUserPosition.setInt(2, userPosition.getPositionID());
+						//this was causing errors I figured I'd get the servlets we have up and running first
+						//insertUserPosition.addBatch();
 					}
 
 					System.out.println("inserting users to positions...");
