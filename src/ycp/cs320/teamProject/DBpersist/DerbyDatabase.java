@@ -190,7 +190,7 @@ public class DerbyDatabase implements IDatabase {
 				 user_Id = resultSet.getInt(1);
 						System.out.println("New User <" + name + "> ID: " + user_Id);						
 					}
-					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
+					else	// really should throw an exception here 
 					{
 						System.out.println("New user <" + name + "> not found in Users table (ID: " + user_Id);
 					}
@@ -389,7 +389,7 @@ public class DerbyDatabase implements IDatabase {
 		return executeTransaction(new Transaction<List<User>>() {
 			@Override
 			public List<User> execute(Connection conn) throws SQLException {
-
+				
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
 
@@ -397,11 +397,11 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 
-					
+					System.out.println("about to change PW");
 					stmt = conn.prepareStatement(
 							" update users " +
 									" set user_passWord = ? " +
-									" where user_userName = ? " +
+									" where user_userName = ? "+ 
 									" and user_passWord = ? "
 							);
 
@@ -414,20 +414,19 @@ public class DerbyDatabase implements IDatabase {
 					// return all users and see that the one entered was deleted
 
 					stmt2 = conn.prepareStatement(
-							" select * from users, user_positions " 	+
-									" where users.user_id = user_positions.user_id " +
-									" and users_userName = ? " +
-									" and users_userPassword = ? "
+							" select * from users " 	+
+									" where user_userName = ? " +
+									" and user_password = ? "
 							);
 					//ensure new userName is in database
-					stmt2.setString(1, newPassword);
+					stmt2.setString(1, name);
+					stmt2.setString(2, newPassword);
 
 					resultSet2 = stmt2.executeQuery();
 
 
 					//if anything is found, return it in a list format
 					List<User> result = new ArrayList<User>();
-
 					Boolean found = false;
 
 					while (resultSet2.next()) {

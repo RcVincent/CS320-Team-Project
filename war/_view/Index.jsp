@@ -49,13 +49,16 @@
 			<input name="createAccount" type="submit" value="Create Account" />
 			</tr>
 			<tr>
+			<input name="changePW" type="submit" value="Change Password" />
+			</tr>
+			<tr>
 			<input name="account" type="submit" value="Account" />
 			</tr>
 			<tr>
 			<input name="createSOP" type="submit" value="Create SOP" />
 			</tr>
 			<tr>
-			<input name="mainPage" type="submit" value="Main Page" />
+			<input name="MainPage" type="submit" value="Main Page" />
 			</tr>
 			<tr>
 			<input name="reviseSOP" type="submit" value="Revise SOP" />
@@ -69,7 +72,7 @@
 			<input name="createPosition" type="submit" value="Create Position" />
 			</tr>
 			<tr>
-				<td><input type = "Submit" name = "submit" value = "Login" /> </td>
+				<td><input type = "Submit" name = "Login" value = "Login" /> </td>
 				<input type="hidden" name="sessionid" value="sessionid.getSessionid">
 				</form>
 			</tr>

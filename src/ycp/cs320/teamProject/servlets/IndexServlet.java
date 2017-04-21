@@ -35,9 +35,12 @@ public class IndexServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/account");
 		} else if (req.getParameter("createAccount") != null) {
 			resp.sendRedirect(req.getContextPath() + "/CreateAccount");
-		} else if (req.getParameter("createSOP") != null) {
+		} else if (req.getParameter("changePW") != null) {
+			resp.sendRedirect(req.getContextPath() + "/changePassword");
+		} 
+		else if (req.getParameter("createSOP") != null) {
 			resp.sendRedirect(req.getContextPath() + "/createSOP");
-		} else if (req.getParameter("mainPage") != null) {
+		} else if (req.getParameter("MainPage") != null) {
 			resp.sendRedirect(req.getContextPath() + "/MainPage");
 		} else if (req.getParameter("reviseSOP") != null) {
 			resp.sendRedirect(req.getContextPath() + "/reviseSOP");
@@ -47,6 +50,8 @@ public class IndexServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Traininghistory");
 		} else if (req.getParameter("createPosition") != null) {
 			resp.sendRedirect(req.getContextPath() + "/createPosition");
+		} else if (req.getParameter("Login") != null) {
+			resp.sendRedirect(req.getContextPath() + "/Login");
 		}
 		req.setAttribute("sessionid", model);
 		req.getRequestDispatcher("/_view/Index.jsp").forward(req, resp);

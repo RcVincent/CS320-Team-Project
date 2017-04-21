@@ -14,7 +14,7 @@ import ycp.cs320.teamProject.model.User;
 
 
 //Priority  # 2
-public class MainPageServlet {
+public class MainPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
