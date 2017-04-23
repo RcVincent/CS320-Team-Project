@@ -21,7 +21,7 @@ Password Name: <input type="text" name="password"><br>
 First Name: <input type="text" name="FirstName"><br>
 Last Name: <input type="text" name="LastName"><br>
 E-Mail: <input type="text" name="Email"><br>
-Admin: <input type="text" name="Admin"><br>
+Admin(Admin or User): <input type="text" name="Admin"><br>
 <td><input type = "Submit" name = "submit" value = "Submit" /> </td>
 <td><input type = "Submit" name = "index" value = "Index" /> </td>
 <input type="hidden" name="sessionid" value="sessionid.getSessionid">

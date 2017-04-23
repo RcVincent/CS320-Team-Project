@@ -46,9 +46,11 @@ public class DerbyDatabase implements IDatabase {
 				
 				try{
 					stmt = conn.prepareStatement(
-							" select * from users, user_positions " +
-									" where users.user_id = user_positions.user_id " +
-									" and user_userName = ? "
+							//" select * from users, user_positions " +
+								//	" where users.user_id = user_positions.user_id " +
+									//" and user_userName = ? "
+									" select * from users " +
+									" where user_userName = ? "
 							);
 					
 					stmt.setString(1, name);
@@ -389,7 +391,9 @@ public class DerbyDatabase implements IDatabase {
 		return executeTransaction(new Transaction<List<User>>() {
 			@Override
 			public List<User> execute(Connection conn) throws SQLException {
-				
+				System.out.println(name);
+				System.out.println(pswd);
+				System.out.println(newPassword);
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
 
@@ -848,11 +852,12 @@ public class DerbyDatabase implements IDatabase {
 			@Override
 			public List<Position> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
+				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
 				
 				ResultSet resultSet = null;
-				
+				ResultSet resultSet1 = null;
 				
 				//TODO
 				try {
@@ -863,7 +868,17 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setString(1, name);
 					stmt.setString(2, duty);
 					stmt.executeUpdate();
-
+//
+				/*
+					//WE need to make it so that it goes back and gets the primary key and puts it back in
+					//get positionIdS and set positionIdU = positionIdS
+					stmt1 = conn.prepareStatement(
+							"Select positionIdS from positions"+
+					"where positionName = ? and "
+											);
+					stmt1.setString(1, name);
+					resultSet1 = stmt1.executeQuery();
+					*/
 					stmt2 = conn.prepareStatement(
 							//until we get the forgein key issue cleared up this is out due to not working
 							//I want to get the servlets working for the milestone
@@ -969,7 +984,7 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(
-							" select positions.* " +
+							" select positions * " +
 									" from positions " +
 									" where positions.positionIdS = position_sops.positionId " +
 									" and positions.positionIdU = user_positions.positionId " +
