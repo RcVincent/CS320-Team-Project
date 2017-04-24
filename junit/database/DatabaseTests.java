@@ -18,8 +18,10 @@ public class DatabaseTests {
 	
 	List<User> userList = null;
 	List<User> users = null;
-	List<SOP> sops = null;
+	//List<SOP> sops = null;
 	List<SOP> sopList = null;
+	List<Position> positionList = null;
+	//List<Position> positions = null;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -197,7 +199,7 @@ public class DatabaseTests {
 			System.out.println("There are no SOPs in the table");
 			fail("Add more SOPs");
 		}else {
-			for(SOP s: sops) {
+			for(SOP s: sopList) {
 				System.out.println(s.getSopIdNumber() + ", " + s.getSopName() + ", " + s.getSopPurpose() + ", " + s.getPriority() + ", " + s.getRevision());
 			}
 		}
@@ -221,9 +223,10 @@ public class DatabaseTests {
 			
 		}else {
 			String newPriority = "9";
-			sopList = db.changePriority(sopID, priority, newPriority);
+			List<SOP> sops = new ArrayList<SOP>();
+			sops = db.changePriority(sopID, priority, newPriority);
 			
-			assertEquals("9", sopList.get(0).getPriority());
+			assertEquals("9", sops.get(0).getPriority());
 			
 			
 		}
@@ -232,6 +235,7 @@ public class DatabaseTests {
 	
 	@Test
 	public void testChangeSOPVersion() {
+		
 		int sopID = 20;
 		String sopName = "Electronic Signature 2";
 		String sopPurpose = "Know the impact of your signature, new and better";
@@ -247,18 +251,51 @@ public class DatabaseTests {
 		}
 		else {
 			String newVersion = "2";
-			sopList = db.reviseSOP(sopID, version, newVersion);
+			List<SOP> sops = new ArrayList<SOP>();
+			sops = db.reviseSOP(sopID, version, newVersion);
 			
-			assertEquals("2", sopList.get(0).getRevision());
+			assertEquals("2", sops.get(0).getRevision());
 			//add a remove method for the SOPs
 		}
 	}
 	
 	public void  testaddPosition() {
 		
+		String positionName = "Dr Henry Killinger";
+		String positionDuty = "Lead investor";
+		
+		positionList = db.addPositionToDatabase(positionName, positionDuty);
+		
+		if(positionList.isEmpty()) {
+			System.out.println("Your positions are too scarce: no one will find me in here ");
+			fail("Add more positions you silly billy");
+		}
+		else {
+			for(Position p: positionList) {
+				System.out.println(p.getPositionIDS() + "," + p.getPositionName() + "," + p.getPositionDuty() + "," + p.getPositionIDU());
+			}
+		}
 	}
 	
+	
 	public void testGetPosition() {
+		int positionID = 1; 
+		
+		positionList = db.getPositionByID(positionID);
+		
+		if(positionList.isEmpty()) {
+			System.out.println("There are no positions in this table you silly billy");
+			fail("You must add more positions to test zis method");
+		}
+		else {
+			List<Position> positions = new ArrayList<Position>();
+			
+			for(Position p : positionList) {
+				Position addpos = p;
+				positions.add(addpos);
+				System.out.println(p.getPositionIDS() + "," + p.getPositionName()+ "," + p.getPositionDuty()+ "," + p.getPositionIDU());
+			}
+		}
 		
 	}
 	
