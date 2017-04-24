@@ -31,6 +31,17 @@ public class AccountServlet extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + "/MainPage");
 			
 		}
+		User model = new User();
+		
+		int UserNumber = (int) req.getSession().getAttribute("UserID");
+		model.setUserID(UserNumber);
+		String FirstName = (String) req.getSession().getAttribute("FirstName");
+		model.setFirstName(FirstName);
+		String LastName = (String) req.getSession().getAttribute("LastName");
+		model.setLastName(LastName);
+		String Email = (String) req.getSession().getAttribute("Email");
+		model.setEmailAddress(Email);
+		
 
 
 

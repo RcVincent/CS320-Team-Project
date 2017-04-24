@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 import ycp.cs320.teamProject.controllers.Projectcontroller;
+
 import ycp.cs320.teamProject.model.User;
 
 
@@ -58,9 +60,7 @@ public class MainPageServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-				if (req.getParameter("changePW") != null) {
-		resp.sendRedirect(req.getContextPath() + "/changePassword");
-	}
+
 		req.getRequestDispatcher("/_view/MainPage.jsp").forward(req, resp);
 
 		}

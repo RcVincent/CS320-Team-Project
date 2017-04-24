@@ -14,15 +14,18 @@ Last Name: ${user.lastName}<br>
 E-Mail: ${user.emailAddress}<br>
 
 </div>
+<<<<<<< HEAD
 <div>
 /--This is where we need to list History --/
 <div>
 <tr>
 			<input name="changePW" type="submit" value="Change Password" />
 			</tr>
+=======
+>>>>>>> refs/remotes/Devin-remote/master
 
 </form>
-
-
+<p>
+</p>
 </body>
 </html>
