@@ -215,6 +215,7 @@ public class DerbyDatabase implements IDatabase {
 
 	//find all users
 	//this is going to be an Admin only function
+	@Override
 	public List<User> findAllUsers() {
 		return executeTransaction(new Transaction<List<User>>() {
 
@@ -264,7 +265,8 @@ public class DerbyDatabase implements IDatabase {
 		});
 
 	}
-
+	
+	@Override
 	public List<User> findUserByLastName(String lastname) {
 		return executeTransaction(new Transaction<List<User>>() {
 
@@ -746,7 +748,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	//search for an sop based on its name 
-	//@Override
+	@Override
 	public List<SOP> findSOPByName(String sopName) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 
@@ -930,7 +932,8 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-
+	
+	@Override
 	public List<Position> getPositionByID(int positionId) {
 		return executeTransaction(new Transaction<List<Position>>() {
 
@@ -973,7 +976,8 @@ public class DerbyDatabase implements IDatabase {
 
 		});
 	}
-
+	
+	@Override
 	public List<Position> findPositionByName(String positionName) { 
 		return executeTransaction(new Transaction<List<Position>>() {
 
