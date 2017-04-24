@@ -1022,6 +1022,13 @@ public class DerbyDatabase implements IDatabase {
 
 		});
 	}
+	
+	//remove position method/archive position method
+	//add sop to a position
+	//add a user to a position 
+	
+	//those two should be the last 3 methods 
+	
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
 			return doExecuteTransaction(txn);

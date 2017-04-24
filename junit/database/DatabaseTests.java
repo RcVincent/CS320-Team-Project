@@ -259,6 +259,7 @@ public class DatabaseTests {
 		}
 	}
 	
+	//will add the @Test when the db is working 
 	public void  testaddPosition() {
 		
 		String positionName = "Dr Henry Killinger";
@@ -277,8 +278,8 @@ public class DatabaseTests {
 		}
 	}
 	
-	
-	public void testGetPosition() {
+	//will add the @Test when the db is working 
+	public void testGetPositionFromID() {
 		int positionID = 1; 
 		
 		positionList = db.getPositionByID(positionID);
@@ -289,7 +290,7 @@ public class DatabaseTests {
 		}
 		else {
 			List<Position> positions = new ArrayList<Position>();
-			
+			//return the found information that we wanted from the db
 			for(Position p : positionList) {
 				Position addpos = p;
 				positions.add(addpos);
@@ -299,6 +300,28 @@ public class DatabaseTests {
 		
 	}
 	
+	//will add the @Test when the db is working 
+	public void testGetPositionFromName() {
+		String positionName = "Intern";
+		
+		positionList = db.getPositionInfo(positionName);
+		
+		if(positionList.isEmpty()) {
+			System.out.println();
+			fail();
+		}
+		else {
+			List<Position> positions = new ArrayList<Position>();
+			//return the found information that we want from the db
+			for(Position p : positionList) {
+				Position addpos = p;
+				positions.add(addpos);
+				System.out.println(p.getPositionName() + "," + p.getPositionDuty());
+			}
+		}
+	}
+	
+	//need to add this method to the DB first 
 	public void testAddSOPtoPosition() {
 		
 	}
