@@ -179,6 +179,11 @@ public class DatabaseTests {
 		users = db.DeleteUserFromDatabase(Username2, userPassword2);
 	}
 	
+	public void changePasswordTest() {
+		
+	}
+	
+	@Test
 	public void testAddSOP() {
 		int sopID = 10;
 		String sopName = "Electronic Signature";
@@ -200,32 +205,64 @@ public class DatabaseTests {
 		
 	}
 	
+	@Test
 	public void testChanegSOPPriority() {
 		int sopID = 10;
 		String sopName = "Electronic Signature";
-		String authorID = "15";
+		String sopPurpose = "Know the impact of your signature";
 		String priority = "10";
 		String revision = "1";
 		
-		sopList = db.addSOP(sopID, sopName, authorID, priority, revision);
+		sopList = db.addSOP(sopID, sopName, sopPurpose, priority, revision);
 		
 		if(sopList.isEmpty()) {
 			System.out.println("There are no SOPs in the table");
 			fail("Add more SOPs");
+			
 		}else {
 			String newPriority = "9";
 			sopList = db.changePriority(sopID, priority, newPriority);
 			
 			assertEquals("9", sopList.get(0).getPriority());
+			
+			
 		}
 		
 	}
 	
+	@Test
 	public void testChangeSOPVersion() {
+		int sopID = 20;
+		String sopName = "Electronic Signature 2";
+		String sopPurpose = "Know the impact of your signature, new and better";
+		String priority = "10";
+		String version = "1";
 		
+		sopList = db.addSOP(sopID, sopName, sopPurpose, priority, version);
+		
+		if(sopList.isEmpty()) {
+			System.out.println("There are no SOPs in the table");
+			fail("Add more SOPs");
+			//add a remove method for the SOPs
+		}
+		else {
+			String newVersion = "2";
+			sopList = db.reviseSOP(sopID, version, newVersion);
+			
+			assertEquals("2", sopList.get(0).getRevision());
+			//add a remove method for the SOPs
+		}
 	}
 	
 	public void  testaddPosition() {
+		
+	}
+	
+	public void testGetPosition() {
+		
+	}
+	
+	public void testAddSOPtoPosition() {
 		
 	}
 
