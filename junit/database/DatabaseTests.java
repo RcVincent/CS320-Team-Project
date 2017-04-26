@@ -325,5 +325,11 @@ public class DatabaseTests {
 	public void testAddSOPtoPosition() {
 		
 	}
+	
+	//this could possibly be done in the servlets/controllers 
+	public void addUserTOPoisition() {
+		
+	}
+	
 
 }
