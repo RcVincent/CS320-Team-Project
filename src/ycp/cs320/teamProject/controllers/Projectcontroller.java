@@ -75,10 +75,11 @@ public class Projectcontroller {
 	}
 	
 	//add an SOP to the DB 
-	public boolean addSOPtoDB(String sopName, int sopID, String sopPurpose, String priority, String revision) {
-		
-		
-		List<SOP> sopid = db.addSOP(sopID, sopName, sopPurpose, priority, revision);
+	public void addSOPtoDB(String sopName, String sopPurpose, String priority, String revision) {
+		db.addSOP(sopName, sopPurpose, priority, revision);
+		/* Using this as a bool wasn't working, changed to match addUser which does work.
+		 * 
+		List<SOP> sopid = db.addSOP(sopName, sopPurpose, priority, revision);
 		
 		if(sopid.size() > 0) {
 			System.out.println("New SOP (ID: " + sopid + "entered into the database");
@@ -88,6 +89,7 @@ public class Projectcontroller {
 			System.out.println("Failed to add the new sop (ID: " + sopid + "to the DB");
 			return false;
 		}
+		*/
 	}
 	
 	//revise an SOP in the DB

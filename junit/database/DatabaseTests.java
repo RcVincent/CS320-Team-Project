@@ -186,7 +186,7 @@ public class DatabaseTests {
 		String priority = "10";
 		String revision = "1";
 		
-		sopList = db.addSOP(sopID, sopName, sopPurpose, priority, revision);
+		sopList = db.addSOP(sopName, sopPurpose, priority, revision);
 		
 		if(sopList.isEmpty()) {
 			System.out.println("There are no SOPs in the table");
@@ -207,7 +207,7 @@ public class DatabaseTests {
 		String priority = "10";
 		String revision = "1";
 		
-		sopList = db.addSOP(sopID, sopName, authorID, priority, revision);
+		sopList = db.addSOP(sopName, authorID, priority, revision);
 		
 		if(sopList.isEmpty()) {
 			System.out.println("There are no SOPs in the table");

@@ -515,7 +515,7 @@ public class DerbyDatabase implements IDatabase {
 
 	//Add an SOP to the DB
 	@Override
-	public List<SOP> addSOP(final int sopID, final String sopName, final String sopPurpose, final String priority, final String revision) {
+	public List<SOP> addSOP(final String sopName, final String sopPurpose, final String priority, final String revision) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
 			public List<SOP> execute(Connection conn) throws SQLException {
@@ -527,33 +527,30 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet = null;
 				ResultSet resultSet2 = null;
 				try {
-
+System.out.println("About to make addSOP stmt");
 					stmt = conn.prepareStatement(
-							" insert into SOPs(sop_id, sop_Name, sop_purpose, sop_priority, sop_revision) " +
-									" values (?, ?, ?, ?, ?, ?) "
+							" insert into SOPs(sop_Name, sop_purpose, sop_priority, sop_revision) " +
+									" values (?, ?, ?, ?) "
 
 							);
-					stmt.setInt(1, sopID);
-					stmt.setString(2, sopName);
-					stmt.setString(3, sopPurpose);
-					stmt.setString(4, priority);
-					stmt.setString(5, revision);
-
+					stmt.setString(1, sopName);
+					stmt.setString(2, sopPurpose);
+					stmt.setString(3, priority);
+					stmt.setString(4, revision);
+					
+					System.out.println("About to execute AddSOP");
 					stmt.executeUpdate();
 
 					stmt2 = conn.prepareStatement(
-							" select * from sops, sop_positions " +
-									" where sops.sop_id = sop_positions.sop_id " +
-									" and sop_id = ? " + 
-									" and sopName = ? "
+							" select * from sops " +
+									" where sop_Name = ? "
 							);
 
-					stmt2.setInt(1, sopID);
-					stmt2.setString(2, sopName);
+					stmt2.setString(1, sopName);
 					
 					
 					resultSet = stmt2.executeQuery();
-					
+					/*not ready for this, getting what we have working first
 					stmt3 = conn.prepareStatement(
 							" select positions.positoinIdS " +
 									" from positions, position_sops " +
@@ -574,7 +571,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt4.setInt(2, sopID);
 					
 					stmt4.executeUpdate();
-					
+					*/
 					//if anything is found, return it in a list format
 					Boolean found = false;
 					List<SOP> result = new ArrayList<SOP>();
@@ -1154,7 +1151,7 @@ public class DerbyDatabase implements IDatabase {
 									" sop_id integer primary key " +
 									" generated always as identity (start with 100, increment by 2), " +
 									" sop_name varchar(40), " +
-									" sop_purpose varchar(100)," +
+									" sop_purpose varchar(200)," +
 									" sop_priority varchar(2)," +
 									" sop_revision varchar(5)" +
 									") "
