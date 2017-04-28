@@ -43,16 +43,16 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
-				
+
 				try{
 					stmt = conn.prepareStatement(
 							//" select * from users, user_positions " +
-								//	" where users.user_id = user_positions.user_id " +
-									//" and user_userName = ? "
-									" select * from users " +
-									" where user_userName = ? "
+							//	" where users.user_id = user_positions.user_id " +
+							//" and user_userName = ? "
+							" select * from users " +
+							" where user_userName = ? "
 							);
-					
+
 					stmt.setString(1, name);
 					resultSet = stmt.executeQuery();
 
@@ -93,7 +93,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
-				
+
 				try {
 					stmt = conn.prepareStatement(
 							" select * from users " +
@@ -101,9 +101,9 @@ public class DerbyDatabase implements IDatabase {
 									//I want to get the servlets working for the milestone
 									//" select * from users " +
 									//" where users.user_id = user_positions.user_id " +
-								    " where user_userName = ? "
+									" where user_userName = ? "
 							);
-					
+
 					stmt.setString(1, name);
 					List<User> result = new ArrayList<User>();
 					resultSet = stmt.executeQuery();
@@ -146,10 +146,10 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
 				ResultSet resultSet = null;
-				
+
 				//to save employee number
-				
-				
+
+
 				//Don't need to edit this method to work with the junction
 				try {
 					System.out.println("prepareStatement addUser");
@@ -186,10 +186,10 @@ public class DerbyDatabase implements IDatabase {
 						loadUser(u, resultSet, 1);
 						result.add(u);
 					}
-*/
+					 */
 					if (resultSet.next())
 					{
-				 user_Id = resultSet.getInt(1);
+						user_Id = resultSet.getInt(1);
 						System.out.println("New User <" + name + "> ID: " + user_Id);						
 					}
 					else	// really should throw an exception here 
@@ -223,7 +223,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
-				
+
 				try {
 					stmt = conn.prepareStatement(
 							//until we get the forgein key issue cleared up this is out due to not working
@@ -232,7 +232,7 @@ public class DerbyDatabase implements IDatabase {
 							" where users.user_id = user_positions.user_id "+
 							" order by lastName asc, firstName asc "
 							);
-					
+
 					List<User> result = new ArrayList<User>();
 
 					resultSet = stmt.executeQuery();
@@ -273,7 +273,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
-				
+
 				try {
 					stmt = conn.prepareStatement(
 							//until we get the forgein key issue cleared up this is out due to not working
@@ -318,13 +318,13 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null; 
 				PreparedStatement stmt3 = null;
-				
-				
+
+
 				ResultSet resultSet = null;
 
 				try {
 
-				
+
 					stmt = conn.prepareStatement(
 							" select users.* " +
 									" from users, user_positions " +
@@ -336,11 +336,11 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setString(2, pswd);
 					resultSet = stmt.executeQuery();
 
-				
+
 					//Using the remove book by title as a guide here
 					List<User> Users = new ArrayList<User>();
 
-					
+
 
 					while (resultSet.next()) {
 						User u = new User();
@@ -359,21 +359,21 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt2.setInt(1, Users.get(0).getUserID());
 					stmt2.executeUpdate();
-					
+
 					System.out.println("Deleting the user from the junction table");
-					
+
 					stmt3 = conn.prepareStatement(
 							" delete from users " +
 									" where users.userName = ? " +
 									" and users.passWord = ? "
 							);
-					
+
 					stmt3.setString(1, name);
 					stmt3.setString(2, pswd);
 					stmt3.executeUpdate();
-					
-					
-					
+
+
+
 					return Users;
 
 
@@ -523,11 +523,11 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
 				PreparedStatement stmt4 = null;
-				
+
 				ResultSet resultSet = null;
 				ResultSet resultSet2 = null;
 				try {
-System.out.println("About to make addSOP stmt");
+					System.out.println("About to make addSOP stmt");
 					stmt = conn.prepareStatement(
 							" insert into SOPs(sop_Name, sop_purpose, sop_priority, sop_revision) " +
 									" values (?, ?, ?, ?) "
@@ -537,7 +537,7 @@ System.out.println("About to make addSOP stmt");
 					stmt.setString(2, sopPurpose);
 					stmt.setString(3, priority);
 					stmt.setString(4, revision);
-					
+
 					System.out.println("About to execute AddSOP");
 					stmt.executeUpdate();
 
@@ -547,8 +547,8 @@ System.out.println("About to make addSOP stmt");
 							);
 
 					stmt2.setString(1, sopName);
-					
-					
+
+
 					resultSet = stmt2.executeQuery();
 					/*not ready for this, getting what we have working first
 					stmt3 = conn.prepareStatement(
@@ -558,20 +558,20 @@ System.out.println("About to make addSOP stmt");
 									" and positions.sop_id = sops.sop_id " +
 									" and sop_id = ? "
 							);
-					
+
 					stmt3.setInt(1, sopID);
 					resultSet2 = stmt3.executeQuery();
-					
+
 					stmt4 = conn.prepareStatement(
 							" insert into position_sops (positionId, sop_id) " +
 									" values(?, ?) "
 							);
-					
+
 					stmt4.setInt(1, resultSet2.getInt(1));
 					stmt4.setInt(2, sopID);
-					
+
 					stmt4.executeUpdate();
-					*/
+					 */
 					//if anything is found, return it in a list format
 					Boolean found = false;
 					List<SOP> result = new ArrayList<SOP>();
@@ -613,7 +613,7 @@ System.out.println("About to make addSOP stmt");
 
 				ResultSet resultSet = null;
 
-				
+
 				try {
 					stmt = conn.prepareStatement(
 							" update sops, position_sops " +
@@ -752,7 +752,7 @@ System.out.println("About to make addSOP stmt");
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
-				
+
 				try {
 
 					stmt = conn.prepareStatement(
@@ -852,63 +852,82 @@ System.out.println("About to make addSOP stmt");
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
-				
+
 				ResultSet resultSet = null;
 				ResultSet resultSet1 = null;
-				
+
 				//TODO
 				try {
+					System.out.println("making prepare stmt for createPosition");
 					stmt = conn.prepareStatement(
 							" insert into positions(positionName, positionDuty) " +
 									" values(?, ?) "
 							);
 					stmt.setString(1, name);
 					stmt.setString(2, duty);
+					System.out.println("execute initial stmt for createPos");
 					stmt.executeUpdate();
-//
-				/*
+
 					//WE need to make it so that it goes back and gets the primary key and puts it back in
 					//get positionIdS and set positionIdU = positionIdS
-					stmt1 = conn.prepareStatement(
-							"Select positionIdS from positions"+
-					"where positionName = ? and "
-											);
-					stmt1.setString(1, name);
-					resultSet1 = stmt1.executeQuery();
-					*/
-					stmt2 = conn.prepareStatement(
-							//until we get the forgein key issue cleared up this is out due to not working
-							//I want to get the servlets working for the milestone
-							" select positions.positionIdS, position_sops.sop_id " +
-							" from positions, sops, position_sops, user_positions " +
-							" where positions.positionIdS = position_sops.positionId " +
-							" and positions.positionIdU = user_positions.positionId " +
-							" and positionName = ?"
 
+					System.out.println("make stmt to get position back");
+					stmt1 = conn.prepareStatement(
+							"Select * from positions"+
+									" where positionName = ?  " + 
+									" and positionDuty = ? "
 							);
-					stmt2.setString(1, name);
-					
-					resultSet = stmt2.executeQuery();
-					// took this out for now, at least till the errors with cross referencing are cleared
-					stmt3 = conn.prepareStatement(
-							" insert into position_sops(positionId, sop_id) " +
-									" values (?, ?) "
-							);
-					
-					//stmt3.setInt(1, );
-					//stmt3.setInt(2, );
-					
-					stmt3.setInt(1, resultSet.getInt(1));
-					stmt3.setInt(2, resultSet.getInt(2));
-					
-					//if anything is found, return it in a list format
-					Boolean found = false;
+					stmt1.setString(1, name);
+					stmt1.setString(2, duty);
+					System.out.println("getting the new position" );
+					resultSet = stmt1.executeQuery();
 					List<Position> result = new ArrayList<Position>();
 					while (resultSet.next()) {
-						found = true;
+						System.out.println("setting the result of the query");
 						Position p = new Position();
 						loadPosition(p, resultSet, 1);
 						result.add(p);
+					}
+					System.out.println("setting new position ");
+					System.out.println("setting a new instance of the new position");
+					Position pos = result.get(0);
+
+					System.out.println(pos.getPositionDuty());
+					System.out.println(pos.getPositionIDS());
+					System.out.println(pos.getPositionName());
+
+					System.out.println("making stmt to put id number into second columen");
+					stmt2 = conn.prepareStatement(
+							" update positions " +
+									" set positionIdU = ? " +
+									" where positionName = ? "+ 
+									" and positionDuty = ? "
+							);
+					stmt2.setInt(1, pos.getPositionIDS());
+					stmt2.setString(2, name);
+					stmt2.setString(3, duty);
+					System.out.println("updating position with second id number");
+					stmt2.executeUpdate();
+
+					System.out.println("making the last stmt in createPosition to return new position");
+
+					stmt3 = conn.prepareStatement(
+							" select * from positions"+
+									" where positionName = ? "+
+									" and positionDuty = ? "
+							);
+					stmt3.setString(1, name);
+					stmt3.setString(2, duty);
+					resultSet1 = stmt3.executeQuery();
+					
+					//if anything is found, return it in a list format
+					Boolean found = false;
+					List<Position> result2 = new ArrayList<Position>();
+					while (resultSet1.next()) {
+						found = true;
+						Position p = new Position();
+						loadPosition(p, resultSet1, 1);
+						result2.add(p);
 					}
 
 					// check if the title was found
@@ -916,15 +935,20 @@ System.out.println("About to make addSOP stmt");
 						System.out.println("<" + name + "> was not found in the positions table");
 					}
 
-					return result;
+					return result2;
 
 
 				} finally {
 					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(resultSet);
 					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
 				}
+
 			}
+
 		});
 	}
 
@@ -1095,9 +1119,9 @@ System.out.println("About to make addSOP stmt");
 	//load position
 	private void loadPosition(Position position, ResultSet resultSet, int index) throws SQLException {
 		position.setPositionIDS(resultSet.getInt(index++));
-		position.setPositionIDU(resultSet.getInt(index++));
 		position.setPositionName(resultSet.getString(index++));
 		position.setPositionDuty(resultSet.getString(index++));	
+		position.setPositionIDU(resultSet.getInt(index++));
 	}
 
 	//load position to sop junction
@@ -1189,7 +1213,7 @@ System.out.println("About to make addSOP stmt");
 					stmt4.executeUpdate();
 					System.out.println("position to sop table created");
 
-					
+
 					//create the user and position junction table 
 					System.out.println("prepare user to position table");
 					stmt5 = conn.prepareStatement(
@@ -1205,7 +1229,7 @@ System.out.println("About to make addSOP stmt");
 									"  positionId integer constraint positionId references positions " +
 									") "
 							);
-							*/
+					 */
 					System.out.println("about to execute user to position table");
 					stmt5.executeUpdate();
 					System.out.println("user to position table created");
