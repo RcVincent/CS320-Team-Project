@@ -214,7 +214,7 @@ public class DatabaseTests {
 			fail("Add more SOPs");
 		}else {
 			String newPriority = "9";
-			sopList = db.changePriority(sopID, priority, newPriority);
+			sopList = db.changePriority(sopName, priority, newPriority);
 			
 			assertEquals("9", sopList.get(0).getPriority());
 		}

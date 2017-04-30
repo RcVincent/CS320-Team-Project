@@ -1,107 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
               http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         version="2.5"
-         xmlns="http://java.sun.com/xml/ns/javaee">
+	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 
-	<!--  Servlets -->
-	
+	<!-- Servlets -->
+
 	<servlet>
-		<servlet-name> IndexServlet</servlet-name>
+		<servlet-name>IndexServlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.IndexServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet>
 		<servlet-name>AccountServlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.AccountServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet>
 		<servlet-name>changePasswordServlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.changePasswordServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet>
 		<servlet-name>CreateAccountServlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.CreateAccountServlet</servlet-class>
 	</servlet>
-	
-		<servlet>
+
+	<servlet>
 		<servlet-name>createPositionServlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.createPositionServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.LoginServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet>
 		<servlet-name>MainPageServlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.MainPageServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet>
 		<servlet-name>retrychangePassword</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.retrychangePassword</servlet-class>
 	</servlet>
-	
-		<servlet>
+
+	<servlet>
 		<servlet-name>createSOPservlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.createSOPservlet</servlet-class>
 	</servlet>
-	
-    <!--  Servlet Mappings -->     
-    
-    <servlet-mapping>
-    	<servlet-name>IndexServlet</servlet-name>
-    	<url-pattern>Index</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-    	<servlet-name>AccountServlet</servlet-name>
-    	<url-pattern>account</url-pattern>
-    </servlet-mapping>
-    
-        <servlet-mapping>
-    	<servlet-name>createSOPservlet</servlet-name>
-    	<url-pattern>createSOP</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-    	<servlet-name>changePasswordServlet</servlet-name>
-    	<url-pattern>changePassword</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-    	<servlet-name>CreateAccountServlet</servlet-name>
-    	<url-pattern>CreateAccount</url-pattern>
-    </servlet-mapping>
-    
-        <servlet-mapping>
-    	<servlet-name>createPositionServlet</servlet-name>
-    	<url-pattern>createPosition</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-    	<servlet-name>LoginServlet</servlet-name>
-    	<url-pattern>Login</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-    	<servlet-name>MainPageServlet</servlet-name>
-    	<url-pattern>MainPage</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-    	<servlet-name>retrychangePassword</servlet-name>
-    	<url-pattern>retrychangePassword</url-pattern>
-    </servlet-mapping>
-    
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-  </welcome-file-list>
-    
-    
+
+	<servlet>
+		<servlet-name>reviseSOP</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.reviseSOP</servlet-class>
+	</servlet>
+	<!-- Servlet Mappings -->
+
+	<servlet-mapping>
+		<servlet-name>IndexServlet</servlet-name>
+		<url-pattern>Index</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>AccountServlet</servlet-name>
+		<url-pattern>account</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>createSOPservlet</servlet-name>
+		<url-pattern>createSOP</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>reviseSOP</servlet-name>
+		<url-pattern>reviseSOP</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>changePasswordServlet</servlet-name>
+		<url-pattern>changePassword</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>CreateAccountServlet</servlet-name>
+		<url-pattern>CreateAccount</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>createPositionServlet</servlet-name>
+		<url-pattern>createPosition</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>Login</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>MainPageServlet</servlet-name>
+		<url-pattern>MainPage</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>retrychangePassword</servlet-name>
+		<url-pattern>retrychangePassword</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+
 </web-app>

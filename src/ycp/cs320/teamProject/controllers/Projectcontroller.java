@@ -70,8 +70,17 @@ public class Projectcontroller {
 	}
 	
 	//need a method for pulling an SOP out of the DB based on the SOP number
-	public void pullSOPfromDB(int sopNumber) {
+	public List<SOP> pullSOPfromDB(String sopName) {
 		
+		List<SOP> sopList = db.FindSOPByName(sopName);
+		
+		ArrayList<SOP> SOPs = new ArrayList<SOP>();
+		
+		for(SOP sop : sopList) {
+			SOPs.add(sop);
+		}
+		
+		return SOPs;
 	}
 	
 	//add an SOP to the DB 
@@ -93,13 +102,13 @@ public class Projectcontroller {
 	}
 	
 	//revise an SOP in the DB
-	public void reversionSOP(int sopID, String version, String newVersion) {
-		db.reviseSOP(sopID, version, newVersion);
+	public void reversionSOP(String name, String version, String newVersion, String purpose) {
+		db.reviseSOP(name, version, newVersion, purpose);
 	}
 	
 	//change an SOP's priority in the DB
-	public void changeSOPpriority(int sopID, String priority, String newPriority){
-		db.changePriority(sopID, priority, newPriority);
+	public void changeSOPpriority(String name, String priority, String newPriority){
+		db.changePriority(name, priority, newPriority);
 	}
 	
 	public static boolean authenticate(User u, String pswd)

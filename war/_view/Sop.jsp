@@ -5,7 +5,10 @@
 <html>
 <body>
 
-<form action="${pageContext.servletContext.contextPath}/User" method="post">
+<form action="${pageContext.servletContext.contextPath}/Sop" method="post">
+SOP Title: <input type="text" name="sopName"><br>
+
+
 SOP ID Number: ${model.sopIdNumber} <br>
 SOP Title: ${model.sopName}<br>
 Author of SOP: ${model.sopAuthor}<br>
@@ -16,6 +19,7 @@ Revision Number: ${model.revision}
 <form action="/action_page.php">
   Select Files Associated with SOP: <input type="file" name="files" multiple>
   <input type="submit">
+    <td><input type = "Submit" name = "index" value = "Index" /> </td>
 </form>
 
 </form>

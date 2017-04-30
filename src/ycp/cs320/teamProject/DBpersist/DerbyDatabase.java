@@ -462,7 +462,7 @@ public class DerbyDatabase implements IDatabase {
 
 	//pull out the SOP requested 
 	@Override
-	public List<SOP> FindSOPByID(final int sopID) {
+	public List<SOP> FindSOPByName(final String sopName) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override
 			public List<SOP> execute(Connection conn) throws SQLException {
@@ -473,11 +473,10 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(
-							" select * from SOPs, sop_positions " +
-									" where sops.sop_id = sop_positions.sop_id " +
-									" and sop_id = ? "	
+							" select * from SOPs " +
+									" where sop_Name = ? "	
 							);
-					stmt.setInt(1, sopID);
+					stmt.setString(1, sopName);
 					resultSet = stmt.executeQuery();
 
 					//if anything is found, return it in a list format
@@ -494,7 +493,7 @@ public class DerbyDatabase implements IDatabase {
 
 					//check if the SOP was found
 					if(!found) {
-						System.out.println("<" + sopID + "was not found in the database" );
+						System.out.println("<" + sopName + "was not found in the database" );
 					}
 
 					return result;
@@ -604,7 +603,7 @@ public class DerbyDatabase implements IDatabase {
 
 	//change the priority of an SOP in the DB
 	@Override
-	public List<SOP> changePriority(final int sopID, final String priority, final String newPriority){
+	public List<SOP> changePriority(final String name, final String priority, final String newPriority){
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
 			public List<SOP> execute(Connection conn) throws SQLException {
@@ -615,28 +614,28 @@ public class DerbyDatabase implements IDatabase {
 
 
 				try {
+					System.out.println("making stmt to update sop priority");
 					stmt = conn.prepareStatement(
-							" update sops, position_sops " +
-									" set priority = ? "+
-									" where sops.sop_id = position_sops.sop_id " +
-									" and sop_id = ? " +
-									" and priority = ? "
+							" update sops " +
+									" set sop_priority = ? "+
+									" where sop_name = ? " +
+									" and sop_priority = ? "
 							);
 
 					stmt.setString(1, newPriority);
-					stmt.setInt(2, sopID);
+					stmt.setString(2, name);
 					stmt.setString(3, priority);
-
+					System.out.println("executing priority update");
 					stmt.executeUpdate();
-
+					
+					System.out.println("making the return value stmt update priority");
 					stmt2 = conn.prepareStatement(
-							" select sops.priority " +
-									" from sops, position_sops " +
-									" where sops.sop_id = position_sops.sop_id " +
-									" and sops.sop_id = ? "
+							" select * " +
+									" from sops " +
+									" where sop_name = ? "
 							);
-					stmt2.setInt(1, sopID);
-
+					stmt2.setString(1, name);
+					System.out.println("getting the updated priority");
 					resultSet = stmt2.executeQuery();
 
 					List<SOP> result = new ArrayList<SOP>();
@@ -652,7 +651,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 
 					if (!found) {
-						System.out.println("<" + sopID + "> was not in the SOP list");
+						System.out.println("<" + name + "> was not in the SOP list");
 					}
 
 
@@ -673,41 +672,58 @@ public class DerbyDatabase implements IDatabase {
 
 	//change the version number and 'edit' the SOP in the DB
 	@Override 
-	public List<SOP> reviseSOP(final int sopID, final String version, final String newVersion) {
+	public List<SOP> reviseSOP(final String name, final String version, final String newVersion, final String purpose) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 			@Override 
 			public List<SOP> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
+				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 
 				ResultSet resultSet = null;
 
 				try {
-
+					
 					//update the SOPS version number in the database
+					System.out.println("makeing stmt for reviseSOP");
 					stmt = conn.prepareStatement(
 							" update sops " +
-									" set revision = ? " +
-									" where sops.sop_id = position_sops.sop_id " +
-									" and sop_id = ? " +
-									" and revision = ? "
+									" set sop_revision = ? " +
+									" where sop_name = ? " +
+									" and sop_revision = ? "
 							);
 
 					stmt.setString(1, newVersion);
-					stmt.setInt(2, sopID);
+					stmt.setString(2, name);
 					stmt.setString(3, version);
+					System.out.println("executingUpdate for revsise SOP");
 					stmt.executeUpdate();
-
-					//pull out the edited SOP
-					stmt2 = conn.prepareStatement(
-							" select sops.* " +
-									" from sops " +
-									" where sops.sop_id = position_sops.sop_id " +
-									" and sops.sop_id = ?"
+					
+					System.out.println("makeing stmt1 for reviseSOP");
+					stmt1 = conn.prepareStatement(
+							" update sops " +
+									" set sop_purpose = ? " +
+									" where sop_name = ? " +
+									" and sop_revision = ? "
 							);
 
-					stmt2.setInt(1, sopID);
+					stmt1.setString(1, purpose);
+					stmt1.setString(2, name);
+					stmt1.setString(3, newVersion);
+					System.out.println("executingUpdate 1 for revsise SOP");
+					stmt1.executeUpdate();
 
+					//pull out the edited SOP
+					System.out.println("making stmt2 revise sop");
+					stmt2 = conn.prepareStatement(
+							" select * " +
+									" from sops " +
+									" where sop_name = ? " 
+									
+							);
+
+					stmt2.setString(1, name);
+					System.out.println("executing stmt2 query reviseSOP");
 					resultSet = stmt2.executeQuery();
 
 					//if anything is found, return it in a list format
@@ -723,7 +739,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 
 					if (!found) {
-						System.out.println("<" + sopID + "> was not in the SOP list");
+						System.out.println("<" + name + "> was not in the SOP list");
 					}
 
 
@@ -733,6 +749,7 @@ public class DerbyDatabase implements IDatabase {
 				finally {
 					DBUtil.closeQuietly(conn);
 					DButil.closeQuietly(stmt);
+					DButil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(resultSet);
 				}

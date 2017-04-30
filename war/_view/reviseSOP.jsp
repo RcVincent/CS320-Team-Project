@@ -3,24 +3,23 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
-	<head>
-	<style type = "text/css">
-		.error {
-			color: red;
-		}
-		
-		</style>
-</head>
-
 <body>
 
-<form action="${pageContext.servletContext.contextPath}/CreateAccount" method="post">
-SOP ID: <input type="text" name="sop_Id"><br>
-SOP Version: <input type="text" name="version"><br>
-New SOP Version: <input type="text" name="newVersion"><br>
-<td><input type = "Submit" name = "submit" value = "Submit" /> </td>
-<td><input type = "Submit" name = "index" value = "Index" /> </td>
-<input type="hidden" name="sessionid" value="sessionid.getSessionid">
+<form action="${pageContext.servletContext.contextPath}/reviseSOP" method="post">
+SOP Title: <input type="text" name="sopName"><br>
+SOP Purpose: <textarea rows="4" cols="50" name="sop_purpose" >
+Enter SOP Purpose here...</textarea><br>
+Priority (1-10): <input type="text" name="sop_priority"><br>
+Priority (1-10): <input type="text" name="sop_newPriority"><br>
+Old Revision Number : <input type="text" name="sop_Version"><br>
+New Revision Number : <input type="text" name="sop_newVersion"><br>
+
+<form action="/action_page.php">
+  Select Files Associated with SOP: <input type="file" name="files" multiple>
+  <input type="submit">
+  <td><input type = "Submit" name = "index" value = "Index" /> </td>
+</form>
+
 </form>
 
 
