@@ -70,15 +70,25 @@ public class Projectcontroller {
 	}
 	
 	//need a method for pulling an SOP out of the DB based on the SOP number
-	public void pullSOPfromDB(int sopNumber) {
+	public List<SOP> pullSOPfromDB(String sopName) {
 		
+		List<SOP> sopList = db.findSOPByName(sopName);
+		
+		ArrayList<SOP> SOPs = new ArrayList<SOP>();
+		
+		for(SOP sop : sopList) {
+			SOPs.add(sop);
+		}
+		
+		return SOPs;
 	}
 	
 	//add an SOP to the DB 
-	public boolean addSOPtoDB(String sopName, int sopID, String sopPurpose, String priority, String revision) {
-		
-		
-		List<SOP> sopid = db.addSOP(sopID, sopName, sopPurpose, priority, revision);
+	public void addSOPtoDB(String sopName, String sopPurpose, String priority, String revision) {
+		db.addSOP(sopName, sopPurpose, priority, revision);
+		/* Using this as a bool wasn't working, changed to match addUser which does work.
+		 * 
+		List<SOP> sopid = db.addSOP(sopName, sopPurpose, priority, revision);
 		
 		if(sopid.size() > 0) {
 			System.out.println("New SOP (ID: " + sopid + "entered into the database");
@@ -88,16 +98,17 @@ public class Projectcontroller {
 			System.out.println("Failed to add the new sop (ID: " + sopid + "to the DB");
 			return false;
 		}
+		*/
 	}
 	
 	//revise an SOP in the DB
-	public void reversionSOP(int sopID, String version, String newVersion) {
-		db.reviseSOP(sopID, version, newVersion);
+	public void reversionSOP(String name, String version, String newVersion, String purpose) {
+		db.reviseSOP(name, version, newVersion, purpose);
 	}
 	
 	//change an SOP's priority in the DB
-	public void changeSOPpriority(int sopID, String priority, String newPriority){
-		db.changePriority(sopID, priority, newPriority);
+	public void changeSOPpriority(String name, String priority, String newPriority){
+		db.changePriority(name, priority, newPriority);
 	}
 	
 	public static boolean authenticate(User u, String pswd)

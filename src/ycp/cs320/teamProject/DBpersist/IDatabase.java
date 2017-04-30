@@ -24,12 +24,14 @@ public interface IDatabase {
 	//SOP related methods implemented in derby database
 	//*******************
 
-	List<SOP> FindSOPByID(int sopID); 
-	List<SOP> addSOP(final int sopID, final String sopName, final String authorID, final String priority, final String revision);
-	List<SOP> changePriority(final int sopID, final String priority, final String newPriority);
-	List<SOP> reviseSOP(final int sopID, final String version, final String newVersion);
+
+	 
+	List<SOP> addSOP(final String sopName, final String authorID, final String priority, final String revision);
+	List<SOP> changePriority(final String name, final String priority, final String newPriority);
+	List<SOP> reviseSOP(final String name, final String version, final String newVersion, final String purpose);
 	List<SOP> findSOPByName(String sopName);
 	
+
 	//archive sop
 	
 

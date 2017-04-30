@@ -187,13 +187,13 @@ public class DatabaseTests {
 	
 	@Test
 	public void testAddSOP() {
-		int sopID = 10;
+		
 		String sopName = "Electronic Signature";
 		String sopPurpose = "Electronic Signature ";
 		String priority = "10";
 		String revision = "1";
 		
-		sopList = db.addSOP(sopID, sopName, sopPurpose, priority, revision);
+		sopList = db.addSOP(sopName, sopPurpose, priority, revision);
 		
 		if(sopList.isEmpty()) {
 			System.out.println("There are no SOPs in the table");
@@ -209,13 +209,12 @@ public class DatabaseTests {
 	
 	@Test
 	public void testChanegSOPPriority() {
-		int sopID = 10;
 		String sopName = "Electronic Signature";
 		String sopPurpose = "Know the impact of your signature";
 		String priority = "10";
 		String revision = "1";
 		
-		sopList = db.addSOP(sopID, sopName, sopPurpose, priority, revision);
+		sopList = db.addSOP( sopName, sopPurpose, priority, revision);
 		
 		if(sopList.isEmpty()) {
 			System.out.println("There are no SOPs in the table");
@@ -224,7 +223,7 @@ public class DatabaseTests {
 		}else {
 			String newPriority = "9";
 			List<SOP> sops = new ArrayList<SOP>();
-			sops = db.changePriority(sopID, priority, newPriority);
+			sops = db.changePriority(sopName, priority, newPriority);
 			
 			assertEquals("9", sops.get(0).getPriority());
 			
@@ -236,13 +235,13 @@ public class DatabaseTests {
 	@Test
 	public void testChangeSOPVersion() {
 		
-		int sopID = 20;
+		
 		String sopName = "Electronic Signature 2";
 		String sopPurpose = "Know the impact of your signature, new and better";
 		String priority = "10";
 		String version = "1";
 		
-		sopList = db.addSOP(sopID, sopName, sopPurpose, priority, version);
+		sopList = db.addSOP(sopName, sopPurpose, priority, version);
 		
 		if(sopList.isEmpty()) {
 			System.out.println("There are no SOPs in the table");
@@ -252,7 +251,7 @@ public class DatabaseTests {
 		else {
 			String newVersion = "2";
 			List<SOP> sops = new ArrayList<SOP>();
-			sops = db.reviseSOP(sopID, version, newVersion);
+			sops = db.reviseSOP(sopName, version, newVersion, sopPurpose);
 			
 			assertEquals("2", sops.get(0).getRevision());
 			//add a remove method for the SOPs

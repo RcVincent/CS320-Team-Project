@@ -32,6 +32,7 @@ Revision Number: ${model.revision}
 <form action="/action_page.php">
   Select Files Associated with SOP: <input type="file" name="files" multiple>
   <input type="submit">
+    <td><input type = "Submit" name = "index" value = "Index" /> </td>
 </form>
 
 

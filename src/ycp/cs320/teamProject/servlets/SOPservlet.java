@@ -7,7 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import ycp.cs320.teamProject.controllers.Projectcontroller;
 import ycp.cs320.teamProject.model.SOP;
 
 
@@ -18,22 +20,33 @@ public class SOPservlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		req.getRequestDispatcher("/_view/createSOP.jsp").forward(req, resp);
-		String user = (String) req.getSession().getAttribute("User.username");
-		SOP model = new SOP();
-		if (user == null) {
+		
+		System.out.println("In the revise SOP servlet do get");
+		HttpSession session = req.getSession();
+		System.out.println(session.getAttribute("username"));
+		if (session.getAttribute("username") == null) {
 			// user is not logged in, or the session expired
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
+		}
+		if(session.getAttribute("type").equals("User")){
+			resp.sendRedirect(req.getContextPath() + "/MainPage");
 
 		}
+		req.getRequestDispatcher("/_view/Sop.jsp").forward(req, resp);
 	}
 		protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 				throws ServletException, IOException {
-			SOP model = new SOP();
+			String sopName = null;
+			sopName = req.getParameter("sopName");
+			Projectcontroller controller = new Projectcontroller();
+			controller.pullSOPfromDB(sopName);
 		
 
-		req.getRequestDispatcher("/_view/SOP.jsp").forward(req, resp);
+			if (req.getParameter("index") != null) {
+				resp.sendRedirect(req.getContextPath() + "/Index");
+			}
+		req.getRequestDispatcher("/_view/Sop.jsp").forward(req, resp);
 
 	}
 
