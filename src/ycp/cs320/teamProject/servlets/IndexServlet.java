@@ -56,6 +56,8 @@ public class IndexServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Traininghistory");
 		} else if (req.getParameter("createPosition") != null) {
 			resp.sendRedirect(req.getContextPath() + "/createPosition");
+		} else if (req.getParameter("addP2U") != null) {
+			resp.sendRedirect(req.getContextPath() + "/addP2U");
 		} else if (req.getParameter("Login") != null) {
 			resp.sendRedirect(req.getContextPath() + "/Login");
 		}

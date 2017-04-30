@@ -1012,6 +1012,74 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 
+	//add positions to users
+	@Override
+	public List<UserPosition> addPositionToUser(final String user, final String position) {
+		return executeTransaction(new Transaction<List<UserPosition>>() {
+			@Override
+			public List<UserPosition> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				ResultSet resultSet = null;
+				ResultSet resultSet2 = null;
+				try{
+					//first get the user from DB
+					stmt = conn.prepareStatement(
+							" select * from users "+
+					" where user_userName = ?"
+							);
+					stmt.setString(1, user);
+					resultSet = stmt.executeQuery();
+					List<User> result = new ArrayList<User>();
+					while (resultSet.next()) {
+						System.out.println("setting the result of the query");
+						User u = new User();
+						loadUser(u, resultSet, 1);
+						result.add(u);
+					}
+					//set the user info from DB to a new user
+					User user = result.get(0);
+					System.out.println(user.getUserID());
+
+					//get the position from DB
+					System.out.println("making stmt get position");
+					stmt2 = conn.prepareStatement(
+							" select * from positions " +
+									" where positionName = ? "
+							);
+					stmt2.setString(1, position);
+					
+					System.out.println("getting position");
+					resultSet2 = stmt2.executeQuery();
+					List<Position> result2 = new ArrayList<Position>();
+					while (resultSet2.next()) {
+						System.out.println("setting the result of the query");
+						Position p = new Position();
+						loadPosition(p, resultSet2, 1);
+						result2.add(p);
+					}
+					//set the user info from DB to a new user
+					Position pos = result2.get(0);
+					System.out.println(pos.getPositionIDU());
+					
+					stmt3 = conn.prepareStatement(
+							" insert into user_positions(positionId, user_id) " +
+									" values(?, ?) "
+							);
+					stmt3.setInt(1, pos.getPositionIDU());
+					stmt3.setInt(2, user.getUserID());
+					
+				return null;
+				}
+			finally {
+				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(stmt);
+			}
+			}
+		});
+	}
+	
 	public List<Position> findPositionByName(String positionName) { 
 		return executeTransaction(new Transaction<List<Position>>() {
 
@@ -1222,8 +1290,8 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("prepare position to sop table");
 					stmt4 = conn.prepareStatement(
 							" create table position_sops( " +
-									"  positionId integer constraint positionIdS references positions, " + 
-									"  sop_id integer constraint sop_id references sops " +
+									"  positionId integer, " + 
+									"  sop_id integer " +
 									") "
 							);
 
@@ -1235,8 +1303,8 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("prepare user to position table");
 					stmt5 = conn.prepareStatement(
 							" create table user_positions( " +
-									"  user_id    integer constraint user_id references users, " + 
-									"  positionId integer constraint positionIdU references positions " +
+									"  user_id    integer,  " + 
+									"  positionId integer  " +
 									") "
 							);
 					/*	rewrote because something wasn't working and I couldn't see it, hoping it was a weird typo

@@ -111,6 +111,11 @@ public class Projectcontroller {
 		db.changePriority(name, priority, newPriority);
 	}
 	
+	public void addPostionToUser(String user, String position){
+		db.addPositionToUser(user, position);
+		
+	}
+	
 	public static boolean authenticate(User u, String pswd)
 	{
 		boolean real = false;

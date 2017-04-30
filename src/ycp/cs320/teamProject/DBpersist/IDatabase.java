@@ -34,7 +34,8 @@ public interface IDatabase {
 	//*******************
 	List<Position> getPositionByID(int positionId);
 	List<Position> getPositionInfo(String position);
-	List<Position> addPositionToDatabase(String name, String duty); 
+	List<Position> addPositionToDatabase(String name, String duty);
+	List<UserPosition> addPositionToUser(String user, String position); 
 
 	//*******************
 	//Training History related methods implemented in derby database
