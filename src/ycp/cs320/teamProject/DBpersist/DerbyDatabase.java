@@ -1025,11 +1025,13 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet2 = null;
 				try{
 					//first get the user from DB
+					System.out.println("making stmt to get user");
 					stmt = conn.prepareStatement(
 							" select * from users "+
 					" where user_userName = ?"
 							);
 					stmt.setString(1, user);
+					System.out.println("executing user get from DB");
 					resultSet = stmt.executeQuery();
 					List<User> result = new ArrayList<User>();
 					while (resultSet.next()) {
@@ -1040,6 +1042,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 					//set the user info from DB to a new user
 					User user = result.get(0);
+					System.out.println(user.getUsername());
 					System.out.println(user.getUserID());
 
 					//get the position from DB
@@ -1061,6 +1064,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 					//set the user info from DB to a new user
 					Position pos = result2.get(0);
+					System.out.println(pos.getPositionName());
 					System.out.println(pos.getPositionIDU());
 					
 					stmt3 = conn.prepareStatement(
@@ -1069,12 +1073,15 @@ public class DerbyDatabase implements IDatabase {
 							);
 					stmt3.setInt(1, pos.getPositionIDU());
 					stmt3.setInt(2, user.getUserID());
-					
+					stmt3.executeUpdate();
 				return null;
 				}
 			finally {
 				DBUtil.closeQuietly(resultSet);
+				DBUtil.closeQuietly(resultSet2);
 				DBUtil.closeQuietly(stmt);
+				DBUtil.closeQuietly(stmt2);
+				DBUtil.closeQuietly(stmt3);
 			}
 			}
 		});
@@ -1429,7 +1436,7 @@ public class DerbyDatabase implements IDatabase {
 						insertPositionSOP.setInt(1, posSop.getPositionID());
 						insertPositionSOP.setInt(2, posSop.getSopID());
 						//this was causing errors I figured I'd get the servlets we have up and running first
-						//insertPositionSOP.addBatch();
+						insertPositionSOP.addBatch();
 					}
 
 
@@ -1446,7 +1453,7 @@ public class DerbyDatabase implements IDatabase {
 						insertUserPosition.setInt(1, userPosition.getUserID());
 						insertUserPosition.setInt(2, userPosition.getPositionID());
 						//this was causing errors I figured I'd get the servlets we have up and running first
-						//insertUserPosition.addBatch();
+						insertUserPosition.addBatch();
 					}
 
 					System.out.println("inserting users to positions...");
