@@ -23,6 +23,9 @@ public class MainPageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("MainPage doGet");
+		
+		//get session information so we can re rout a user or admin back to the login page
+		//will help implement a time out in the future 
 		HttpSession session = req.getSession();
 		System.out.println(session.getAttribute("username"));
 		if (session.getAttribute("username") == null) {
@@ -39,7 +42,7 @@ public class MainPageServlet extends HttpServlet {
 		
 		
 		Projectcontroller controller = new Projectcontroller();
-				
+		//set the necessary information to display for the user 		
 		String userName = (String) session.getAttribute("username");
 		System.out.println("Session info");
 		System.out.println(req.getSession().getAttribute("username"));

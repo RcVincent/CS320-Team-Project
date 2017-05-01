@@ -19,7 +19,11 @@ public class AccountServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
 		System.out.println("In the accouny servlet do get");
+		
+		//get session information so we can re rout a user or admin back to the login page
+		//will help implement a time out in the future 
 		HttpSession session = req.getSession();
 		System.out.println(session.getAttribute("username"));
 		if (session.getAttribute("username") == null) {
@@ -27,12 +31,15 @@ public class AccountServlet extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
+		
 		if(session.getAttribute("type").equals("User")){
 			resp.sendRedirect(req.getContextPath() + "/MainPage");
 			
 		}
-		User model = new User();
 		
+		//set up the user as a model in the system
+		User model = new User();
+		//getting necessary account information to display in the model of the app 
 		int UserNumber = (int) req.getSession().getAttribute("UserID");
 		model.setUserID(UserNumber);
 		String FirstName = (String) req.getSession().getAttribute("FirstName");
@@ -47,23 +54,27 @@ public class AccountServlet extends HttpServlet{
 
 		req.getRequestDispatcher("/_view/account.jsp").forward(req, resp);
 	}
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("In the account do post");
+		
 		Projectcontroller controller = new Projectcontroller();
 		String userName = req.getParameter("username");
+		
+		//create the users account as a model with all the necessary parameters
 		ArrayList<User> users = controller.getAccountInformation(userName);
 		User user = users.get(0);
+		
 		System.out.println(user.getUsername());
 		System.out.println(user.getUserID());
 		req.setAttribute("user", user);
 
-
+		//set the link back to the index page 
 		if (req.getParameter("Index") != null) {
 			System.out.println("back to index");
 			resp.sendRedirect(req.getContextPath() + "/Index");
-			//resp.sendRedirect(req.getContextPath() + "/Login");
 		}
 
 

@@ -20,6 +20,9 @@ public class CreateAccountServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("CreateAccountServlet: doGet");
+		
+		//get session information so we can re rout a user or admin back to the login page
+		//will help implement a time out in the future 
 		HttpSession session = req.getSession();
 		System.out.println(session.getAttribute("username"));
 		if (session.getAttribute("username") == null) {
@@ -31,7 +34,7 @@ public class CreateAccountServlet extends HttpServlet{
 		//this will be for sending a new user to complete their electronic signature form
 		//before they can advance into the main application 
 		
-		//uncomment when it works 
+		//will uncomment when it works 
 		/*if(session.getAttribute("type").equals("User")){
 			resp.sendRedirect(req.getContextPath() + "/ElectronicSignature");
 		}*/

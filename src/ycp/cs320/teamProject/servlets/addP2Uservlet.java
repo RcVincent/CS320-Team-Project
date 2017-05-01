@@ -22,7 +22,11 @@ public class addP2Uservlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
 		System.out.println("addP2U doGet");
+		
+		//get session information so we can re rout a user or admin back to the login page
+		//will help implement a time out in the future 
 		HttpSession session = req.getSession();
 		System.out.println(session.getAttribute("username"));
 		if (session.getAttribute("username") == null) {
@@ -30,6 +34,8 @@ public class addP2Uservlet extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
+		//if you are a user you should not be able to see this page
+		//redirect non admins to the main page 
 		if(session.getAttribute("type").equals("User")){
 			resp.sendRedirect(req.getContextPath() + "/MainPage");
 

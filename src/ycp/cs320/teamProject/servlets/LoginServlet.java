@@ -19,9 +19,10 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-
+		
 		System.out.println("\nLoginServlet: doGet");
-
+		
+		//no need to get session info here: this is the first page 
 		req.getRequestDispatcher("/_view/Login.jsp").forward(req, resp);
 	}
 

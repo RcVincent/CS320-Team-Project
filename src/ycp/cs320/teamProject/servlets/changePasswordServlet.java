@@ -20,6 +20,9 @@ public class changePasswordServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("in change PW servlet do get");
+		
+		//get session information so we can re rout a user or admin back to the login page
+		//will help implement a time out in the future 
 		HttpSession session = req.getSession();
 		if (session.getAttribute("username")== null) {
 			// user is not logged in, or the session expired

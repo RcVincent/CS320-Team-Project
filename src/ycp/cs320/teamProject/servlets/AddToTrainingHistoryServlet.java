@@ -22,6 +22,7 @@ public class AddToTrainingHistoryServlet extends HttpServlet{
 		//use session info to make sure the user is logged in, and 
 		//send them to login if they aren't 
 		HttpSession session = req.getSession();
+		System.out.println(session.getAttribute("username"));
 		if (session.getAttribute("username")== null) {
 			// user is not logged in, or the session expired
 			resp.sendRedirect(req.getContextPath() + "/Login");

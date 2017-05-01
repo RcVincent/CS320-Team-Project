@@ -25,6 +25,9 @@ public class reviseSOP extends HttpServlet{
 			throws ServletException, IOException {
 
 		System.out.println("In the revise SOP servlet do get");
+		
+		//get session information so we can re rout a user or admin back to the login page
+		//will help implement a time out in the future 
 		HttpSession session = req.getSession();
 		System.out.println(session.getAttribute("username"));
 		if (session.getAttribute("username") == null) {

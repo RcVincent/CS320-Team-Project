@@ -19,6 +19,9 @@ public class IndexServlet extends HttpServlet {
 			throws ServletException, IOException
 	{
 		System.out.println("In the Index servlet do get");
+		
+		//get session information so we can re rout a user or admin back to the login page
+		//will help implement a time out in the future 
 		HttpSession session = req.getSession();
 		System.out.println(session.getAttribute("username"));
 		if (session.getAttribute("username") == null) {
@@ -36,6 +39,8 @@ public class IndexServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
+		//set a massive amount of redirect links. this is the admins primary page, so it 
+		//would make sense that they can go anywhere
 		System.out.println("In the Index servlet");
 		if (req.getParameter("account") != null) {
 			resp.sendRedirect(req.getContextPath() + "/account");
