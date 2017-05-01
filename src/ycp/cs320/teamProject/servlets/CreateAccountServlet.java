@@ -30,9 +30,11 @@ public class CreateAccountServlet extends HttpServlet{
 		
 		//this will be for sending a new user to complete their electronic signature form
 		//before they can advance into the main application 
-		if(session.getAttribute("type").equals("User")){
+		
+		//uncomment when it works 
+		/*if(session.getAttribute("type").equals("User")){
 			resp.sendRedirect(req.getContextPath() + "/ElectronicSignature");
-		}
+		}*/
 		
 		//before we call this, we need to send the new user to the electronic signature page 
 		if(session.getAttribute("type").equals("User")){
