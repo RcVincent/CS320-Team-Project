@@ -66,6 +66,16 @@
 		<servlet-class>ycp.cs320.teamProject.servlets.ElectronicSignatureServlet</servlet-class>
 	</servlet>
 	
+	<servlet>
+		<servlet-name>CompleteSOPServlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.CompleteSOPServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>AddToTrainingHistoryServlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.AddToTrainingHistoryServlet</servlet-class>
+	</servlet>
+	
 	<!-- Servlet Mappings -->
 
 	<servlet-mapping>
@@ -128,6 +138,16 @@
 		<url-pattern>ElectronicSignature</url-pattern>
 	</servlet-mapping>
 
+	<servlet-mapping>
+		<servlet-name>CompleteSOPServlet</servlet-name>
+		<url-pattern>doyourdamnjobcommie</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>AddToTrainingHistoryServlet</servlet-name>
+		<url-pattern>history</url-pattern>
+	</servlet-mapping>
+	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
