@@ -27,6 +27,14 @@ public class CreateAccountServlet extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
+		
+		//this will be for sending a new user to complete their electronic signature form
+		//before they can advance into the main application 
+		if(session.getAttribute("type").equals("User")){
+			resp.sendRedirect(req.getContextPath() + "/ElectronicSignature");
+		}
+		
+		//before we call this, we need to send the new user to the electronic signature page 
 		if(session.getAttribute("type").equals("User")){
 			resp.sendRedirect(req.getContextPath() + "/MainPage");
 			
@@ -67,6 +75,7 @@ public class CreateAccountServlet extends HttpServlet{
 		req.getRequestDispatcher("/_view/CreateAccount.jsp").forward(req, resp);
 
 	}
+	
 	private String getSession(HttpServletRequest req, String name) {
 		// TODO Auto-generated method stub
 		return String.valueOf(req.getParameter(name));

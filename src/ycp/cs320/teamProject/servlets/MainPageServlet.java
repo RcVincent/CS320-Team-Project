@@ -30,7 +30,14 @@ public class MainPageServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
-	
+		
+		//for checking to see if the electronic signature flag has been tripped and re route the user if it has 
+		/*System.out.println(session.getAttribute("electronicSignatureFlag"));
+		if(session.getAttribute("electronicSignatureFlag") == false) {
+			resp.sendRedirect(req.getContextPath() + "/ElectronicSignature");
+		}*/
+		
+		
 		Projectcontroller controller = new Projectcontroller();
 				
 		String userName = (String) session.getAttribute("username");
