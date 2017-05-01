@@ -25,12 +25,16 @@ public class ElectronicSignatureServlet extends HttpServlet{
 			throws ServletException, IOException {
 		User user = new User();
 		
+		//leaving space here to add session data if we need it 
 		if(user.isElectronicSignatureFlag() == true) {
-			req.getRequestDispatcher("");
+			resp.sendRedirect(req.getContextPath() + "/MainPage");
 		}
 		else {
-			//pull the SOP 
-			//need to add a method for that 
+			req.getRequestDispatcher("/_view/ElectronicSignature.jsp").forward(req, resp);
+			//set the electronic signature flag in the user class to true 
+			user.setElectronicSignatureFlag(true);
+			//after the flag is set to true
+			resp.sendRedirect(req.getContextPath() + "/MainPage");
 		}
 	}
 }
