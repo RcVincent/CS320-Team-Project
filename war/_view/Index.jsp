@@ -100,6 +100,9 @@
 			</tr>
 			<input name="createPosition" type="submit" value="Create Position" />
 			</tr>
+						</tr>
+			<input name="addP2U" type="submit" value="Add Position to User" />
+			</tr>
 			<tr>
 				<td><input type = "Submit" name = "Login" value = "Login" /> </td>
 				<input type="hidden" name="sessionid" value="sessionid.getSessionid">
