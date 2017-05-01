@@ -13,6 +13,10 @@ public class User {
 		private String isAdmin;
 		private String sessionid;
 		
+		//need this here because it will be called by the user class. But the history
+		//will be its own object, so its class will remain its own and has methods in the controller
+		private TrainingHistory trainingHist;
+		
 		private boolean loginStatus = false;
 		
 		//will act as a first time user in other programs 
@@ -125,5 +129,14 @@ public class User {
 
 		public void setSessionid(String sessionid) {
 			this.sessionid = sessionid;
+		}
+
+		//these two methods are more for display purposes. any changes will be handled by the controller 
+		public TrainingHistory getTrainingHist() {
+			return trainingHist;
+		}
+
+		public void setTrainingHist(TrainingHistory trainingHist) {
+			this.trainingHist = trainingHist;
 		}
 }

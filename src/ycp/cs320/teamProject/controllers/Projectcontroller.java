@@ -1,7 +1,10 @@
 package ycp.cs320.teamProject.controllers;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 import ycp.cs320.teamProject.DBpersist.*;
@@ -132,13 +135,45 @@ public class Projectcontroller {
 		db.addPositionToDatabase(name, duty);
 	}
 	
-	
-	//utility methods 
-	/*public Queue<SOP> pushToPriorityQueue(SOP sopID){
-		Queue<SOP> priorityQueue = null;
-		if(sopID.getPriority() >= 7) {
-			priorityQueue = p.pushToQueue(sopID);
+	//leaving this method here for now, may have to have it put somewhere else 
+	public void addToTrainingHistory(SOP sop, User user) {
+		TrainingHistory t = new TrainingHistory();
+		
+		if(t.getUser().getUserID() == user.getUserID() ){
+			if(sop.isIsComplete()) {
+				t.addToCompleted(sop);
+			}
+			else {
+				t.addToTodoList(sop);
+			}
 		}
-		return priorityQueue;
+	}
+	
+	//more  a utility method but will probably be necessary for the servlets 
+	public TrainingHistory getHistoryFromUser(User user) {
+		TrainingHistory t = user.getTrainingHist();
+		
+		return t;
+	}
+	
+	//f*ck these next two methods i can't figure out how to sort them for the life of me 
+	
+	/*
+	public void sortHistoryByPriority(Integer priority) {
+		TrainingHistory t = new TrainingHistory();
+		
+		t.getCompletedSOPs().sort(priority);
+	}*/
+	
+	/*
+	//sorting the priority queue 
+	public void sortHistoryByPriority(int priority) {
+		TrainingHistory t = new TrainingHistory();
+		PriorityQueue<SOP> p = t.getSopsToComplete();
+	
+		if(p.comparator().equals(priority)) {
+			//sort the priority queue
+		}
+		
 	}*/
 }

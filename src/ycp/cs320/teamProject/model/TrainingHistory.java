@@ -9,6 +9,22 @@ public class TrainingHistory {
 	//BinaryHeap<SOP> sopsToComplete = new BinaryHeap<SOP>();
 	PriorityQueue<SOP> sopsToComplete = new PriorityQueue<SOP>();
 	
+	public ArrayList<SOP> getCompletedSOPs() {
+		return completedSOPs;
+	}
+
+	public void setCompletedSOPs(ArrayList<SOP> completedSOPs) {
+		this.completedSOPs = completedSOPs;
+	}
+
+	public PriorityQueue<SOP> getSopsToComplete() {
+		return sopsToComplete;
+	}
+
+	public void setSopsToComplete(PriorityQueue<SOP> sopsToComplete) {
+		this.sopsToComplete = sopsToComplete;
+	}
+
 	public TrainingHistory() {
 		
 	}
@@ -32,6 +48,6 @@ public class TrainingHistory {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	//possibly adding methods here to add and remove SOPs from their respective lists
 }
