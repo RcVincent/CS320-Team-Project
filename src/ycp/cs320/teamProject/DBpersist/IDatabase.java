@@ -27,7 +27,7 @@ public interface IDatabase {
 	List<SOP> changePriority(final String name, final String priority, final String newPriority);
 	List<SOP> reviseSOP(final String name, final String version, final String newVersion, final String purpose);
 	//archive sop
-	
+
 
 	//*******************
 	//Position related methods 

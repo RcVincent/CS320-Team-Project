@@ -74,13 +74,25 @@ public class Projectcontroller {
 		
 		List<SOP> sopList = db.FindSOPByName(sopName);
 		
-		ArrayList<SOP> SOPs = new ArrayList<SOP>();
+		List<SOP> SOPs = new ArrayList<SOP>();
 		
 		for(SOP sop : sopList) {
 			SOPs.add(sop);
 		}
 		
 		return SOPs;
+	}
+	
+	//get a position by name
+	public List<Position>getPositionfromDB(String positionName){
+		List<Position> positionList = db.getPositionInfo(positionName);
+		List<Position> positions = new ArrayList<Position>();
+		for(Position position : positionList){
+			positions.add(position);
+		}
+		
+		
+		return positions;		
 	}
 	
 	//add an SOP to the DB 

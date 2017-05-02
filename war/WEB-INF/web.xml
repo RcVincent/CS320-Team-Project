@@ -55,13 +55,33 @@
 		<servlet-name>reviseSOP</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.reviseSOP</servlet-class>
 	</servlet>
-	
-		<servlet>
+
+	<servlet>
 		<servlet-name>addP2Uservlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.addP2Uservlet</servlet-class>
 	</servlet>
-	
+
+	<servlet>
+		<servlet-name>SOPservlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.SOPservlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>Positionservlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.Positionservlet</servlet-class>
+	</servlet>
+
 	<!-- Servlet Mappings -->
+
+	<servlet-mapping>
+		<servlet-name>Positionservlet</servlet-name>
+		<url-pattern>position</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>SOPservlet</servlet-name>
+		<url-pattern>Sop</url-pattern>
+	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>IndexServlet</servlet-name>
@@ -112,8 +132,8 @@
 		<servlet-name>retrychangePassword</servlet-name>
 		<url-pattern>retrychangePassword</url-pattern>
 	</servlet-mapping>
-	
-		<servlet-mapping>
+
+	<servlet-mapping>
 		<servlet-name>addP2Uservlet</servlet-name>
 		<url-pattern>addP2U</url-pattern>
 	</servlet-mapping>

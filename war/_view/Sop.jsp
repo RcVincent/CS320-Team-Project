@@ -5,16 +5,20 @@
 <html>
 <body>
 
+		<c:if test="${! empty errorMessage}">
+			<div class="error">${errorMessage}</div>
+		</c:if>
 <form action="${pageContext.servletContext.contextPath}/Sop" method="post">
 SOP Title: <input type="text" name="sopName"><br>
 
 
-SOP ID Number: ${model.sopIdNumber} <br>
-SOP Title: ${model.sopName}<br>
-Author of SOP: ${model.sopAuthor}<br>
-Author ID Number: ${model.authorIDnumber}<br>
-Priority (1-10): ${model.priority}<br>
-Revision Number: ${model.revision}
+<c:forEach items="${sops}" var="sop">
+SOP ID Number: ${sop.sopIdNumber} <br>
+SOP Title: ${sop.sopName}<br>
+SOP Purpose: ${sop.sopPurpose}<br>				
+SOP Priority (1-10): ${sop.priority}<br>
+SOP Revision Number: ${sop.revision}
+</c:forEach>
 
 <form action="/action_page.php">
   Select Files Associated with SOP: <input type="file" name="files" multiple>

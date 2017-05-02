@@ -627,7 +627,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setString(3, priority);
 					System.out.println("executing priority update");
 					stmt.executeUpdate();
-					
+
 					System.out.println("making the return value stmt update priority");
 					stmt2 = conn.prepareStatement(
 							" select * " +
@@ -683,7 +683,7 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet = null;
 
 				try {
-					
+
 					//update the SOPS version number in the database
 					System.out.println("makeing stmt for reviseSOP");
 					stmt = conn.prepareStatement(
@@ -698,7 +698,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt.setString(3, version);
 					System.out.println("executingUpdate for revsise SOP");
 					stmt.executeUpdate();
-					
+
 					System.out.println("makeing stmt1 for reviseSOP");
 					stmt1 = conn.prepareStatement(
 							" update sops " +
@@ -719,7 +719,7 @@ public class DerbyDatabase implements IDatabase {
 							" select * " +
 									" from sops " +
 									" where sop_name = ? " 
-									
+
 							);
 
 					stmt2.setString(1, name);
@@ -823,18 +823,19 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet = null;
 
 				try {
+					System.out.println("making find position stmt");
 					stmt = conn.prepareStatement(
-							" select * from Positions, pososition_sops, user_positions " +
-									" where positions.positionIdS = position_sops.positionId" +
-									" and positions.positionIdU = user_positions.positionId "+
-									" and positionName = ? "
+							" select * from Positions " +
+									" where positionName = ? "
 							);
 					stmt.setString(1, position);
+					System.out.println("executing find postion");
 					resultSet = stmt.executeQuery();
 
 					//if anything is found, return it in a list format
 					List<Position> result = new ArrayList<Position>();
 					Boolean found = false;
+					System.out.println("collecting the reuslts of find position");
 					while (resultSet.next()) {
 						found = true;
 
@@ -936,7 +937,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt3.setString(1, name);
 					stmt3.setString(2, duty);
 					resultSet1 = stmt3.executeQuery();
-					
+
 					//if anything is found, return it in a list format
 					Boolean found = false;
 					List<Position> result2 = new ArrayList<Position>();
@@ -1028,7 +1029,7 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("making stmt to get user");
 					stmt = conn.prepareStatement(
 							" select * from users "+
-					" where user_userName = ?"
+									" where user_userName = ?"
 							);
 					stmt.setString(1, user);
 					System.out.println("executing user get from DB");
@@ -1052,7 +1053,7 @@ public class DerbyDatabase implements IDatabase {
 									" where positionName = ? "
 							);
 					stmt2.setString(1, position);
-					
+
 					System.out.println("getting position");
 					resultSet2 = stmt2.executeQuery();
 					List<Position> result2 = new ArrayList<Position>();
@@ -1066,7 +1067,7 @@ public class DerbyDatabase implements IDatabase {
 					Position pos = result2.get(0);
 					System.out.println(pos.getPositionName());
 					System.out.println(pos.getPositionIDU());
-					
+
 					stmt3 = conn.prepareStatement(
 							" insert into user_positions(positionId, user_id) " +
 									" values(?, ?) "
@@ -1074,19 +1075,19 @@ public class DerbyDatabase implements IDatabase {
 					stmt3.setInt(1, pos.getPositionIDU());
 					stmt3.setInt(2, user.getUserID());
 					stmt3.executeUpdate();
-				return null;
+					return null;
 				}
-			finally {
-				DBUtil.closeQuietly(resultSet);
-				DBUtil.closeQuietly(resultSet2);
-				DBUtil.closeQuietly(stmt);
-				DBUtil.closeQuietly(stmt2);
-				DBUtil.closeQuietly(stmt3);
-			}
+				finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(resultSet2);
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+				}
 			}
 		});
 	}
-	
+
 	public List<Position> findPositionByName(String positionName) { 
 		return executeTransaction(new Transaction<List<Position>>() {
 
@@ -1099,9 +1100,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt = conn.prepareStatement(
 							" select positions * " +
 									" from positions " +
-									" where positions.positionIdS = position_sops.positionId " +
-									" and positions.positionIdU = user_positions.positionId " +
-									" and positions.positionName = ? "
+									" where positions.positionName = ? "
 
 							);
 
