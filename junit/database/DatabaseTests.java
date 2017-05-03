@@ -259,6 +259,7 @@ public class DatabaseTests {
 	}
 	
 	//will add the @Test when the db is working 
+	@Test
 	public void  testaddPosition() {
 		
 		String positionName = "Dr Henry Killinger";
@@ -272,12 +273,13 @@ public class DatabaseTests {
 		}
 		else {
 			for(Position p: positionList) {
-				System.out.println(p.getPositionIDS() + "," + p.getPositionName() + "," + p.getPositionDuty() + "," + p.getPositionIDU());
+				System.out.println(p.getPositionIdS() + "," + p.getPositionName() + "," + p.getPositionDuty() + "," + p.getPositionIDU());
 			}
 		}
 	}
 	
 	//will add the @Test when the db is working 
+	@Test
 	public void testGetPositionFromID() {
 		int positionID = 1; 
 		
@@ -293,13 +295,14 @@ public class DatabaseTests {
 			for(Position p : positionList) {
 				Position addpos = p;
 				positions.add(addpos);
-				System.out.println(p.getPositionIDS() + "," + p.getPositionName()+ "," + p.getPositionDuty()+ "," + p.getPositionIDU());
+				System.out.println(p.getPositionIdS() + "," + p.getPositionName()+ "," + p.getPositionDuty()+ "," + p.getPositionIDU());
 			}
 		}
 		
 	}
 	
 	//will add the @Test when the db is working 
+	@Test
 	public void testGetPositionFromName() {
 		String positionName = "Intern";
 		
@@ -327,6 +330,62 @@ public class DatabaseTests {
 	
 	//this could possibly be done in the servlets/controllers 
 	public void addUserTOPoisition() {
+		
+	}
+	
+	//influenced by the Lab 6 library example 
+	@Test
+	public void testGetAllUsers() {
+		List<User> userList = db.findAllUsers(); 
+		if(userList.isEmpty()) {
+			System.out.println("There are no users in the database");
+			fail("Fix the problem!");
+		}
+		else {
+			users = new ArrayList<User>();
+			for(User user: userList) {
+				users.add(user);
+				System.out.println(user.getFirstName() + ", "+ user.getLastName() + " , "+ user.getUserID() + " , "+  user.getUsername());
+			}
+		}
+		
+	}
+	
+	@Test
+	public void testGetAllSSOPs() {
+		List<SOP> sops = db.findAllSOPs();
+		
+		if(sops.isEmpty()) {
+			System.out.println("There are no SOPs in the databse");
+			fail("Knock knock: this is the FDA");
+		}
+		else {
+			sopList = new ArrayList<SOP>();
+			for(SOP s : sops) {
+				sopList.add(s);
+				System.out.println(s.getSopName() + " , "+  s.getSopIdNumber() + " , "+ s.getPriority() + " , "+ s.getRevision());
+			}
+		}
+	}
+	
+	@Test
+	public void testGetAllPositions() {
+		List<Position> positions = new ArrayList<Position>();
+		
+		if(positions.isEmpty()) {
+			System.out.println("There are no positions in the database");
+			fail("Don't you think that you should, I don't know, have positions availible?");
+		}
+		else {
+			positionList = new ArrayList<Position>();
+			for(Position p: positions) {
+				positionList.add(p);
+				System.out.println(p.getPositionIdS() + " , "+ p.getPositionName() + " , "+ p.getPositionDuty());
+			}
+		}
+	}
+	
+	public void getUserByLastName() {
 		
 	}
 	
