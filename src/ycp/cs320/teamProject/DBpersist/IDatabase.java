@@ -14,6 +14,8 @@ public interface IDatabase {
 	List<User> addUserToDatabase(String name, String pswd, String email, String type, String first, String last);
 	List<User> DeleteUserFromDatabase(String name, String pswd);
 	List<User> changePassword(String name, String pswd, String newPassword);
+	List<User> findAllUsers();
+	List<User> findUserByLastName(String lastname);
 	//rework 'delete users from database' to archive 'usersInDatabase'
 
 
@@ -43,6 +45,8 @@ public interface IDatabase {
 	List<Position> findPositionByName(String positionName);
 	List<UserPosition> addPositionToUser(String user, String position);
 	List<Position> findAllPositions();
+	
+	
 	
 
 
