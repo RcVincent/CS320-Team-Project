@@ -17,7 +17,7 @@ SOP ID Number: ${sop.sopIdNumber} <br>
 SOP Title: ${sop.sopName}<br>
 SOP Purpose: ${sop.sopPurpose}<br>				
 SOP Priority (1-10): ${sop.priority}<br>
-SOP Revision Number: ${sop.revision}
+SOP Revision Number: ${sop.revision}<br>
 </c:forEach>
 
 <form action="/action_page.php">

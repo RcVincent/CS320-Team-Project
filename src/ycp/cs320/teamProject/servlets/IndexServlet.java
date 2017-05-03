@@ -60,6 +60,8 @@ public class IndexServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/createPosition");
 		} else if (req.getParameter("addP2U") != null) {
 			resp.sendRedirect(req.getContextPath() + "/addP2U");
+		}else if (req.getParameter("addS2P") != null) {
+			resp.sendRedirect(req.getContextPath() + "/addS2P");
 		}else if (req.getParameter("position") != null) {
 			resp.sendRedirect(req.getContextPath() + "/position");
 		}else if (req.getParameter("allposition") != null) {

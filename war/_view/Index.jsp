@@ -84,6 +84,9 @@
 			<input name="addP2U" type="submit" value="Add Position to User" /><br>
 			</tr>
 			<tr>
+			<input name="addS2P" type="submit" value="Add SOP to Position" /><br>
+			</tr>
+			<tr>
 				<td><input type = "Submit" name = "Login" value = "Login" /><br> </td>
 				<input type="hidden" name="sessionid" value="sessionid.getSessionid">
 				</form>

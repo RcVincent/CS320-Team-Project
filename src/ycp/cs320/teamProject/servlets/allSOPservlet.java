@@ -46,7 +46,7 @@ public class allSOPservlet extends HttpServlet{
 
 			Projectcontroller controller = new Projectcontroller();
 
-			// get list of books returned from query
+			// get list of sops returned from query
 			sops = controller.findAllSOPs();
 
 

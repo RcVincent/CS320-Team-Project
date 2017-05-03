@@ -1,8 +1,7 @@
 package ycp.cs320.teamProject.servlets;
 
 import java.io.IOException;
-
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,21 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 import ycp.cs320.teamProject.controllers.Projectcontroller;
-import ycp.cs320.teamProject.model.Position;
+import ycp.cs320.teamProject.model.User;
+/*
+ * This is to add positions to users which then can be used to make the training history
+ * 
+ */
 
-
-
-
-public class allPositionservlet extends HttpServlet{
+public class addS2Pservlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	//private getAccountInfo user = null;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-
-		System.out.println("In the allPosition servlet do get");
+		System.out.println("addS2P doGet");
 		HttpSession session = req.getSession();
 		System.out.println(session.getAttribute("username"));
 		if (session.getAttribute("username") == null) {
@@ -36,42 +34,41 @@ public class allPositionservlet extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + "/MainPage");
 
 		}
-		req.getRequestDispatcher("/_view/allposition.jsp").forward(req, resp);
-	}
+		req.getRequestDispatcher("/_view/addS2P.jsp").forward(req, resp);
+	}	
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		Position position = null;
-		String errorMessage   = null;
-		List<Position> positions = null;
-		System.out.println("In the allPosition servlet do post");
-		
-		
-			Projectcontroller controller = new Projectcontroller();
+		System.out.println("addp2u doPost");
+		Projectcontroller cont = new Projectcontroller();
+		String sop = null;
+		String position = null;
 
-			// get list of positions returned from query
-			positions = controller.findAllPositions();
+		sop = req.getParameter("sop");
+		position = req.getParameter("position");
 
+		System.out.println(sop);
+		System.out.println(position);
 		
-		
-				position = positions.get(0);
-				System.out.println(position.getPositionIdS());
-				System.out.println(position.getPositionName());
-				System.out.println(position.getPositionDuty());
+		if (sop !=null && position != null) {
 			
+			// this needs updated cont.addPostionToUser(sop, position);
+			cont.addSOPtoPositions(sop, position);
+		}
 		
 
 
+
+
+		//req.setAttribute("sessionid", model);
 		if (req.getParameter("index") != null) {
 			resp.sendRedirect(req.getContextPath() + "/Index");
 		}
 
-		// Add result objects as request attributes
-		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("position",   position);
-		req.setAttribute("positions",  positions);
-		req.getRequestDispatcher("/_view/allposition.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/addS2P.jsp").forward(req, resp);
 
 	}
+
 
 
 
