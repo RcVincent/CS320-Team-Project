@@ -204,9 +204,9 @@ public class ModelTests {
 	 
 	 @Test
 	 public void testPositions() {
-		int positionID1 = Manager.getPositionIDS();
-		int positionID2 = regularUser.getPositionIDS();
-		int positionID3 = admin.getPositionIDS();
+		int positionID1 = Manager.getPositionIdS();
+		int positionID2 = regularUser.getPositionIdS();
+		int positionID3 = admin.getPositionIdS();
 		
 		assertEquals(1200349, positionID1);
 		assertEquals(1102597, positionID2);

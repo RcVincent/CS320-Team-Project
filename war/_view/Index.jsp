@@ -64,17 +64,23 @@
 			<input name="reviseSOP" type="submit" value="Revise SOP" /><br>
 			</tr>
 			<tr>
-			<input name="sop" type="submit" value="SOP" /><br>
+			<input name="sop" type="submit" value="Find SOP by name" /><br>
+			</tr>
+			<tr>
+			<input name="allsop" type="submit" value="Find all SOPs" /><br>
 			</tr>
 			<tr>
 			<input name="trainingHistory" type="submit" value="Training History" /><br>
 			</tr>
 			<input name="createPosition" type="submit" value="Create Position" /><br>
 			</tr>
-						</tr>
+			<tr>
 			<input name="position" type="submit" value="Find Position By Name" /><br>
 			</tr>
-						</tr>
+			<tr>
+			<input name="allposition" type="submit" value="Find All Positions" /><br>
+			</tr>
+			<tr>
 			<input name="addP2U" type="submit" value="Add Position to User" /><br>
 			</tr>
 			<tr>

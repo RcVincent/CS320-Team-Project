@@ -67,8 +67,18 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>allSOPservlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.allSOPservlet</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>Positionservlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.Positionservlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>allPositionservlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.allPositionservlet</servlet-class>
 	</servlet>
 
 	<!-- Servlet Mappings -->
@@ -79,8 +89,18 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
+		<servlet-name>allPositionservlet</servlet-name>
+		<url-pattern>allposition</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
 		<servlet-name>SOPservlet</servlet-name>
 		<url-pattern>Sop</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>allSOPservlet</servlet-name>
+		<url-pattern>allSop</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

@@ -17,14 +17,14 @@ import ycp.cs320.teamProject.model.Position;
 
 
 
-public class Positionservlet extends HttpServlet{
+public class allPositionservlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	//private getAccountInfo user = null;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("In the Position servlet do get");
+		System.out.println("In the allPosition servlet do get");
 		HttpSession session = req.getSession();
 		System.out.println(session.getAttribute("username"));
 		if (session.getAttribute("username") == null) {
@@ -36,38 +36,29 @@ public class Positionservlet extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + "/MainPage");
 
 		}
-		req.getRequestDispatcher("/_view/position.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/allposition.jsp").forward(req, resp);
 	}
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		Position position = null;
 		String errorMessage   = null;
 		List<Position> positions = null;
-		System.out.println("In the Position servlet do post");
-		String positionName = null;
-		positionName = req.getParameter("positionName");
-
-
-
-		if (positionName == null || positionName.equals("")) {
-			errorMessage = "Please specify the Position's name";
-		} else {
+		System.out.println("In the allPosition servlet do post");
+		
+		
 			Projectcontroller controller = new Projectcontroller();
 
 			// get list of books returned from query
-			positions = controller.getPositionfromDB(positionName);
+			positions = controller.findAllPositions();
 
-			// any books found?
-			if (positions == null) {
-				errorMessage = "No Positions found with name: " + positionName;
-			}
-			else {
+		
+		
 				position = positions.get(0);
 				System.out.println(position.getPositionIdS());
 				System.out.println(position.getPositionName());
 				System.out.println(position.getPositionDuty());
-			}
-		}
+			
+		
 
 
 		if (req.getParameter("index") != null) {

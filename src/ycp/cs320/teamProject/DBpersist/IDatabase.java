@@ -26,6 +26,7 @@ public interface IDatabase {
 	List<SOP> addSOP(final String sopName, final String purpose,  final String priority, final String revision);
 	List<SOP> changePriority(final String name, final String priority, final String newPriority);
 	List<SOP> reviseSOP(final String name, final String version, final String newVersion, final String purpose);
+	List<SOP> findAllSOPs();
 	//archive sop
 
 
@@ -35,7 +36,9 @@ public interface IDatabase {
 	List<Position> getPositionByID(int positionId);
 	List<Position> getPositionInfo(String position);
 	List<Position> addPositionToDatabase(String name, String duty);
-	List<UserPosition> addPositionToUser(String user, String position); 
+	List<UserPosition> addPositionToUser(String user, String position);
+	List<Position> findAllPositions();
+	
 
 	//*******************
 	//Training History related methods implemented in derby database

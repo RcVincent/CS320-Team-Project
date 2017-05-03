@@ -1,7 +1,7 @@
 package ycp.cs320.teamProject.servlets;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,19 +12,18 @@ import javax.servlet.http.HttpSession;
 
 
 import ycp.cs320.teamProject.controllers.Projectcontroller;
-import ycp.cs320.teamProject.model.Position;
+import ycp.cs320.teamProject.model.SOP;
 
 
 
-
-public class Positionservlet extends HttpServlet{
+public class allSOPservlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	//private getAccountInfo user = null;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("In the Position servlet do get");
+		System.out.println("In the allSOP servlet do get");
 		HttpSession session = req.getSession();
 		System.out.println(session.getAttribute("username"));
 		if (session.getAttribute("username") == null) {
@@ -36,38 +35,26 @@ public class Positionservlet extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + "/MainPage");
 
 		}
-		req.getRequestDispatcher("/_view/position.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/allSop.jsp").forward(req, resp);
 	}
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		Position position = null;
+		SOP sop = null;
 		String errorMessage   = null;
-		List<Position> positions = null;
-		System.out.println("In the Position servlet do post");
-		String positionName = null;
-		positionName = req.getParameter("positionName");
+		List<SOP> sops = null;
+		System.out.println("In the SOP servlet do post");
 
-
-
-		if (positionName == null || positionName.equals("")) {
-			errorMessage = "Please specify the Position's name";
-		} else {
 			Projectcontroller controller = new Projectcontroller();
 
 			// get list of books returned from query
-			positions = controller.getPositionfromDB(positionName);
+			sops = controller.findAllSOPs();
 
-			// any books found?
-			if (positions == null) {
-				errorMessage = "No Positions found with name: " + positionName;
-			}
-			else {
-				position = positions.get(0);
-				System.out.println(position.getPositionIdS());
-				System.out.println(position.getPositionName());
-				System.out.println(position.getPositionDuty());
-			}
-		}
+
+		
+				sop = sops.get(0);
+
+			
+		
 
 
 		if (req.getParameter("index") != null) {
@@ -76,9 +63,9 @@ public class Positionservlet extends HttpServlet{
 
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("position",   position);
-		req.setAttribute("positions",  positions);
-		req.getRequestDispatcher("/_view/position.jsp").forward(req, resp);
+		req.setAttribute("sop",   sop);
+		req.setAttribute("sops",  sops);
+		req.getRequestDispatcher("/_view/allSop.jsp").forward(req, resp);
 
 	}
 

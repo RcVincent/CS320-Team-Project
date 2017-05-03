@@ -458,7 +458,45 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+//Pull are sops from DB
+	@Override
+	public List<SOP>findAllSOPs(){
+		return executeTransaction(new Transaction<List<SOP>>(){
+				//@Override
+				public List<SOP>execute(Connection conn)throws SQLException{
+					PreparedStatement stmt = null;
+					ResultSet resultSet = null;
+					
+					try{
+						stmt = conn.prepareStatement(
+								" select * from sops "
+								);
+						resultSet = stmt.executeQuery();
+						//if anything is found, return it in a list format
 
+						
+						List<SOP> result = new ArrayList<SOP>();
+
+						while(resultSet.next()) {
+							
+							SOP s = new SOP();
+							loadSOP(s, resultSet, 1);
+							result.add(s);
+						}
+						return result;
+					}
+						finally {
+							DBUtil.closeQuietly(conn);
+							DBUtil.closeQuietly(stmt);
+							DBUtil.closeQuietly(resultSet);
+						}
+					
+		}
+					
+				});
+				
+				
+	}
 
 	//pull out the SOP requested 
 	@Override
@@ -860,6 +898,46 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 
+	//Pull all positions  from DB
+		@Override
+		public List<Position>findAllPositions(){
+			return executeTransaction(new Transaction<List<Position>>(){
+					//@Override
+					public List<Position>execute(Connection conn)throws SQLException{
+						PreparedStatement stmt = null;
+						ResultSet resultSet = null;
+						
+						try{
+							stmt = conn.prepareStatement(
+									" select * from positions "
+									);
+							resultSet = stmt.executeQuery();
+							//if anything is found, return it in a list format
+
+							
+							List<Position> result = new ArrayList<Position>();
+
+							while(resultSet.next()) {
+								
+								Position p = new Position();
+								loadPosition(p, resultSet, 1);
+								result.add(p);
+							}
+							return result;
+						}
+							finally {
+								DBUtil.closeQuietly(conn);
+								DBUtil.closeQuietly(stmt);
+								DBUtil.closeQuietly(resultSet);
+							}
+						
+			}
+						
+					});
+					
+					
+		}
+	
 	//Add a new position to the system 
 	@Override
 	public List<Position> addPositionToDatabase(final String name, final String duty) {
@@ -911,7 +989,7 @@ public class DerbyDatabase implements IDatabase {
 					Position pos = result.get(0);
 
 					System.out.println(pos.getPositionDuty());
-					System.out.println(pos.getPositionIDS());
+					System.out.println(pos.getPositionIdS());
 					System.out.println(pos.getPositionName());
 
 					System.out.println("making stmt to put id number into second columen");
@@ -921,7 +999,7 @@ public class DerbyDatabase implements IDatabase {
 									" where positionName = ? "+ 
 									" and positionDuty = ? "
 							);
-					stmt2.setInt(1, pos.getPositionIDS());
+					stmt2.setInt(1, pos.getPositionIdS());
 					stmt2.setString(2, name);
 					stmt2.setString(3, duty);
 					System.out.println("updating position with second id number");
