@@ -1096,6 +1096,7 @@ public class DerbyDatabase implements IDatabase {
 						loadPosition(p, resultSet2, 1);
 						result2.add(p);
 					}
+					
 					//set the user info from DB to a new user
 					Position pos = result2.get(0);
 					System.out.println(pos.getPositionName());

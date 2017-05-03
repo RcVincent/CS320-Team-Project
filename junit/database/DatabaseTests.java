@@ -18,10 +18,12 @@ public class DatabaseTests {
 	
 	List<User> userList = null;
 	List<User> users = null;
-	//List<SOP> sops = null;
+	
 	List<SOP> sopList = null;
 	List<Position> positionList = null;
-	//List<Position> positions = null;
+	
+	List<PositionSOP> sopPositionList = null;
+	List<UserPosition> userPositionList = null;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -325,6 +327,16 @@ public class DatabaseTests {
 	
 	//need to add this method to the DB first 
 	public void testAddSOPtoPosition() {
+		String sop = "Electronic Signature";
+		String position = "Grunt";
+		
+		List<PositionSOP> positions = db.addSOPToPositions(sop, position);
+		if(positions.isEmpty()) {
+			
+		}
+		else {
+			//resume working here when we have return statements 
+		}
 		
 	}
 	
@@ -334,7 +346,15 @@ public class DatabaseTests {
 		String user = "Jsnow";
 		List<UserPosition> positions = db.addPositionToUser(user, position);
 		
-		System.out.println(); 
+		
+		if(positions.isEmpty()) {
+			System.out.println("I can't let you do that 'insert username here'");
+			fail("Would you like to play a game?");
+		}
+		else {
+			userPositionList = new ArrayList<UserPosition>();
+			//continue working here when we have return statements
+		}
 	}
 	
 	//influenced by the Lab 6 library example 
