@@ -58,7 +58,7 @@ public class addP2Uservlet extends HttpServlet{
 		
 		if (user !=null && position != null) {
 			
-			cont.addPostionToUser(user, position);
+			cont.addPositionToUser(user, position);
 
 		}
 		

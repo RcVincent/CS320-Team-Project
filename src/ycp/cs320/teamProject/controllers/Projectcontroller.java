@@ -151,9 +151,13 @@ public class Projectcontroller {
 		db.changePriority(name, priority, newPriority);
 	}
 	
-	public void addPostionToUser(String user, String position){
+	public void addPositionToUser(String user, String position){
 		db.addPositionToUser(user, position);
 		
+	}
+	
+	public void addSOPtoPositions(String sop, String position){
+		db.addSOPToPositions(sop, position);
 	}
 	
 	public static boolean authenticate(User u, String pswd)

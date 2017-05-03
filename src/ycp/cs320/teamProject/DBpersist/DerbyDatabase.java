@@ -1045,7 +1045,86 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	//add positions to users
+	//add positions to users !!!!!!!!!!!!!!!!STILL NEED THE RETURN STATEMENT MADE
+	@Override
+	public List<PositionSOP> addSOPToPositions(final String sop, final String position) {
+		return executeTransaction(new Transaction<List<PositionSOP>>() {
+			@Override
+			public List<PositionSOP> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				ResultSet resultSet = null;
+				ResultSet resultSet2 = null;
+				try{
+					//first get the user from DB
+					System.out.println("making stmt to get sop");
+					stmt = conn.prepareStatement(
+							" select * from sops "+
+									" where sop_name = ?"
+							);
+					stmt.setString(1, sop);
+					System.out.println("executing sop get from DB");
+					resultSet = stmt.executeQuery();
+					List<SOP> result = new ArrayList<SOP>();
+					while (resultSet.next()) {
+						System.out.println("setting the result of the query");
+						SOP s = new SOP();
+						loadSOP(s,resultSet,1);
+						result.add(s);
+					}
+					//set the user info from DB to a new user
+					
+					SOP sop = result.get(0);
+					System.out.println(sop.getSopName());
+					System.out.println(sop.getSopIdNumber());
+
+					//get the position from DB
+					System.out.println("making stmt get position");
+					stmt2 = conn.prepareStatement(
+							" select * from positions " +
+									" where positionName = ? "
+							);
+					stmt2.setString(1, position);
+
+					System.out.println("getting position");
+					resultSet2 = stmt2.executeQuery();
+					List<Position> result2 = new ArrayList<Position>();
+					while (resultSet2.next()) {
+						System.out.println("setting the result of the query");
+						Position p = new Position();
+						loadPosition(p, resultSet2, 1);
+						result2.add(p);
+					}
+					//set the user info from DB to a new user
+					Position pos = result2.get(0);
+					System.out.println(pos.getPositionName());
+					System.out.println(pos.getPositionIDU());
+
+					stmt3 = conn.prepareStatement(
+							" insert into position_sops(positionId, sop_id) " +
+									" values(?, ?) "
+							);
+					stmt3.setInt(1, pos.getPositionIDU());
+					stmt3.setInt(2, sop.getSopIdNumber());
+					stmt3.executeUpdate();
+					
+					
+					
+					return null;
+				}
+				finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(resultSet2);
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+				}
+			}
+		});
+	}
+	
+	//add positions to users !!!!!!!!!!!!!!!!STILL NEED THE RETURN STATEMENT MADE
 	@Override
 	public List<UserPosition> addPositionToUser(final String user, final String position) {
 		return executeTransaction(new Transaction<List<UserPosition>>() {

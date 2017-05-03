@@ -62,6 +62,11 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>addS2Pservlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.addS2Pservlet</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>SOPservlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.SOPservlet</servlet-class>
 	</servlet>
@@ -188,6 +193,11 @@
 		<url-pattern>history</url-pattern>
 	</servlet-mapping>
 	
+	<servlet-mapping>
+		<servlet-name>addS2Pservlet</servlet-name>
+		<url-pattern>addS2P</url-pattern>
+	</servlet-mapping>
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>

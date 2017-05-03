@@ -330,7 +330,11 @@ public class DatabaseTests {
 	
 	//this could possibly be done in the servlets/controllers 
 	public void addUserTOPoisition() {
+		String position = "Watch Commander";
+		String user = "Jsnow";
+		List<UserPosition> positions = db.addPositionToUser(user, position);
 		
+		System.out.println(); 
 	}
 	
 	//influenced by the Lab 6 library example 
@@ -345,7 +349,7 @@ public class DatabaseTests {
 			users = new ArrayList<User>();
 			for(User user: userList) {
 				users.add(user);
-				System.out.println(user.getFirstName() + ", "+ user.getLastName() + " , "+ user.getUserID() + " , "+  user.getUsername());
+				System.out.println(user.getFirstName() + ", "+ user.getLastName() + " , "+ user.getUserID() + " , "+  user.getUsername() + " , "+ user.getEmailAddress());
 			}
 		}
 		
@@ -385,7 +389,23 @@ public class DatabaseTests {
 		}
 	}
 	
+	@Test
 	public void getUserByLastName() {
+		String lastname = "Fawlty";
+		List<User> users = db.findUserByLastName(lastname);
+		
+		if(users.isEmpty()) {
+			System.out.println("There are no users in the Database with that last name");
+			fail("If you would like, I could ring up my man Manuel");
+		}
+		else {
+			userList = new ArrayList<User>();
+			for(User user: users) {
+				userList.add(user);
+				System.out.println(user.getFirstName() + " , "+ user.getLastName() + " , "+ user.getUsername() + " , "+ user.getUserID() + " , "+ user.getEmailAddress());
+			}
+		}
+		
 		
 	}
 	

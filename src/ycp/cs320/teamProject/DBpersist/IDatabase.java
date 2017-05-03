@@ -45,6 +45,7 @@ public interface IDatabase {
 	List<Position> findPositionByName(String positionName);
 	List<UserPosition> addPositionToUser(String user, String position);
 	List<Position> findAllPositions();
+	List<PositionSOP> addSOPToPositions(String sop, String position);
 	
 	
 	
