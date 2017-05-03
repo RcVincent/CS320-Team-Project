@@ -106,7 +106,7 @@ public class InitialData {
 				Position position = new Position();
 
 				position.setPositionIDS(positionId++);
-				position.setPositionIDU(position.getPositionIDS());
+				position.setPositionIDU(position.getPositionIdS());
 				position.setPositionName(i.next());
 				position.setPositionDuty(i.next());
 

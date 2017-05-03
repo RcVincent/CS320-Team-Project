@@ -56,14 +56,20 @@ public class IndexServlet extends HttpServlet {
 		} else if (req.getParameter("reviseSOP") != null) {
 			resp.sendRedirect(req.getContextPath() + "/reviseSOP");
 		} else if (req.getParameter("sop") != null) {
-			resp.sendRedirect(req.getContextPath() + "/SOP");
-		} else if (req.getParameter("treaingHistory") != null) {
+			resp.sendRedirect(req.getContextPath() + "/Sop");
+		}else if (req.getParameter("allsop") != null) {
+			resp.sendRedirect(req.getContextPath() + "/allSop");
+		}else if (req.getParameter("treaingHistory") != null) {
 			resp.sendRedirect(req.getContextPath() + "/Traininghistory");
 		} else if (req.getParameter("createPosition") != null) {
 			resp.sendRedirect(req.getContextPath() + "/createPosition");
 		} else if (req.getParameter("addP2U") != null) {
 			resp.sendRedirect(req.getContextPath() + "/addP2U");
-		} else if (req.getParameter("Login") != null) {
+		}else if (req.getParameter("position") != null) {
+			resp.sendRedirect(req.getContextPath() + "/position");
+		}else if (req.getParameter("allposition") != null) {
+			resp.sendRedirect(req.getContextPath() + "/allposition");
+		}else if (req.getParameter("Login") != null) {
 			resp.sendRedirect(req.getContextPath() + "/Login");
 		}
 		//req.setAttribute("sessionid", model);

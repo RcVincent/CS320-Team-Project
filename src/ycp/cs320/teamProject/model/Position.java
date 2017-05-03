@@ -30,7 +30,7 @@ public class Position {
 		this.positionIdS = PositionId;
 	}
 	
-	public int getPositionIDS() {
+	public int getPositionIdS() {
 		return positionIdS;
 	}
 	public void setPositionIDU(int PositionId) {
@@ -69,7 +69,7 @@ public class Position {
 		ArrayList<SOP> sops = new ArrayList<SOP>();
 
 		for(int i = 0; i < regulatingSOPs.size(); i++) {
-			if(position.getPositionIDS() == regulatingSOPs.get(i).getPositionsAffected().get(i).getPositionIDS()) {
+			if(position.getPositionIdS() == regulatingSOPs.get(i).getPositionsAffected().get(i).getPositionIdS()) {
 				sops.add(regulatingSOPs.get(i));
 			}
 		}

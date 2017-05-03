@@ -75,36 +75,45 @@
 			</tr>
 			<tr>
 				-->	
-			<input name="createAccount" type="submit" value="Create Account" />
+			<input name="createAccount" type="submit" value="Create Account" /><br>
 			</tr>
 			<tr>
-			<input name="changePW" type="submit" value="Change Password" />
+			<input name="changePW" type="submit" value="Change Password" /><br>
 			</tr>
 			<tr>
-			<input name="account" type="submit" value="Account" />
+			<input name="account" type="submit" value="Account" /><br>
 			</tr>
 			<tr>
-			<input name="createSOP" type="submit" value="Create SOP" />
+			<input name="createSOP" type="submit" value="Create SOP" /><br>
 			</tr>
 			<tr>
-			<input name="MainPage" type="submit" value="Main Page" />
+			<input name="MainPage" type="submit" value="Main Page" /><br>
 			</tr>
 			<tr>
-			<input name="reviseSOP" type="submit" value="Revise SOP" />
+			<input name="reviseSOP" type="submit" value="Revise SOP" /><br>
 			</tr>
 			<tr>
-			<input name="sop" type="submit" value="SOP" />
+			<input name="sop" type="submit" value="Find SOP by name" /><br>
 			</tr>
 			<tr>
-			<input name="trainingHistory" type="submit" value="Training History" />
-			</tr>
-			<input name="createPosition" type="submit" value="Create Position" />
-			</tr>
-						</tr>
-			<input name="addP2U" type="submit" value="Add Position to User" />
+			<input name="allsop" type="submit" value="Find all SOPs" /><br>
 			</tr>
 			<tr>
-				<td><input type = "Submit" name = "Login" value = "Login" /> </td>
+			<input name="trainingHistory" type="submit" value="Training History" /><br>
+			</tr>
+			<input name="createPosition" type="submit" value="Create Position" /><br>
+			</tr>
+			<tr>
+			<input name="position" type="submit" value="Find Position By Name" /><br>
+			</tr>
+			<tr>
+			<input name="allposition" type="submit" value="Find All Positions" /><br>
+			</tr>
+			<tr>
+			<input name="addP2U" type="submit" value="Add Position to User" /><br>
+			</tr>
+			<tr>
+				<td><input type = "Submit" name = "Login" value = "Login" /><br> </td>
 				<input type="hidden" name="sessionid" value="sessionid.getSessionid">
 				</form>
 			</tr>

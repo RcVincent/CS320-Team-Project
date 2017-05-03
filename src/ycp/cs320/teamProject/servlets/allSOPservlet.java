@@ -16,17 +16,14 @@ import ycp.cs320.teamProject.model.SOP;
 
 
 
-public class SOPservlet extends HttpServlet{
+public class allSOPservlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	//private getAccountInfo user = null;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("In the SOP servlet do get");
-		
-		//get session information so we can re rout a user or admin back to the login page
-		//will help implement a time out in the future 
+		System.out.println("In the allSOP servlet do get");
 		HttpSession session = req.getSession();
 		System.out.println(session.getAttribute("username"));
 		if (session.getAttribute("username") == null) {
@@ -38,7 +35,7 @@ public class SOPservlet extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + "/MainPage");
 
 		}
-		req.getRequestDispatcher("/_view/Sop.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/allSop.jsp").forward(req, resp);
 	}
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -46,28 +43,18 @@ public class SOPservlet extends HttpServlet{
 		String errorMessage   = null;
 		List<SOP> sops = null;
 		System.out.println("In the SOP servlet do post");
-		String sopName = null;
-		sopName = req.getParameter("sopName");
 
-
-
-		if (sopName == null || sopName.equals("")) {
-			errorMessage = "Please specify the SOP's name";
-		} else {
 			Projectcontroller controller = new Projectcontroller();
 
 			// get list of books returned from query
-			sops = controller.pullSOPfromDB(sopName);
+			sops = controller.findAllSOPs();
 
-			// any books found?
-			if (sops == null) {
-				errorMessage = "No SOP's found with name: " + sopName;
-			}
-			else {
+
+		
 				sop = sops.get(0);
 
-			}
-		}
+			
+		
 
 
 		if (req.getParameter("index") != null) {
@@ -78,7 +65,7 @@ public class SOPservlet extends HttpServlet{
 		req.setAttribute("errorMessage", errorMessage);
 		req.setAttribute("sop",   sop);
 		req.setAttribute("sops",  sops);
-		req.getRequestDispatcher("/_view/Sop.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/allSop.jsp").forward(req, resp);
 
 	}
 

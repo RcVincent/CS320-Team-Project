@@ -53,6 +53,9 @@ public class addP2Uservlet extends HttpServlet{
 		user = req.getParameter("user");
 		position = req.getParameter("position");
 
+		System.out.println(user);
+		System.out.println(position);
+		
 		if (user !=null && position != null) {
 			
 			cont.addPostionToUser(user, position);

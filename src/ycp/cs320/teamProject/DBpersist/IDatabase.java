@@ -14,8 +14,6 @@ public interface IDatabase {
 	List<User> addUserToDatabase(String name, String pswd, String email, String type, String first, String last);
 	List<User> DeleteUserFromDatabase(String name, String pswd);
 	List<User> changePassword(String name, String pswd, String newPassword);
-	List<User> findAllUsers();
-	List<User> findUserByLastName(String lastname);
 	//rework 'delete users from database' to archive 'usersInDatabase'
 
 
@@ -30,10 +28,10 @@ public interface IDatabase {
 	List<SOP> changePriority(final String name, final String priority, final String newPriority);
 	List<SOP> reviseSOP(final String name, final String version, final String newVersion, final String purpose);
 	List<SOP> findSOPByName(String sopName);
-	
+	List<SOP> findAllSOPs();
 
 	//archive sop
-	
+
 
 	//*******************
 	//Position related methods 
@@ -43,7 +41,9 @@ public interface IDatabase {
 
 	List<Position> addPositionToDatabase(String name, String duty); 
 	List<Position> findPositionByName(String positionName);
-	List<UserPosition> addPositionToUser(String user, String position); 
+	List<UserPosition> addPositionToUser(String user, String position);
+	List<Position> findAllPositions();
+	
 
 
 	//*******************

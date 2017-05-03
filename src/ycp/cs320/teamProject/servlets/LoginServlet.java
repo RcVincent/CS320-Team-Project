@@ -65,7 +65,7 @@ public class LoginServlet extends HttpServlet {
 					System.out.println("Session info");
 					System.out.println(req.getSession().getAttribute("username"));
 					System.out.println(req.getSession().getAttribute("userID"));
-					System.out.println(req.getSession().getAttribute("fristName"));
+					System.out.println(req.getSession().getAttribute("firstName"));
 					System.out.println(req.getSession().getAttribute("lastName"));
 					System.out.println(req.getSession().getAttribute("type"));
 					System.out.println(req.getSession().getAttribute("emailAddress"));
