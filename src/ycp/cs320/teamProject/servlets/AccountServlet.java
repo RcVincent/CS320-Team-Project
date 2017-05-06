@@ -2,6 +2,7 @@ package ycp.cs320.teamProject.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import ycp.cs320.teamProject.controllers.Projectcontroller;
+import ycp.cs320.teamProject.model.SOP;
 import ycp.cs320.teamProject.model.User;
 
 
@@ -71,6 +73,18 @@ public class AccountServlet extends HttpServlet{
 		System.out.println(user.getUserID());
 		req.setAttribute("user", user);
 
+		SOP sop = null;
+		String errorMessage   = null;
+		List<SOP> sops = null;
+		System.out.println("In the MainPage servlet do post");
+			// get list of sops returned from query
+			sops = controller.TrainingHistory(userName);
+			sop = sops.get(0);
+		// Add result objects as request attributes
+		req.setAttribute("errorMessage", errorMessage);
+		req.setAttribute("sop",   sop);
+		req.setAttribute("sops",  sops);
+		
 		//set the link back to the index page 
 		if (req.getParameter("Index") != null) {
 			System.out.println("back to index");

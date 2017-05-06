@@ -48,6 +48,10 @@ public interface IDatabase {
 	List<PositionSOP> addSOPToPositions(String sop, String position);
 	
 	
+	List<SOP> trainingHistory(String user);
+	
+	
+	
 	
 
 

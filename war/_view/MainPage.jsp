@@ -16,7 +16,16 @@ E-Mail: ${user.emailAddress}<br>
 </div>
 <<<<<<< HEAD
 <div>
-/--This is where we need to list History --/
+/--SOPs needed for this Employee --/<br>
+<br>
+<c:forEach items="${sops}" var="sop">
+SOP ID Number: ${sop.sopIdNumber} <br>
+SOP Title: ${sop.sopName}<br>
+SOP Purpose: ${sop.sopPurpose}<br>				
+SOP Priority (1-10): ${sop.priority}<br>
+SOP Revision Number: ${sop.revision}<br>
+<br>
+</c:forEach>
 <div>
 <tr>
 			<input name="changePW" type="submit" value="Change Password" />

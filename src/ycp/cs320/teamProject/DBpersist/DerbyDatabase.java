@@ -460,44 +460,44 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-//Pull are sops from DB
+	//Pull are sops from DB
 	@Override
 	public List<SOP>findAllSOPs(){
 		return executeTransaction(new Transaction<List<SOP>>(){
-				//@Override
-				public List<SOP>execute(Connection conn)throws SQLException{
-					PreparedStatement stmt = null;
-					ResultSet resultSet = null;
-					
-					try{
-						stmt = conn.prepareStatement(
-								" select * from sops "
-								);
-						resultSet = stmt.executeQuery();
-						//if anything is found, return it in a list format
+			//@Override
+			public List<SOP>execute(Connection conn)throws SQLException{
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
 
-						
-						List<SOP> result = new ArrayList<SOP>();
+				try{
+					stmt = conn.prepareStatement(
+							" select * from sops "
+							);
+					resultSet = stmt.executeQuery();
+					//if anything is found, return it in a list format
 
-						while(resultSet.next()) {
-							
-							SOP s = new SOP();
-							loadSOP(s, resultSet, 1);
-							result.add(s);
-						}
-						return result;
+
+					List<SOP> result = new ArrayList<SOP>();
+
+					while(resultSet.next()) {
+
+						SOP s = new SOP();
+						loadSOP(s, resultSet, 1);
+						result.add(s);
 					}
-						finally {
-							DBUtil.closeQuietly(conn);
-							DBUtil.closeQuietly(stmt);
-							DBUtil.closeQuietly(resultSet);
-						}
-					
-		}
-					
-				});
-				
-				
+					return result;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+
+			}
+
+		});
+
+
 	}
 
 	//pull out the SOP requested 
@@ -764,10 +764,9 @@ public class DerbyDatabase implements IDatabase {
 				try {
 
 					stmt = conn.prepareStatement(
-							" select sops.* " +
-									" from sops, position_sops " +
-									" where sops.sop_id = position_sops.sop_id " +
-									" and sops.sopName = ? "
+							" select * " +
+									" from sops " +
+									" where sop_id = ? "
 
 							);
 					stmt.setString(1, sopName);
@@ -852,45 +851,45 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	//Pull all positions  from DB
-		@Override
-		public List<Position>findAllPositions(){
-			return executeTransaction(new Transaction<List<Position>>(){
-					//@Override
-					public List<Position>execute(Connection conn)throws SQLException{
-						PreparedStatement stmt = null;
-						ResultSet resultSet = null;
-						
-						try{
-							stmt = conn.prepareStatement(
-									" select * from positions "
-									);
-							resultSet = stmt.executeQuery();
-							//if anything is found, return it in a list format
+	@Override
+	public List<Position>findAllPositions(){
+		return executeTransaction(new Transaction<List<Position>>(){
+			//@Override
+			public List<Position>execute(Connection conn)throws SQLException{
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
 
-							
-							List<Position> result = new ArrayList<Position>();
+				try{
+					stmt = conn.prepareStatement(
+							" select * from positions "
+							);
+					resultSet = stmt.executeQuery();
+					//if anything is found, return it in a list format
 
-							while(resultSet.next()) {
-								
-								Position p = new Position();
-								loadPosition(p, resultSet, 1);
-								result.add(p);
-							}
-							return result;
-						}
-							finally {
-								DBUtil.closeQuietly(conn);
-								DBUtil.closeQuietly(stmt);
-								DBUtil.closeQuietly(resultSet);
-							}
-						
+
+					List<Position> result = new ArrayList<Position>();
+
+					while(resultSet.next()) {
+
+						Position p = new Position();
+						loadPosition(p, resultSet, 1);
+						result.add(p);
+					}
+					return result;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+
 			}
-						
-					});
-					
-					
-		}
-	
+
+		});
+
+
+	}
+
 	//Add a new position to the system 
 	@Override
 	public List<Position> addPositionToDatabase(final String name, final String duty) {
@@ -1074,7 +1073,7 @@ public class DerbyDatabase implements IDatabase {
 						result.add(s);
 					}
 					//set the user info from DB to a new user
-					
+
 					SOP sop = result.get(0);
 					System.out.println(sop.getSopName());
 					System.out.println(sop.getSopIdNumber());
@@ -1109,9 +1108,9 @@ public class DerbyDatabase implements IDatabase {
 					stmt3.setInt(1, pos.getPositionIDU());
 					stmt3.setInt(2, sop.getSopIdNumber());
 					stmt3.executeUpdate();
-					
-					
-					
+
+
+
 					return null;
 				}
 				finally {
@@ -1124,7 +1123,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+
 	//add positions to users !!!!!!!!!!!!!!!!STILL NEED THE RETURN STATEMENT MADE
 	@Override
 	public List<UserPosition> addPositionToUser(final String user, final String position) {
@@ -1200,6 +1199,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
 	public List<Position> findPositionByName(String positionName) { 
 		return executeTransaction(new Transaction<List<Position>>() {
 
@@ -1614,6 +1614,12 @@ public class DerbyDatabase implements IDatabase {
 
 
 		System.out.println("Sucess!");
+	}
+
+	@Override
+	public List<SOP> trainingHistory(String user) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
