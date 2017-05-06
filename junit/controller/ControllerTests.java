@@ -10,7 +10,9 @@ import org.junit.Test;
 
 import ycp.cs320.teamProject.controllers.Projectcontroller;;
 public class ControllerTests {
-	private Projectcontroller controller;
+	//we never filled out these tests but if we had we probably could have avoided alot of issues with our servlets 
+	//will keep that in mind for next time
+	 private Projectcontroller controller;
 	 private User Admin = new User(); 
 	 private String AdminUserName = "User"; 
 	 private String AdminPassword = "Pa55w0rd";
@@ -25,6 +27,8 @@ public class ControllerTests {
 	
 	 @Before
 	 public void setUp() {
+		
+		 //set the model information so we can mess with it in the controller methods 
 		 Admin.setUserAccountInformation("Ad", "Min", "Admin@email");
 		 Admin.setPassword(AdminPassword);
 		 Admin.setUsername(AdminUserName);

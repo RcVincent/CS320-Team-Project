@@ -16,12 +16,17 @@ import ycp.cs320.teamProject.model.*;
 public class DatabaseTests {
 	private IDatabase db = null;
 	
+	//user lists
 	List<User> userList = null;
-	List<User> users = null;
 	
+	
+	//sop Lists
 	List<SOP> sopList = null;
+	
+	//position list
 	List<Position> positionList = null;
 	
+	//junction table lists 
 	List<PositionSOP> sopPositionList = null;
 	List<UserPosition> userPositionList = null;
 	
@@ -45,6 +50,7 @@ public class DatabaseTests {
 	public void tearDown() throws Exception {
 	}
 	
+	//test if users are being added properly to the database
 	@Test
 	public void addUserToDatabaseTest() throws Exception {
 		
@@ -57,7 +63,7 @@ public class DatabaseTests {
 		String email = "sillywalksLLC@silly.com";
 		String type = "user";
 		
-		users = db.addUserToDatabase(username, password, email, type, firstname, lastname);
+		List<User >users = db.addUserToDatabase(username, password, email, type, firstname, lastname);
 		
 		if(users.size() > 0) {
 			
@@ -76,6 +82,7 @@ public class DatabaseTests {
 		}
 	}
 	
+	//match a username with their password: for use in authentication when logging in 
 	@Test
 	public void MatchUsernameWithPasswordTest() {
 		
@@ -87,7 +94,7 @@ public class DatabaseTests {
 		String email = "fawltyTowerz@bedlum.com";
 		String type = "Admin";
 		
-		users = db.addUserToDatabase(userName, userPassword, email, type, firstname, lastname);
+		List<User> users = db.addUserToDatabase(userName, userPassword, email, type, firstname, lastname);
 		
 		userList = db.matchUsernameWithPassword(userPassword);
 		
@@ -96,10 +103,10 @@ public class DatabaseTests {
 			fail("No accounts with that password exist");
 		}
 		else {
-			List<User> users = new ArrayList<User>(); 
+			List<User> usersToAdd = new ArrayList<User>(); 
 			for(User u: userList) {
 				User userToAdd = u;
-				users.add(userToAdd);
+				usersToAdd.add(userToAdd);
 				System.out.println(u.getUsername() + ", " +u.getFirstName()+ ", " +u.getLastName());
 				
 				//remove the user from the db after the test 
@@ -143,6 +150,7 @@ public class DatabaseTests {
 		//will work on this when the database is populated, 
 	}
 	
+	//testing we get the full list of a users account information 
 	@Test
 	public void getAccountInfoTest() throws Exception {
 		//Add user 1
@@ -165,6 +173,7 @@ public class DatabaseTests {
 		userList = db.addUserToDatabase(Username1, userPassword1, email1, type1, firstname1, lastname1);
 		userList = db.addUserToDatabase(Username2, userPassword2, email2, type2, firstname2, lastname2);
 		
+		List<User> users = new ArrayList<User>();
 		//get account information 
 		users = db.getAccountInfo(Username1);
 		users = db.getAccountInfo(Username2);
@@ -187,6 +196,7 @@ public class DatabaseTests {
 		
 	}
 	
+	//testing adding an SOP to the DB properly 
 	@Test
 	public void testAddSOP() {
 		
@@ -209,6 +219,7 @@ public class DatabaseTests {
 		
 	}
 	
+	//testing changing an SOPs priority 
 	@Test
 	public void testChanegSOPPriority() {
 		String sopName = "Electronic Signature";
@@ -234,6 +245,7 @@ public class DatabaseTests {
 		
 	}
 	
+	//testing changing an SOPs version
 	@Test
 	public void testChangeSOPVersion() {
 		
@@ -260,7 +272,7 @@ public class DatabaseTests {
 		}
 	}
 	
-	//will add the @Test when the db is working 
+	//testing adding a position to the db properly 
 	@Test
 	public void  testaddPosition() {
 		
@@ -280,7 +292,7 @@ public class DatabaseTests {
 		}
 	}
 	
-	//will add the @Test when the db is working 
+	//return a position found through its ID 
 	@Test
 	public void testGetPositionFromID() {
 		int positionID = 1; 
@@ -303,7 +315,7 @@ public class DatabaseTests {
 		
 	}
 	
-	//will add the @Test when the db is working 
+	//get a position from its name, and return it as an object  
 	@Test
 	public void testGetPositionFromName() {
 		String positionName = "Intern";
@@ -367,7 +379,8 @@ public class DatabaseTests {
 		}
 	}
 	
-	//influenced by the Lab 6 library example 
+	//influenced by the Lab 6 library example
+	//get all users in the DB
 	@Test
 	public void testGetAllUsers() {
 		List<User> userList = db.findAllUsers(); 
@@ -376,7 +389,7 @@ public class DatabaseTests {
 			fail("Fix the problem!");
 		}
 		else {
-			users = new ArrayList<User>();
+			List<User> users = new ArrayList<User>();
 			for(User user: userList) {
 				users.add(user);
 				System.out.println(user.getFirstName() + ", "+ user.getLastName() + " , "+ user.getUserID() + " , "+  user.getUsername() + " , "+ user.getEmailAddress());
@@ -385,6 +398,7 @@ public class DatabaseTests {
 		
 	}
 	
+	//return all sops in the DB
 	@Test
 	public void testGetAllSSOPs() {
 		List<SOP> sops = db.findAllSOPs();
@@ -402,6 +416,7 @@ public class DatabaseTests {
 		}
 	}
 	
+	//return all positions in the DB
 	@Test
 	public void testGetAllPositions() {
 		List<Position> positions = new ArrayList<Position>();
@@ -419,6 +434,7 @@ public class DatabaseTests {
 		}
 	}
 	
+	//search for a user based on their last name 
 	@Test
 	public void getUserByLastName() {
 		String lastname = "Fawlty";
@@ -439,6 +455,7 @@ public class DatabaseTests {
 		
 	}
 	
+	//find a position by the name of the position
 	@Test
 	public void getPositionByNametest() {
 		String positionName = "Intern";
@@ -460,10 +477,5 @@ public class DatabaseTests {
 		}
 	}
 	
-	//might not implement this is the method itself doesnt work. 
-	public void TestGetTrainingHist() {
-		
-	}
-	
-
+	//TODO: space for training history methods 
 }
