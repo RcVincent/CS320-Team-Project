@@ -39,9 +39,7 @@ Enter SOP Purpose here...</textarea><br></h3>
 <h3>Old Revision Number : <input type="text" name="sop_Version"><br></h3>
 <h3>New Revision Number : <input type="text" name="sop_newVersion"><br></h3>
 
-<form action="/action_page.php">
-  Select Files Associated with SOP: <input type="file" name="files" multiple>
-  <input type="submit">
+<td><input type = "Submit" name = "submit" value = "Submit" /> </td>
   <td><input type = "Submit" name = "index" value = "Index" /> </td>
 </form>
 

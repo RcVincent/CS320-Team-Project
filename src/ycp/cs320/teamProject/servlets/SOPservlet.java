@@ -56,10 +56,10 @@ public class SOPservlet extends HttpServlet{
 		} else {
 			Projectcontroller controller = new Projectcontroller();
 
-			// get list of books returned from query
+			// get sops from DB
 			sops = controller.pullSOPfromDB(sopName);
 
-			// any books found?
+			// any sops found?
 			if (sops == null) {
 				errorMessage = "No SOP's found with name: " + sopName;
 			}
