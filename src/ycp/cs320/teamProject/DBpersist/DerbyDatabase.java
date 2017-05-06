@@ -1247,6 +1247,12 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
+	public List<SOP> trainingHistory(String user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	//remove position method/archive position method
 	//add sop to a position
 	//add a user to a position 
@@ -1614,12 +1620,6 @@ public class DerbyDatabase implements IDatabase {
 
 
 		System.out.println("Sucess!");
-	}
-
-	@Override
-	public List<SOP> trainingHistory(String user) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	

@@ -326,6 +326,7 @@ public class DatabaseTests {
 	}
 	
 	//need to add this method to the DB first 
+	@Test
 	public void testAddSOPtoPosition() {
 		String sop = "Electronic Signature";
 		String position = "Grunt";
@@ -459,8 +460,10 @@ public class DatabaseTests {
 		}
 	}
 	
-	
-	
+	//might not implement this is the method itself doesnt work. 
+	public void TestGetTrainingHist() {
+		
+	}
 	
 
 }
