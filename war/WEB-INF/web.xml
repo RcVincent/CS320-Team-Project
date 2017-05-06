@@ -87,7 +87,7 @@
 	</servlet>
 
 	<servlet>
-		<servlet-name>ElectronicSignature</servlet-name>
+		<servlet-name>ElectronicSignatureServlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.ElectronicSignatureServlet</servlet-class>
 	</servlet>
 	

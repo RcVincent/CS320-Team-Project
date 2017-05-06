@@ -48,7 +48,7 @@ public interface IDatabase {
 	List<PositionSOP> addSOPToPositions(String sop, String position);
 	
 	
-	List<SOP> trainingHistory(String user);
+	List<SOP> trainingHistory(String userName);
 	
 	
 	
