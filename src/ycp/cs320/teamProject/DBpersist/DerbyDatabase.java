@@ -755,51 +755,51 @@ public class DerbyDatabase implements IDatabase {
 	@Override
 	public List<SOP> findSOPByName(String sopName) {
 		return executeTransaction(new Transaction<List<SOP>>() {
-
 			@Override
 			public List<SOP> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+
 				ResultSet resultSet = null;
 
-
 				try {
-
 					stmt = conn.prepareStatement(
-							" select * " +
-									" from sops " +
-									" where sop_id = ? "
-
+							" select * from SOPs " +
+									" where sop_Name = ? "	
 							);
 					stmt.setString(1, sopName);
-
 					resultSet = stmt.executeQuery();
 
+					//if anything is found, return it in a list format
+
+					Boolean found = false;
 					List<SOP> result = new ArrayList<SOP>();
 
-					boolean found = true;
 					while(resultSet.next()) {
 						found = true;
-						SOP sop = new SOP();
-
-						loadSOP(sop, resultSet, 1);
-
-						result.add(sop);
+						SOP s = new SOP();
+						loadSOP(s, resultSet, 1);
+						result.add(s);
 					}
 
+					//check if the SOP was found
 					if(!found) {
-						System.out.println("No sops found with name: " + sopName);
+						System.out.println("<" + sopName + "was not found in the database" );
 					}
 
 					return result;
 
-				}finally {
+
+				}
+
+				finally {
+					DBUtil.closeQuietly(conn);
 					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(resultSet);
 				}
 
-
 			}
-
 		});
 	}
 

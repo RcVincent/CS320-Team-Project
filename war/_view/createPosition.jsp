@@ -32,7 +32,7 @@ Position Duty: <textarea rows="4" cols="50" name="positionDuty" >
 Enter Position Duty here...</textarea><br>
 <td><input type = "Submit" name = "submit" value = "Submit" /> </td>
 <td><input type = "Submit" name = "index" value = "Index" /> </td>
-<input type="hidden" name="sessionid" value="sessionid.getSessionid">
+
 </form>
 
 

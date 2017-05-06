@@ -16,7 +16,7 @@
 		background: -ms-linear-gradient(0deg, rgba(0,255,255,1) 0%, rgba(255,255,255,1) 37%, rgba(0,128,128,1) 100%); /* ie10+ */
 		background: linear-gradient(90deg, rgba(0,255,255,1) 0%, rgba(255,255,255,1) 37%, rgba(0,128,128,1) 100%); /* w3c */
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffff', endColorstr='#008080',GradientType=1 ); /* ie6-9 */
-
+}
           
           h1{
           font-size: 40px;
@@ -31,18 +31,18 @@
 		<c:if test="${! empty errorMessage}">
 			<div class="error">${errorMessage}</div>
 		</c:if>
-<form action="${pageContext.servletContext.contextPath}/Sop.jsp" method="post">
+<form action="${pageContext.servletContext.contextPath}/Sop" method="post">
+<h3>SOP Title: <input type="text" name="sopName"><br></h3>
 <c:forEach items="${sops}" var="sop">
-SOP ID Number: ${sop.sopIdNumber} <br>
-SOP Title: ${sop.sopName}<br>
-SOP Purpose: ${sop.sopPurpose}<br>				
-SOP Priority (1-10): ${sop.priority}<br>
-SOP Revision Number: ${sop.revision}
+<h3>SOP ID Number: ${sop.sopIdNumber} <br></h3>
+<h3>SOP Title: ${sop.sopName}<br></h3>
+<h3>SOP Purpose: ${sop.sopPurpose}<br>		</h3>		
+<h3>SOP Priority (1-10): ${sop.priority}<br></h3>
+<h3>SOP Revision Number: ${sop.revision}</h3>
 </c:forEach>
-</form>
-<form action="/action_page.php">
-  Select Files Associated with SOP: <input type="file" name="files" multiple>
-  <input type="submit">
+
+
+<td><input type = "Submit" name = "submit" value = "Submit" /> </td>
     <td><input type = "Submit" name = "index" value = "Index" /> </td>
 </form>
 
