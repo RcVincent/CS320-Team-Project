@@ -27,6 +27,7 @@ public interface IDatabase {
 	List<SOP> changePriority(final String name, final String priority, final String newPriority);
 	List<SOP> reviseSOP(final String name, final String version, final String newVersion, final String purpose);
 	List<SOP> findAllSOPs();
+	List<SOP> findSOPByID(int sopID);
 	//archive sop
 
 
@@ -39,6 +40,8 @@ public interface IDatabase {
 	List<UserPosition> addPositionToUser(String user, String position);
 	List<Position> findAllPositions();
 	List<PositionSOP> addSOPToPositions(String sop, String position);
+	List<SOP> trainingHistory(String user);
+	
 	
 
 	//*******************

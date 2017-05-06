@@ -15,7 +15,16 @@ E-Mail: ${user.emailAddress}<br>
 
 </div>
 <div>
-/--This is where we need to list History --/
+/--SOPs need for this Employee --/<br>
+<br>
+<c:forEach items="${sops}" var="sop">
+SOP ID Number: ${sop.sopIdNumber} <br>
+SOP Title: ${sop.sopName}<br>
+SOP Purpose: ${sop.sopPurpose}<br>				
+SOP Priority (1-10): ${sop.priority}<br>
+SOP Revision Number: ${sop.revision}<br>
+<br>
+</c:forEach>
 <div>
 
 <td><input type = "Submit" name = "submit" value = "Submit" /> </td>

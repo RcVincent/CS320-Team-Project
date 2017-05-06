@@ -458,44 +458,44 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-//Pull are sops from DB
+	//Pull are sops from DB
 	@Override
 	public List<SOP>findAllSOPs(){
 		return executeTransaction(new Transaction<List<SOP>>(){
-				//@Override
-				public List<SOP>execute(Connection conn)throws SQLException{
-					PreparedStatement stmt = null;
-					ResultSet resultSet = null;
-					
-					try{
-						stmt = conn.prepareStatement(
-								" select * from sops "
-								);
-						resultSet = stmt.executeQuery();
-						//if anything is found, return it in a list format
+			//@Override
+			public List<SOP>execute(Connection conn)throws SQLException{
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
 
-						
-						List<SOP> result = new ArrayList<SOP>();
+				try{
+					stmt = conn.prepareStatement(
+							" select * from sops "
+							);
+					resultSet = stmt.executeQuery();
+					//if anything is found, return it in a list format
 
-						while(resultSet.next()) {
-							
-							SOP s = new SOP();
-							loadSOP(s, resultSet, 1);
-							result.add(s);
-						}
-						return result;
+
+					List<SOP> result = new ArrayList<SOP>();
+
+					while(resultSet.next()) {
+
+						SOP s = new SOP();
+						loadSOP(s, resultSet, 1);
+						result.add(s);
 					}
-						finally {
-							DBUtil.closeQuietly(conn);
-							DBUtil.closeQuietly(stmt);
-							DBUtil.closeQuietly(resultSet);
-						}
-					
-		}
-					
-				});
-				
-				
+					return result;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+
+			}
+
+		});
+
+
 	}
 
 	//pull out the SOP requested 
@@ -798,8 +798,8 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	//search for an sop based on its name 
-	//@Override
-	public List<SOP> findSOPByName(String sopName) {
+	@Override
+	public List<SOP> findSOPByID(int sopID) {
 		return executeTransaction(new Transaction<List<SOP>>() {
 
 			@Override
@@ -811,13 +811,12 @@ public class DerbyDatabase implements IDatabase {
 				try {
 
 					stmt = conn.prepareStatement(
-							" select sops.* " +
-									" from sops, position_sops " +
-									" where sops.sop_id = position_sops.sop_id " +
-									" and sops.sopName = ? "
+							" select * " +
+									" from sops " +
+									" where sop_id = ? "
 
 							);
-					stmt.setString(1, sopName);
+					stmt.setInt(1, sopID);
 
 					resultSet = stmt.executeQuery();
 
@@ -834,7 +833,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 
 					if(!found) {
-						System.out.println("No sops found with name: " + sopName);
+						System.out.println("No sops found with ID: " + sopID);
 					}
 
 					return result;
@@ -899,45 +898,45 @@ public class DerbyDatabase implements IDatabase {
 	}
 
 	//Pull all positions  from DB
-		@Override
-		public List<Position>findAllPositions(){
-			return executeTransaction(new Transaction<List<Position>>(){
-					//@Override
-					public List<Position>execute(Connection conn)throws SQLException{
-						PreparedStatement stmt = null;
-						ResultSet resultSet = null;
-						
-						try{
-							stmt = conn.prepareStatement(
-									" select * from positions "
-									);
-							resultSet = stmt.executeQuery();
-							//if anything is found, return it in a list format
+	@Override
+	public List<Position>findAllPositions(){
+		return executeTransaction(new Transaction<List<Position>>(){
+			//@Override
+			public List<Position>execute(Connection conn)throws SQLException{
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
 
-							
-							List<Position> result = new ArrayList<Position>();
+				try{
+					stmt = conn.prepareStatement(
+							" select * from positions "
+							);
+					resultSet = stmt.executeQuery();
+					//if anything is found, return it in a list format
 
-							while(resultSet.next()) {
-								
-								Position p = new Position();
-								loadPosition(p, resultSet, 1);
-								result.add(p);
-							}
-							return result;
-						}
-							finally {
-								DBUtil.closeQuietly(conn);
-								DBUtil.closeQuietly(stmt);
-								DBUtil.closeQuietly(resultSet);
-							}
-						
+
+					List<Position> result = new ArrayList<Position>();
+
+					while(resultSet.next()) {
+
+						Position p = new Position();
+						loadPosition(p, resultSet, 1);
+						result.add(p);
+					}
+					return result;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(resultSet);
+				}
+
 			}
-						
-					});
-					
-					
-		}
-	
+
+		});
+
+
+	}
+
 	//Add a new position to the system 
 	@Override
 	public List<Position> addPositionToDatabase(final String name, final String duty) {
@@ -1120,7 +1119,7 @@ public class DerbyDatabase implements IDatabase {
 						result.add(s);
 					}
 					//set the user info from DB to a new user
-					
+
 					SOP sop = result.get(0);
 					System.out.println(sop.getSopName());
 					System.out.println(sop.getSopIdNumber());
@@ -1154,9 +1153,9 @@ public class DerbyDatabase implements IDatabase {
 					stmt3.setInt(1, pos.getPositionIDU());
 					stmt3.setInt(2, sop.getSopIdNumber());
 					stmt3.executeUpdate();
-					
-					
-					
+
+
+
 					return null;
 				}
 				finally {
@@ -1169,7 +1168,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+
 	//add positions to users !!!!!!!!!!!!!!!!STILL NEED THE RETURN STATEMENT MADE
 	@Override
 	public List<UserPosition> addPositionToUser(final String user, final String position) {
@@ -1291,6 +1290,163 @@ public class DerbyDatabase implements IDatabase {
 
 		});
 	}
+
+	//The meat and potatos.  get all sops linked to a position linked to a user
+
+	@Override
+	public List<SOP> trainingHistory(String userName){
+		return executeTransaction(new Transaction<List<SOP>>() {
+
+			@Override
+			public List<SOP> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
+				
+				ResultSet resultSet = null;
+				ResultSet resultSet2 = null;
+				ResultSet resultSet3 = null;
+				ResultSet resultSet4 = null;
+			
+
+
+				try {
+System.out.println("stmt to get user from db");
+					stmt = conn.prepareStatement(
+							" select  * " +
+									" from users " +
+									" where user_userName = ? "
+
+							);
+					stmt.setString(1, userName);
+					System.out.println("getting user from DB");
+					resultSet = stmt.executeQuery();
+
+					List<User> result = new ArrayList<User>();
+
+					boolean found = false;
+					while(resultSet.next()) {
+						found = true;
+						User user = new User();
+
+						loadUser(user, resultSet, 1);
+
+
+						result.add(user);
+					}
+
+					if(!found) {
+						System.out.println("No users found with Name: " + userName);
+					}
+					User USER = result.get(0);
+
+					System.out.println("stmt to get positions of user");
+					stmt2 = conn.prepareStatement(
+							" select * from user_positions " +
+									" where user_id = ? "
+							);
+
+					stmt2.setInt(1, USER.getUserID());
+					System.out.println("getting positions");
+					resultSet2 = stmt2.executeQuery();
+					System.out.println("positions got");
+					List<UserPosition> result2 = new ArrayList<UserPosition>();
+					boolean found2 = false;
+					while(resultSet2.next()){
+						System.out.println("returning positions");
+						found2 = true;
+						UserPosition UP = new UserPosition();
+						System.out.println("loadUserPositions");
+						loadUserPositions(UP, resultSet2,1);
+						System.out.println("putting results in result2");
+						result2.add(UP);						
+					}
+					if(!found2){
+						System.out.println("No positions linked to user:" + userName);
+					}
+					System.out.println("setting up to get sop ids");
+					int i = 0;
+					List<PositionSOP> result3 = new ArrayList<PositionSOP>();
+
+					UserPosition UP = new UserPosition();
+					System.out.println("about to loop through positions and get sops");
+					while( i < result2.size()){
+						System.out.println("getting the user position");
+						UP = result2.get(i);
+						System.out.println("stmt to get sop of position");
+						stmt3 = conn.prepareStatement(
+								" select * from position_sops " + 
+										" where positionId = ? "								
+								);
+						System.out.println("getting sops from position");
+						stmt3.setInt(1, UP.getPositionID());
+						resultSet3 = stmt3.executeQuery();
+						boolean found3 = false;
+						while(resultSet3.next()){
+							found3 = true;
+							PositionSOP SP = new PositionSOP();
+							loadPositionSOPs(SP, resultSet3,1);
+							result3.add(SP);
+														
+						}
+						i++;
+						if(!found3){
+							System.out.println("No positions linked to sops for:" + userName);
+						}
+					}
+					System.out.println(result3.toString());
+					int j = 0;
+					List<SOP> result4 = new ArrayList<SOP>();
+					
+					PositionSOP SP = new PositionSOP();
+					System.out.println(result3.size());
+					while( j < result3.size()){
+						SP = result3.get(j);
+						System.out.println("stmt to get sops");
+						stmt4 = conn.prepareStatement(
+								" select * from sops " + 
+										" where sop_id = ? "								
+								);
+						stmt4.setInt(1, SP.getSopID());
+						System.out.println("getting sops");
+						resultSet4 = stmt4.executeQuery();
+						boolean found4 = false;
+						while(resultSet4.next()){
+							found4 = true;
+							SOP sop = new SOP();
+							loadSOP(sop, resultSet4,1);
+							System.out.println("adding sop to result4");
+							result4.add(sop);
+							
+						}
+						j++;
+						if(!found4){
+							System.out.println("No SOPs linked to positions for:" + userName);
+						}
+					}
+
+
+					return result4;
+
+				}finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(resultSet2);
+					DBUtil.closeQuietly(resultSet3);
+					DBUtil.closeQuietly(resultSet4);
+				}
+
+
+			}
+
+		});
+
+	}
+
 	public<ResultType> ResultType executeTransaction(Transaction<ResultType> txn) {
 		try {
 			return doExecuteTransaction(txn);

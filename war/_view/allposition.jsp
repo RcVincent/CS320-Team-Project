@@ -16,7 +16,7 @@
 Position ID Number: ${position.positionIdS} <br>
 Position Name: ${position.positionName}<br>
 Position Duty: ${position.positionDuty}<br>				
-
+<br>
 </c:forEach>
 
 
