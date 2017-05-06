@@ -4,7 +4,7 @@
 
 <html>
 	<head>
-      <title>Create SOP</title>
+      <title>Create User Account</title>
 		<style type = "text/css">
           body{
            font-family: Verdan;
@@ -17,6 +17,9 @@
 		background: linear-gradient(90deg, rgba(0,255,255,1) 0%, rgba(255,255,255,1) 37%, rgba(0,128,128,1) 100%); /* w3c */
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffff', endColorstr='#008080',GradientType=1 ); /* ie6-9 */
 
+		.error {
+			color: red;
+		}
           h1{
           font-size: 40px;
           }

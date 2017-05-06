@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javafx.util.Pair;
@@ -1247,6 +1248,176 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
+	public List<SOP> trainingHistory(String userName){
+		return executeTransaction(new Transaction<List<SOP>>() {
+
+			@Override
+			public List<SOP> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
+				
+				ResultSet resultSet = null;
+				ResultSet resultSet2 = null;
+				ResultSet resultSet3 = null;
+				ResultSet resultSet4 = null;
+			
+
+
+				try {
+System.out.println("stmt to get user from db");
+					stmt = conn.prepareStatement(
+							" select  * " +
+									" from users " +
+									" where user_userName = ? "
+
+							);
+					stmt.setString(1, userName);
+					System.out.println("getting user from DB");
+					resultSet = stmt.executeQuery();
+
+					List<User> result = new ArrayList<User>();
+
+					boolean found = false;
+					while(resultSet.next()) {
+						found = true;
+						User user = new User();
+
+						loadUser(user, resultSet, 1);
+
+
+						result.add(user);
+					}
+
+					if(!found) {
+						System.out.println("No users found with Name: " + userName);
+					}
+					User USER = result.get(0);
+
+					System.out.println("stmt to get positions of user");
+					stmt2 = conn.prepareStatement(
+							" select * from user_positions " +
+									" where user_id = ? "
+							);
+
+					stmt2.setInt(1, USER.getUserID());
+					System.out.println("getting positions");
+					resultSet2 = stmt2.executeQuery();
+					System.out.println("positions got");
+					List<UserPosition> result2 = new ArrayList<UserPosition>();
+					boolean found2 = false;
+					while(resultSet2.next()){
+						System.out.println("returning positions");
+						found2 = true;
+						UserPosition UP = new UserPosition();
+						System.out.println("loadUserPositions");
+						loadUserPositions(UP, resultSet2,1);
+						System.out.println("putting results in result2");
+						result2.add(UP);						
+					}
+					if(!found2){
+						System.out.println("No positions linked to user:" + userName);
+					}
+					System.out.println("setting up to get sop ids");
+					int i = 0;
+					List<PositionSOP> result3 = new ArrayList<PositionSOP>();
+
+					UserPosition UP = new UserPosition();
+					System.out.println("about to loop through positions and get sops");
+					while( i < result2.size()){
+						System.out.println("getting the user position");
+						UP = result2.get(i);
+						System.out.println("stmt to get sop of position");
+						stmt3 = conn.prepareStatement(
+								" select * from position_sops " + 
+										" where positionId = ? "								
+								);
+						System.out.println("getting sops from position");
+						stmt3.setInt(1, UP.getPositionID());
+						resultSet3 = stmt3.executeQuery();
+						boolean found3 = false;
+						while(resultSet3.next()){
+							found3 = true;
+							PositionSOP SP = new PositionSOP();
+							loadPositionSOPs(SP, resultSet3,1);
+							result3.add(SP);
+														
+						}
+						i++;
+						if(!found3){
+							System.out.println("No positions linked to sops for:" + userName);
+						}
+					}
+					System.out.println(result3.toString());
+					int k =0;
+					int q = 0;
+					PositionSOP SP = new PositionSOP();
+					List<Integer> sopIDs = new ArrayList<Integer>();
+					List<Integer> SOPs = new ArrayList<Integer>();
+					while(k < result3.size()){
+						SP = result3.get(k);
+						sopIDs.add(SP.getSopID());
+						k++;
+					}
+					while(q < sopIDs.size()){
+						if(!SOPs.contains(sopIDs.get(q))){
+							SOPs.add(sopIDs.get(q));
+						}
+						q++;
+					}
+					int j = 0;
+					List<SOP> result4 = new ArrayList<SOP>();
+										
+					System.out.println(result3.size());
+					while( j < SOPs.size()){
+						
+						System.out.println("stmt to get sops");
+						stmt4 = conn.prepareStatement(
+								" select * from sops " + 
+										" where sop_id = ? "								
+								);
+						stmt4.setInt(1,SOPs.get(j) );
+						System.out.println("getting sops");
+						resultSet4 = stmt4.executeQuery();
+						boolean found4 = false;
+						while(resultSet4.next()){
+							found4 = true;
+							SOP sop = new SOP();
+							loadSOP(sop, resultSet4,1);
+							System.out.println("adding sop to result4");
+							result4.add(sop);
+							
+						}
+						j++;
+						if(!found4){
+							System.out.println("No SOPs linked to positions for:" + userName);
+						}
+					}
+
+
+					return result4;
+
+				}finally {
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(resultSet2);
+					DBUtil.closeQuietly(resultSet3);
+					DBUtil.closeQuietly(resultSet4);
+				}
+
+
+			}
+
+		});
+
+	}
+	
+	
 	//remove position method/archive position method
 	//add sop to a position
 	//add a user to a position 
@@ -1616,11 +1787,7 @@ public class DerbyDatabase implements IDatabase {
 		System.out.println("Sucess!");
 	}
 
-	@Override
-	public List<SOP> trainingHistory(String user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	
 }

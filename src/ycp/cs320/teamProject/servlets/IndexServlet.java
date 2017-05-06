@@ -19,7 +19,7 @@ public class IndexServlet extends HttpServlet {
 			throws ServletException, IOException
 	{
 		System.out.println("In the Index servlet do get");
-		
+
 		//get session information so we can re rout a user or admin back to the login page
 		//will help implement a time out in the future 
 		HttpSession session = req.getSession();
@@ -31,14 +31,14 @@ public class IndexServlet extends HttpServlet {
 		}
 		if(session.getAttribute("type").equals("User")){
 			resp.sendRedirect(req.getContextPath() + "/MainPage");
-			
+
 		}
 		req.getRequestDispatcher("/_view/Index.jsp").forward(req, resp);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+
 		//set a massive amount of redirect links. this is the admins primary page, so it 
 		//would make sense that they can go anywhere
 		System.out.println("In the Index servlet");
@@ -59,8 +59,6 @@ public class IndexServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Sop");
 		}else if (req.getParameter("allsop") != null) {
 			resp.sendRedirect(req.getContextPath() + "/allSop");
-		}else if (req.getParameter("treaingHistory") != null) {
-			resp.sendRedirect(req.getContextPath() + "/Traininghistory");
 		} else if (req.getParameter("createPosition") != null) {
 			resp.sendRedirect(req.getContextPath() + "/createPosition");
 		} else if (req.getParameter("addP2U") != null) {

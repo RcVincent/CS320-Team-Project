@@ -19,17 +19,18 @@
 		margin-top: 2px;
 	}
 	
-	body{
+          body{
            font-family: Verdan;
           
-          background-color: lightblue
-          }
-          h1{
-          font-size: 40px;
-          }
-          h3{
-          font-size: 15px;
-          }
+        background: -moz-linear-gradient(0deg, rgba(0,255,255,1) 0%, rgba(255,255,255,1) 37%, rgba(0,128,128,1) 100%); /* ff3.6+ */
+		background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(0,255,255,1)), color-stop(37%, rgba(255,255,255,1)), color-stop(100%, rgba(0,128,128,1))); /* safari4+,chrome */
+		background: -webkit-linear-gradient(0deg, rgba(0,255,255,1) 0%, rgba(255,255,255,1) 37%, rgba(0,128,128,1) 100%); /* safari5.1+,chrome10+ */
+		background: -o-linear-gradient(0deg, rgba(0,255,255,1) 0%, rgba(255,255,255,1) 37%, rgba(0,128,128,1) 100%); /* opera 11.10+ */
+		background: -ms-linear-gradient(0deg, rgba(0,255,255,1) 0%, rgba(255,255,255,1) 37%, rgba(0,128,128,1) 100%); /* ie10+ */
+		background: linear-gradient(90deg, rgba(0,255,255,1) 0%, rgba(255,255,255,1) 37%, rgba(0,128,128,1) 100%); /* w3c */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffff', endColorstr='#008080',GradientType=1 ); /* ie6-9 */
+}
+          
 	#PageName {
 		color: white;
 		font-size: 250%;
@@ -97,9 +98,6 @@
 			</tr>
 			<tr>
 			<input name="allsop" type="submit" value="Find all SOPs" /><br>
-			</tr>
-			<tr>
-			<input name="trainingHistory" type="submit" value="Training History" /><br>
 			</tr>
 			<input name="createPosition" type="submit" value="Create Position" /><br>
 			</tr>

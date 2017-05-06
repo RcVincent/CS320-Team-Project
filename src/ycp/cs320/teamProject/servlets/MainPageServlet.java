@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 import ycp.cs320.teamProject.controllers.Projectcontroller;
 import ycp.cs320.teamProject.model.SOP;
 import ycp.cs320.teamProject.model.User;
@@ -25,9 +24,6 @@ public class MainPageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("MainPage doGet");
-		
-		//get session information so we can re rout a user or admin back to the login page
-		//will help implement a time out in the future 
 		HttpSession session = req.getSession();
 		System.out.println(session.getAttribute("username"));
 		if (session.getAttribute("username") == null) {
@@ -35,16 +31,9 @@ public class MainPageServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Login");
 			return;
 		}
-		
-		//for checking to see if the electronic signature flag has been tripped and re route the user if it has 
-		/*System.out.println(session.getAttribute("electronicSignatureFlag"));
-		if(session.getAttribute("electronicSignatureFlag") == false) {
-			resp.sendRedirect(req.getContextPath() + "/ElectronicSignature");
-		}*/
-		
-		
+	
 		Projectcontroller controller = new Projectcontroller();
-		//set the necessary information to display for the user 		
+				
 		String userName = (String) session.getAttribute("username");
 		System.out.println("Session info");
 		System.out.println(req.getSession().getAttribute("username"));
@@ -91,7 +80,15 @@ public class MainPageServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
 
+			
+		
+		if (req.getParameter("changePW") != null) {
+		resp.sendRedirect(req.getContextPath() + "/changePassword");
+		}
+				
+				
 		req.getRequestDispatcher("/_view/MainPage.jsp").forward(req, resp);
 
 		}
