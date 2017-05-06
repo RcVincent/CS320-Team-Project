@@ -336,11 +336,17 @@ public class DatabaseTests {
 		}
 		else {
 			//resume working here when we have return statements 
+			sopPositionList = new ArrayList<PositionSOP>();
+			for(PositionSOP sp : positions) {
+				sopPositionList.add(sp);
+				System.out.println(sp.getPositionID() + ", " + sp.getSopID());
+			}
 		}
 		
 	}
 	
 	//this could possibly be done in the servlets/controllers 
+	@Test
 	public void addUserTOPoisition() {
 		String position = "Watch Commander";
 		String user = "Jsnow";
@@ -353,7 +359,10 @@ public class DatabaseTests {
 		}
 		else {
 			userPositionList = new ArrayList<UserPosition>();
-			//continue working here when we have return statements
+			for(UserPosition up: positions) {
+				userPositionList.add(up);
+				System.out.println(up.getUserID()+", "+ up.getPositionID());
+			}
 		}
 	}
 	
@@ -428,6 +437,30 @@ public class DatabaseTests {
 		
 		
 	}
+	
+	@Test
+	public void getPositionByNametest() {
+		String positionName = "Intern";
+		
+		List<Position> positions = db.findPositionByName(positionName);
+		
+		if(positions.isEmpty()) {
+			System.out.println("I'm afraid the class you are searching for does not exist");
+			fail("Now witness the power of this fully operational system");
+		}
+		else {
+			positionList = new ArrayList<Position>();
+			for(Position p : positions) {
+				
+				positionList.add(p);
+				
+				System.out.println(p.getPositionName() +", " + p.getPositionDuty());
+			}
+		}
+	}
+	
+	
+	
 	
 
 }
