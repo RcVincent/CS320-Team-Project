@@ -77,6 +77,11 @@
 	</servlet>
 
 	<servlet>
+		<servlet-name>AllUsersServlet</servlet-name>
+		<servlet-class>ycp.cs320.teamProject.servlets.AllUsersServlet</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>Positionservlet</servlet-name>
 		<servlet-class>ycp.cs320.teamProject.servlets.Positionservlet</servlet-class>
 	</servlet>
@@ -111,6 +116,11 @@
 	<servlet-mapping>
 		<servlet-name>allPositionservlet</servlet-name>
 		<url-pattern>allposition</url-pattern>
+	</servlet-mapping>
+	
+		<servlet-mapping>
+		<servlet-name>AllUsersServlet</servlet-name>
+		<url-pattern>allUsers</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

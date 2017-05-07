@@ -44,6 +44,7 @@ public class IndexServlet extends HttpServlet {
 		System.out.println("In the Index servlet");
 		if (req.getParameter("account") != null) {
 			resp.sendRedirect(req.getContextPath() + "/account");
+			
 		} else if (req.getParameter("createAccount") != null) {
 			resp.sendRedirect(req.getContextPath() + "/CreateAccount");
 		} else if (req.getParameter("changePW") != null) {
@@ -59,6 +60,8 @@ public class IndexServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/Sop");
 		}else if (req.getParameter("allsop") != null) {
 			resp.sendRedirect(req.getContextPath() + "/allSop");
+		}else if (req.getParameter("allUsers") != null) {
+			resp.sendRedirect(req.getContextPath() + "/allUsers");
 		} else if (req.getParameter("createPosition") != null) {
 			resp.sendRedirect(req.getContextPath() + "/createPosition");
 		} else if (req.getParameter("addP2U") != null) {
