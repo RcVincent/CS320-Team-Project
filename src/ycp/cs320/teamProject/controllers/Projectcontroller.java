@@ -72,6 +72,20 @@ public class Projectcontroller {
 		db.DeleteUserFromDatabase(userName, password);
 	}
 
+	//find all users in DB
+	public List<User>findAllUsers(){
+		List<User> userList = db.findAllUsers();
+
+		List<User> Users = new ArrayList<User>();
+
+		for(User user : userList) {
+			Users.add(user);
+		}
+
+		return Users;
+
+	}
+	
 	//need a method for pulling an SOP out of the DB based on the SOP number
 	public List<SOP> pullSOPfromDB(String sopName) {
 

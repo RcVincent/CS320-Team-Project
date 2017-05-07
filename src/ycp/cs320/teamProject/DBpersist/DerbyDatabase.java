@@ -218,52 +218,40 @@ public class DerbyDatabase implements IDatabase {
 	//this is going to be an Admin only function
 	@Override
 	public List<User> findAllUsers() {
-		return executeTransaction(new Transaction<List<User>>() {
-
-			@Override
-			public List<User> execute(Connection conn) throws SQLException {
+		return executeTransaction(new Transaction<List<User>>(){
+			//@Override
+			public List<User>execute(Connection conn)throws SQLException{
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 
-
-				try {
+				try{
 					stmt = conn.prepareStatement(
-							//until we get the forgein key issue cleared up this is out due to not working
-							//I want to get the servlets working for the milestone
-							" select * from users, user_positions " +
-							" where users.user_id = user_positions.user_id "+
-							" order by lastName asc, firstName asc "
+							" select * from users "
 							);
+					resultSet = stmt.executeQuery();
+					//if anything is found, return it in a list format
+
 
 					List<User> result = new ArrayList<User>();
 
-					resultSet = stmt.executeQuery();
-
-					Boolean found = false;
 					while(resultSet.next()) {
-						found = true;
 
-						User user = new User();
-						loadUser(user, resultSet, 1);
-
-						result.add(user);
+						User u = new User();
+						loadUser(u, resultSet, 1);
+						result.add(u);
 					}
-
-					if(!found) {
-						System.out.println("No users were found in the database");
-					}
-
-					return result;	
-
-				}finally {
+					return result;
+				}
+				finally {
+					DBUtil.closeQuietly(conn);
 					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet);
 				}
 
-
 			}
 
 		});
+
 
 	}
 	
@@ -312,6 +300,8 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 
+
+	
 	//this one may be tricky to work out 
 	@Override
 	public List<User> DeleteUserFromDatabase(final String name, final String pswd) {

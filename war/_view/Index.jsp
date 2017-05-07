@@ -76,6 +76,13 @@
 			</tr>
 			<tr>
 				-->	
+			<tr>
+			<input name="MainPage" type="submit" value="Main Page" /><br>
+			</tr>
+			<tr>
+			<input name="allUsers" type="submit" value="All Users" /><br>
+			</tr>
+			
 			<input name="createAccount" type="submit" value="Create Account" /><br>
 			</tr>
 			<tr>
@@ -85,17 +92,16 @@
 			<input name="account" type="submit" value="Account" /><br>
 			</tr>
 			<tr>
-			<input name="createSOP" type="submit" value="Create SOP" /><br>
+			<input name="sop" type="submit" value="Find SOP by name" /><br>
 			</tr>
 			<tr>
-			<input name="MainPage" type="submit" value="Main Page" /><br>
+			<input name="createSOP" type="submit" value="Create SOP" /><br>
 			</tr>
+
 			<tr>
 			<input name="reviseSOP" type="submit" value="Revise SOP" /><br>
 			</tr>
-			<tr>
-			<input name="sop" type="submit" value="Find SOP by name" /><br>
-			</tr>
+
 			<tr>
 			<input name="allsop" type="submit" value="Find all SOPs" /><br>
 			</tr>
